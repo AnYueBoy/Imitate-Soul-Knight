@@ -5,6 +5,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using UFramework;
 using UnityEngine;
 
 public class RoleControl : MonoBehaviour {
@@ -18,22 +19,19 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void Update () {
-        this.editorControl ();
+        this.roleMove (Time.deltaTime);
     }
 
-    private void editorControl () {
-#if UNITY_EDITOR
-        if (Input.GetKey (KeyCode.D)) {
-            transform.Translate (Vector3.right * Time.deltaTime * this.moveSpeed);
-            transform.localScale = new Vector3 (1, 1, 1);
-        } else if (Input.GetKey (KeyCode.A)) {
-            transform.Translate (Vector3.left * Time.deltaTime * this.moveSpeed);
-            transform.localScale = new Vector3 (-1, 1, 1);
-        } else if (Input.GetKey (KeyCode.W)) {
-            transform.Translate (Vector3.up * Time.deltaTime * this.moveSpeed);
-        } else if (Input.GetKey (KeyCode.S)) {
-            transform.Translate (Vector3.down * Time.deltaTime * this.moveSpeed);
+    private void roleMove (float dt) {
+        Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
+        if (moveDir == Vector2.zero) {
+            return;
         }
-#endif
+        transform.Translate (moveDir * dt * moveSpeed);
+
+        if (moveDir.x != 0) {
+            transform.localScale = new Vector3 (moveDir.x, 1, 1);
+        }
+
     }
 }
