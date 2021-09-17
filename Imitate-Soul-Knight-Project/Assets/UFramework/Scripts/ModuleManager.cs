@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-09-17 15:55:10
+ * @Last Modified time: 2021-09-17 16:29:54
  */
 
 namespace UFramework {
@@ -28,7 +28,7 @@ namespace UFramework {
         #endregion
 
         #region 非mono模块
-        private GUIConsole guiConsole = new GUIConsole ();
+        private GUIConsole guiConsole = null;
         public PromiseTimer promiseTimer = new PromiseTimer ();
         #endregion
 
@@ -36,6 +36,7 @@ namespace UFramework {
         private void Awake () {
             _instance = this;
             if (this.appMode != AppMode.Release) {
+                this.guiConsole = new GUIConsole ();
                 this.guiConsole.init ();
             }
         }

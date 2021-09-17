@@ -19,6 +19,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void Update () {
+        this.roleAni ();
         this.roleMove (Time.deltaTime);
     }
 
@@ -31,6 +32,24 @@ public class RoleControl : MonoBehaviour {
 
         if (moveDir.x != 0) {
             transform.localScale = new Vector3 (moveDir.x, 1, 1);
+        }
+    }
+
+    private void roleAni () {
+        AnimatorStateInfo animatorStateInfo = this.animator.GetCurrentAnimatorStateInfo (0);
+
+        Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
+        if (moveDir == Vector2.zero) {
+            bool inIdleState = animatorStateInfo.IsName ("Idle");
+            if (!inIdleState) {
+                this.animator.SetBool ("IsMove", false);
+            }
+            return;
+        }
+
+        bool inMoveState = animatorStateInfo.IsName ("Move");
+        if (!inMoveState) {
+            this.animator.SetBool ("IsMove", true);
         }
 
     }
