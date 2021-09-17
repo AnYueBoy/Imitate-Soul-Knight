@@ -18,13 +18,13 @@ public class InputManager {
 
 	private void editorControl () {
 #if UNITY_EDITOR
-		if (Input.GetKeyDown (KeyCode.D)) {
+		if (Input.GetKey (KeyCode.D)) {
 			this._moveDir = Vector2.right;
-		} else if (Input.GetKeyDown (KeyCode.A)) {
+		} else if (Input.GetKey (KeyCode.A)) {
 			this._moveDir = Vector2.left;
-		} else if (Input.GetKeyDown (KeyCode.W)) {
+		} else if (Input.GetKey (KeyCode.W)) {
 			this._moveDir = Vector2.up;
-		} else if (Input.GetKeyDown (KeyCode.S)) {
+		} else if (Input.GetKey (KeyCode.S)) {
 			this._moveDir = Vector2.down;
 		}
 
