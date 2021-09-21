@@ -35,7 +35,7 @@ namespace UFramework.FrameUtil {
         /// 是否是IPad分辨率
         /// </summary>
         /// <returns></returns>
-        public static bool isPadResoluation () {
+        public static bool isPadResolution () {
             return targetValue (4 / 3.0f);
         }
 

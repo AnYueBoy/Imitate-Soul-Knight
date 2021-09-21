@@ -23,7 +23,7 @@ namespace UFramework {
         }
 
         #region mono模块
-        public InputManager inputManager = new InputManager ();
+        public InputManager inputManager;
 
         #endregion
 
