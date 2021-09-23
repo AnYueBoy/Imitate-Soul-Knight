@@ -316,9 +316,29 @@ namespace UFramework.FrameUtil {
             }
         }
 
+        /// <summary>
+        /// 根据单位向量获取角度值
+        /// </summary>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public static float signedAngle (Vector2 to) {
+            to = to.normalized;
+            float angle = Mathf.Asin (to.y);
+            float transAngle = 180 / Mathf.PI * angle;
+            if (to.x < 0) {
+                if (to.y >= 0) {
+                    transAngle = 180 - transAngle;
+                } else {
+                    transAngle = -180 - transAngle;
+                }
+            }
+
+            return transAngle;
+        }
+
         public static string getBundleUrl () {
             string platformName = getCurPlatformName ();
-            string bundleUrl = Application.dataPath + "/AssetsBundles/" + platformName+"/";
+            string bundleUrl = Application.dataPath + "/AssetsBundles/" + platformName + "/";
             return bundleUrl;
         }
     }

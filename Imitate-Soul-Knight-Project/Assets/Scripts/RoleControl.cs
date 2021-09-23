@@ -38,12 +38,12 @@ public class RoleControl : MonoBehaviour {
             transform.localScale = new Vector3 (sign, 1, 1);
         }
 
-        this.weaponRotate (moveDir);
+        this.weaponRotate (transform.localScale,moveDir);
     }
 
-    private void weaponRotate (Vector2 moveDir) {
-        float angle = Mathf.Asin (moveDir.y);
-
+    private void weaponRotate (Vector2 refer, Vector2 moveDir) {
+        float rotationAngle = Vector2.Angle (Vector2.right, moveDir);
+        this.weaponSprite.transform.parent.eulerAngles = new Vector3 (0, 0, rotationAngle);
     }
 
     private void roleAni () {
