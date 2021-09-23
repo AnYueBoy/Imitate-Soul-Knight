@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class RoleControl : MonoBehaviour {
 
+    public SpriteRenderer weaponSprite;
+
     private readonly float moveSpeed = 2;
 
     private Animator animator;
@@ -28,12 +30,20 @@ public class RoleControl : MonoBehaviour {
         if (moveDir == Vector2.zero) {
             return;
         }
+
         transform.Translate (moveDir * dt * moveSpeed);
 
         if (moveDir.x != 0) {
             float sign = moveDir.x / Mathf.Abs (moveDir.x);
             transform.localScale = new Vector3 (sign, 1, 1);
         }
+
+        this.weaponRotate (moveDir);
+    }
+
+    private void weaponRotate (Vector2 moveDir) {
+        float angle = Mathf.Asin (moveDir.y);
+
     }
 
     private void roleAni () {
