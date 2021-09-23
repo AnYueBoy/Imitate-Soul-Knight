@@ -42,6 +42,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
+        // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
         this.weaponSprite.transform.parent.eulerAngles = new Vector3 (0, 0, rotationAngle);
     }
