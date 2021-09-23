@@ -31,8 +31,10 @@ public class InputManager : MonoBehaviour {
 
 		Vector2 outResult;
 		RectTransformUtility.ScreenPointToLocalPointInRectangle (this.canvasRect, touch.position, null, out outResult);
-		// 只对左半边屏幕进行触摸相应
-		if (touch.position.x > Screen.width / 2) {
+
+		// 对屏幕三分之一出的屏幕进行触摸响应
+		if (touch.position.x > Screen.width / 3 && this.touchStartPos == Vector2.zero) {
+			this.touchEnd ();
 			return;
 		}
 
@@ -72,6 +74,7 @@ public class InputManager : MonoBehaviour {
 	private void touchEnd () {
 		this.touchStartPos = Vector2.zero;
 		this._moveDir = Vector2.zero;
+		this.movePointer.localPosition = Vector2.zero;
 	}
 
 	#endregion

@@ -31,7 +31,8 @@ public class RoleControl : MonoBehaviour {
         transform.Translate (moveDir * dt * moveSpeed);
 
         if (moveDir.x != 0) {
-            transform.localScale = new Vector3 (moveDir.x, 1, 1);
+            float sign = moveDir.x / Mathf.Abs (moveDir.x);
+            transform.localScale = new Vector3 (sign, 1, 1);
         }
     }
 
