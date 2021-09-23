@@ -62,6 +62,9 @@ public class InputManager : MonoBehaviour {
 
 	public RectTransform movePointer;
 	private void touchMove (Vector2 pos) {
+		if (this.touchStartPos == Vector2.zero) {
+			return;
+		}
 		Vector2 moveVec = pos - touchStartPos;
 		this._moveDir = moveVec.normalized;
 		if (moveVec.magnitude > moveMaxDis) {
