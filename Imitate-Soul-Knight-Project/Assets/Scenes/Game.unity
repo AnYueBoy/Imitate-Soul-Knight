@@ -596,6 +596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasRect: {fileID: 1944031416}
   moveRocker: {fileID: 26273831}
+  movePointer: {fileID: 260314170}
 --- !u!4 &671483817
 Transform:
   m_ObjectHideFlags: 0

@@ -41,25 +41,37 @@ public class InputManager : MonoBehaviour {
 		}
 
 		if (touch.phase == TouchPhase.Moved) {
-
+			this.touchMove (outResult);
 		}
 
 		if (touch.phase == TouchPhase.Ended) {
-
+			this.touchEnd ();
 		}
-
 	}
+
+	private Vector2 touchStartPos;
 
 	private void touchStart (Vector2 pos) {
 		this.moveRocker.localPosition = pos;
+		this.touchStartPos = pos;
 	}
 
-	private void touchMove () {
+	private readonly float moveMaxDis = 100f;
 
+	public RectTransform movePointer;
+	private void touchMove (Vector2 pos) {
+		Vector2 moveVec = pos - touchStartPos;
+		this._moveDir = moveVec.normalized;
+		if (moveVec.magnitude > moveMaxDis) {
+			this.movePointer.localPosition = this._moveDir * moveMaxDis;
+		} else {
+			this.movePointer.localPosition = moveVec;
+		}
 	}
 
 	private void touchEnd () {
-
+		this.touchStartPos = Vector2.zero;
+		this._moveDir = Vector2.zero;
 	}
 
 	#endregion
