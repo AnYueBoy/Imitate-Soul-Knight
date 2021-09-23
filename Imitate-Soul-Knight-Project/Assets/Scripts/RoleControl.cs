@@ -38,11 +38,11 @@ public class RoleControl : MonoBehaviour {
             transform.localScale = new Vector3 (sign, 1, 1);
         }
 
-        this.weaponRotate (transform.localScale,moveDir);
+        this.weaponRotate (new Vector2 (transform.localScale.x, 0), moveDir);
     }
 
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
-        float rotationAngle = Vector2.Angle (Vector2.right, moveDir);
+        float rotationAngle = Vector2.SignedAngle (refer, moveDir);
         this.weaponSprite.transform.parent.eulerAngles = new Vector3 (0, 0, rotationAngle);
     }
 
