@@ -35,7 +35,7 @@ namespace UFramework.FrameUtil {
         /// 是否是IPad分辨率
         /// </summary>
         /// <returns></returns>
-        public static bool isPadResolution () {
+        public static bool isPadResoluation () {
             return targetValue (4 / 3.0f);
         }
 
@@ -262,6 +262,22 @@ namespace UFramework.FrameUtil {
             sourceList = sourceList.GetRange (0, newListLength);
         }
 
+        public static bool isOddNumber (int value) {
+            // 奇数的二进制最后一位为1
+            return (value & 1) == 1;
+        }
+
+        //取一定范围内的一个奇数
+        public static int getOddNumber (int min, int max) {
+            while (true) {
+                int temp = Random.Range (min, max);
+                if (!isOddNumber (temp)) {
+                    continue;
+                }
+                return temp;
+            }
+        }
+
         /// <summary> 
         /// 简单2d射线检测（只返回是否检测到目标）       
         /// </summary> 
@@ -314,26 +330,6 @@ namespace UFramework.FrameUtil {
                     // FIXME: other platfrom not support
                     return null;
             }
-        }
-
-        /// <summary>
-        /// 根据单位向量获取角度值
-        /// </summary>
-        /// <param name="to"></param>
-        /// <returns></returns>
-        public static float signedAngle (Vector2 to) {
-            to = to.normalized;
-            float angle = Mathf.Asin (to.y);
-            float transAngle = 180 / Mathf.PI * angle;
-            if (to.x < 0) {
-                if (to.y >= 0) {
-                    transAngle = 180 - transAngle;
-                } else {
-                    transAngle = -180 - transAngle;
-                }
-            }
-
-            return transAngle;
         }
 
         public static string getBundleUrl () {
