@@ -1,10 +1,11 @@
 ﻿/*
  * @Author: l hy 
  * @Date: 2021-09-29 08:40:01 
- * @Description: 地图生成管理s
+ * @Description: 地图生成管理
  */
 using System.Collections;
 using System.Collections.Generic;
+using UFramework.FrameUtil;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -51,18 +52,54 @@ public class MapManager : MonoBehaviour {
     private void DrawRoad () { }
     //画出地板和墙壁
     private void DrawFloor () { }
+
     //生成房间 （用二维 int 数组表示）
-    private int[, ] RandomRoom (int maxW, int maxH, int minW, int minH, out int width, out int height) {
-        width = 1;
-        height = 1;
-        return null;
+    private int[, ] RandomRoom (int minW, int minH, int maxW, int maxH) {
+        int randomWidth = CommonUtil.getOddNumber (minW, maxW);
+        int randomHeight = CommonUtil.getOddNumber (minH, maxH);
+
+        int[, ] room = new int[randomWidth, randomHeight];
+        for (int i = 0; i < randomWidth; i++) {
+            for (int j = 0; j < randomHeight; j++) {
+                room[i, j] = 1;
+            }
+        }
+        return room;
     }
+
     //生成一个地图 （用二维 int 数组表示）
     private int[, ] GetRoomMap (int mapW, int mapH, int roomCount) {
+
         return null;
     }
     //获取下一个房间的位置
     private Vector2Int GetNextPoint (Vector2Int nowPoint, int maxW, int maxH) {
-        return Vector2Int.zero;
+        while (true) {
+            Vector2Int endPoint = nowPoint;
+            int randomValue = Random.Range (0, 4);
+            switch (randomValue) {
+                case 0:
+                    endPoint.x += 1;
+                    break;
+                case 1:
+                    endPoint.y += 1;
+                    break;
+                case 2:
+                    endPoint.x -= 1;
+                    break;
+
+                case 3:
+                    endPoint.y -= 1;
+                    break;
+
+                default:
+                    Debug.LogWarning ("exceed value: " + randomValue);
+                    break;
+            }
+
+            if (endPoint.x >= 0 && endPoint.y >= 0 && endPoint.x < maxW && endPoint.y < maxH) {
+                return endPoint;
+            }
+        }
     }
 }
