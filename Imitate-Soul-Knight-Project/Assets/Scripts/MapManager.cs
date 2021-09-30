@@ -68,9 +68,24 @@ public class MapManager : MonoBehaviour {
     }
 
     //生成一个地图 （用二维 int 数组表示）
-    private int[, ] GetRoomMap (int mapW, int mapH, int roomCount) {
+    private int[, ] GetRoomMap (int mapRow, int mapColumn, int roomCount) {
+        Vector2Int nowPoint = Vector2Int.zero;
+        int curRoomCount = 1;
 
-        return null;
+        int[, ] map = new int[mapRow, mapColumn];
+        map[nowPoint.x, nowPoint.y] = 1;
+
+        while (curRoomCount < roomCount) {
+            nowPoint = GetNextPoint (nowPoint, mapRow, mapColumn);
+            if (map[nowPoint.x, nowPoint.y] == 1) {
+                continue;
+            }
+
+            map[nowPoint.x, nowPoint.y] = 1;
+            curRoomCount++;
+        }
+
+        return map;
     }
     //获取下一个房间的位置
     private Vector2Int GetNextPoint (Vector2Int nowPoint, int maxW, int maxH) {
