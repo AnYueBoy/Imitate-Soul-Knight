@@ -114,6 +114,7 @@ public class MapManager : MonoBehaviour {
             }
 
             map[nowPoint.x, nowPoint.y] = 1;
+            // 是否可在此直接进行房间的生成处理
             curRoomCount++;
         }
 
