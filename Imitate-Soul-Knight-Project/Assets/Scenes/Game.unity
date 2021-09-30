@@ -496,7 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2261383d69a641b43cafa55b872ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wall: {fileID: 11400000, guid: 7543ba6412703d148b04d1fc935dae95, type: 2}
+  floor: {fileID: 11400000, guid: 7543ba6412703d148b04d1fc935dae95, type: 2}
+  wall: {fileID: 11400000, guid: 6d8234615ee8fad469cc7adc7d39dd7d, type: 2}
   tilemap: {fileID: 2114980463}
 --- !u!4 &361785849
 Transform:
@@ -1892,22 +1893,22 @@ Tilemap:
       e11: 0
       e12: 0
       e13: NaN
-      e20: 1.3321097e-37
+      e20: -0.0020769686
       e21: 0
-      e22: 3633976
+      e22: 2.415319e-22
       e23: -9.2493013e-38
-      e30: 7.12e-43
+      e30: 7.1e-43
       e31: 0
       e32: 7.12e-43
       e33: 4.5905e-41
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 7.9213104, g: 7.9213104, b: 7.9213104, a: 7.9213104}
+    m_Data: {r: 10.931793, g: 10.931793, b: 10.931793, a: 10.931793}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -36, y: -15, z: 0}
-  m_Size: {x: 48, y: 32, z: 1}
+  m_Origin: {x: -36, y: -19, z: 0}
+  m_Size: {x: 48, y: 36, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:

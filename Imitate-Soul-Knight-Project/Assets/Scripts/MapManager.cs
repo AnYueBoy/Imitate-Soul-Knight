@@ -29,6 +29,7 @@ public class MapManager : MonoBehaviour {
 
     private int roomDistance;
 
+    [SerializeField]
     private TileBase floor;
 
     [SerializeField]
