@@ -496,9 +496,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd2261383d69a641b43cafa55b872ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapRowCount: 5
+  mapColumnCount: 5
+  totalRoomCount: 5
   floor: {fileID: 11400000, guid: 7543ba6412703d148b04d1fc935dae95, type: 2}
   wall: {fileID: 11400000, guid: 6d8234615ee8fad469cc7adc7d39dd7d, type: 2}
   tilemap: {fileID: 2114980463}
+  passwayHeight: 0
 --- !u!4 &361785849
 Transform:
   m_ObjectHideFlags: 0

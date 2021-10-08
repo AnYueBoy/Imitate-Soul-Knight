@@ -11,12 +11,13 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour {
 
-    private int seed = 123456;
+    [SerializeField]
+    private int mapRowCount;
 
-    private int mapMaxRowCount;
+    [SerializeField]
+    private int mapColumnCount;
 
-    private int mapMaxColumnCount;
-
+    [SerializeField]
     private int totalRoomCount;
 
     private int roomMaxWidth;
@@ -37,6 +38,9 @@ public class MapManager : MonoBehaviour {
 
     [SerializeField]
     private Tilemap tilemap;
+
+    [SerializeField]
+    private int passwayHeight;
 
     private int[, ] roomMap;
 
@@ -64,9 +68,10 @@ public class MapManager : MonoBehaviour {
     private void DrawFloor () { }
 
     private void generateMapData () {
-        int[, ] roomMap = this.getRoomMap (5, 5, 5);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
+        int[, ] roomMap = this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
+        for (int i = 0; i < mapRowCount; i++) {
+            for (int j = 0; j < mapColumnCount; j++) {
                 if (roomMap[i, j] == 1) {
                     // 生成房间
                     this.drawRoom (i, j);
@@ -78,9 +83,21 @@ public class MapManager : MonoBehaviour {
     private void drawRoom (int x, int y) {
         int startX = 6 * x;
         int startY = 6 * y;
+        // FIXME: 房间的宽和高
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
+
+                // 绘制墙体
+                // FIXME: row-1
+                if (i == 0 || i == 5 - 1) {
+                    tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                } else {
+                    // FIXME: column-1
+                    if (j == 0 || j == 5 - 1) {
+                        tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                    }
+                }
             }
         }
     }
@@ -101,6 +118,7 @@ public class MapManager : MonoBehaviour {
 
     //生成一个地图 （用二维 int 数组表示）
     private int[, ] getRoomMap (int mapRow, int mapColumn, int roomCount) {
+        //FIXME: 初始位置可以进行随机
         Vector2Int nowPoint = Vector2Int.zero;
         int curRoomCount = 1;
 
@@ -114,7 +132,6 @@ public class MapManager : MonoBehaviour {
             }
 
             map[nowPoint.x, nowPoint.y] = 1;
-            // 是否可在此直接进行房间的生成处理
             curRoomCount++;
         }
 
