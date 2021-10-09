@@ -51,20 +51,6 @@ public class MapManager : MonoBehaviour {
         this.generateMapData ();
     }
 
-    //画出地图
-    private void DrawMap () {
-        this.DrawFloor ();
-        this.DrawRoad ();
-    }
-    //画出房间
-    private void DrawRoom (int roomX, int roomY) { }
-
-    //画出路
-    private void DrawRoad () { }
-
-    //画出地板和墙壁
-    private void DrawFloor () { }
-
     private void generateMapData () {
         int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
         int[, ] roomMap = this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
@@ -92,6 +78,7 @@ public class MapManager : MonoBehaviour {
         int startY = (roomHeight + roomDistance) * y;
         for (int i = 0; i < roomWidth; i++) {
             for (int j = 0; j < roomHeight; j++) {
+                // 绘制地板
                 tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
                 // 绘制墙体
                 if (i == 0 || i == roomWidth - 1) {
