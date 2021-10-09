@@ -1,10 +1,9 @@
-﻿/*
+﻿using System.Collections.Generic;
+/*
  * @Author: l hy 
  * @Date: 2021-09-29 08:40:01 
  * @Description: 地图生成管理
  */
-using System.Collections;
-using System.Collections.Generic;
 using UFramework.FrameUtil;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -20,14 +19,6 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     private int totalRoomCount;
 
-    private int roomMaxWidth;
-
-    private int roomMaxHeight;
-
-    private int roomMinWidth;
-
-    private int roomMinHeight;
-
     [SerializeField]
     private TileBase floor;
 
@@ -40,11 +31,7 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     private int passwayHeight;
 
-    private int[, ] roomMap;
-
-    private List<Vector2Int> _centerPoint;
-
-    private Dictionary<Vector2Int, int> _mapPoint;
+    private List<RoomData> roomList;
 
     public void generateMapClick () {
         tilemap.ClearAllTiles ();
