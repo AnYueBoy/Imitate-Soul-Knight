@@ -499,10 +499,13 @@ MonoBehaviour:
   mapRowCount: 5
   mapColumnCount: 5
   totalRoomCount: 5
+  roomDistance: 10
   floor: {fileID: 11400000, guid: 7543ba6412703d148b04d1fc935dae95, type: 2}
   wall: {fileID: 11400000, guid: 6d8234615ee8fad469cc7adc7d39dd7d, type: 2}
   tilemap: {fileID: 2114980463}
-  passwayHeight: 0
+  passwayHeight: 5
+  roomHeight: 15
+  roomWidth: 21
 --- !u!4 &361785849
 Transform:
   m_ObjectHideFlags: 0

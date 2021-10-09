@@ -28,8 +28,6 @@ public class MapManager : MonoBehaviour {
 
     private int roomMinHeight;
 
-    private int roomDistance;
-
     [SerializeField]
     private TileBase floor;
 
@@ -80,21 +78,26 @@ public class MapManager : MonoBehaviour {
         }
     }
 
-    private void drawRoom (int x, int y) {
-        int startX = 6 * x;
-        int startY = 6 * y;
-        // FIXME: 房间的宽和高
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
+    [SerializeField]
+    private int roomHeight;
 
+    [SerializeField]
+    private int roomWidth;
+
+    [SerializeField]
+    private int roomDistance;
+
+    private void drawRoom (int x, int y) {
+        int startX = (roomWidth + roomDistance) * x;
+        int startY = (roomHeight + roomDistance) * y;
+        for (int i = 0; i < roomWidth; i++) {
+            for (int j = 0; j < roomHeight; j++) {
+                tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
                 // 绘制墙体
-                // FIXME: row-1
-                if (i == 0 || i == 5 - 1) {
+                if (i == 0 || i == roomWidth - 1) {
                     tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
                 } else {
-                    // FIXME: column-1
-                    if (j == 0 || j == 5 - 1) {
+                    if (j == 0 || j == roomHeight - 1) {
                         tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
                     }
                 }
