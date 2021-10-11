@@ -85,7 +85,12 @@ public class MapManager : MonoBehaviour {
     }
 
     private void drawPassway () {
+        for (int i = 0; i < this.roomList.Count - 1; i++) {
+            RoomData curRoomData = this.roomList[i];
+            RoomData nextRoomData = this.roomList[i + 1];
 
+            // TODO: 根据房间在地图中的位置坐标，判断方向。
+        }
     }
 
     //生成房间 （用二维 int 数组表示）
