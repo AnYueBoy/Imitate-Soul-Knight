@@ -34,11 +34,12 @@ public class MapManager : MonoBehaviour {
     private List<RoomData> roomList;
 
     public void generateMapClick () {
-        tilemap.ClearAllTiles ();
-        this.generateMapData ();
+        this.resetMap ();
+        this.generateMapRoom ();
+        this.drawPassway ();
     }
 
-    private void generateMapData () {
+    private void generateMapRoom () {
         int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
         int[, ] roomMap = this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
         for (int i = 0; i < mapRowCount; i++) {
@@ -81,6 +82,10 @@ public class MapManager : MonoBehaviour {
         Vector2Int roomCenter = new Vector2Int (startX + Mathf.FloorToInt (roomWidth / 2), startY + Mathf.FloorToInt (roomHeight / 2));
         RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
         this.roomList.Add (roomData);
+    }
+
+    private void drawPassway () {
+
     }
 
     //生成房间 （用二维 int 数组表示）
@@ -147,5 +152,10 @@ public class MapManager : MonoBehaviour {
                 return endPoint;
             }
         }
+    }
+
+    private void resetMap () {
+        this.roomList.Clear ();
+        this.tilemap.ClearAllTiles ();
     }
 }
