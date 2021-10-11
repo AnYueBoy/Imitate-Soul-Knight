@@ -90,6 +90,24 @@ public class MapManager : MonoBehaviour {
             RoomData nextRoomData = this.roomList[i + 1];
 
             // TODO: 根据房间在地图中的位置坐标，判断方向。
+            int horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
+            int vertical = nextRoomData.roomInMapPos.y - nextRoomData.roomInMapPos.y;
+            if (horizontal > 0) {
+                Vector2Int curRoomCenter = curRoomData.roomCenter;
+                Vector2Int rightStart = new Vector2Int (curRoomCenter.x + curRoomData.roomWidth / 2, curRoomCenter.y + this.passwayHeight / 2);
+
+                Vector2Int nextRoomCenter = nextRoomData.roomCenter;
+                Vector2Int rightEnd = new Vector2Int (nextRoomCenter.x - nextRoomData.roomWidth / 2, nextRoomCenter.y + this.passwayHeight / 2);
+                // TODO: 右侧方向
+            } else {
+                // TODO: 左侧方向
+            }
+
+            if (vertical > 0) {
+                // TODO: 上方向
+            } else {
+                // TODO: 下方向
+            }
         }
     }
 

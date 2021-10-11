@@ -6,13 +6,13 @@
 using UnityEngine;
 public class RoomData {
 
-	private int roomWidth;
+	public int roomWidth;
 
-	private int roomHeight;
+	public int roomHeight;
 
-	private Vector2Int roomCenter = Vector2Int.zero;
+	public Vector2Int roomCenter = Vector2Int.zero;
 
-	private Vector2Int roomInMapPos = Vector2Int.zero;
+	public Vector2Int roomInMapPos = Vector2Int.zero;
 
 	public RoomData (int roomWidth, int roomHeight, Vector2Int roomCenter, Vector2Int roomInMapPos) {
 		this.roomWidth = roomWidth;
