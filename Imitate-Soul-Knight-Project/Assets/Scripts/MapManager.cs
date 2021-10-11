@@ -77,6 +77,10 @@ public class MapManager : MonoBehaviour {
                 }
             }
         }
+
+        Vector2Int roomCenter = new Vector2Int (startX + Mathf.FloorToInt (roomWidth / 2), startY + Mathf.FloorToInt (roomHeight / 2));
+        RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
+        this.roomList.Add (roomData);
     }
 
     //生成房间 （用二维 int 数组表示）
