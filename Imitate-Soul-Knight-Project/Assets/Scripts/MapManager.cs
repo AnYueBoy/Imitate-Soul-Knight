@@ -90,10 +90,10 @@ public class MapManager : MonoBehaviour {
             }
         }
 
-        Vector2Int roomCenter = new Vector2Int (startX + Mathf.FloorToInt (roomWidth / 2), startY + Mathf.FloorToInt (roomHeight / 2));
+        Vector2Int roomCenter = new Vector2Int (startX + roomWidth / 2, startY + roomHeight / 2);
         RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
         this.roomDic.Add (roomData.roomInMapPos, roomData);
-        Debug.Log ("pos: " + new Vector2Int (x, y));
+        Debug.Log ("pos: " + roomData.roomInMapPos);
     }
 
     private void drawPassway () {
