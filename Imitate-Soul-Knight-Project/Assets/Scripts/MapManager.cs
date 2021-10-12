@@ -93,7 +93,6 @@ public class MapManager : MonoBehaviour {
         Vector2Int roomCenter = new Vector2Int (startX + roomWidth / 2, startY + roomHeight / 2);
         RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
         this.roomDic.Add (roomData.roomInMapPos, roomData);
-        Debug.Log ("pos: " + roomData.roomInMapPos);
     }
 
     private void drawPassway () {
@@ -114,7 +113,9 @@ public class MapManager : MonoBehaviour {
                 horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
                 vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
                 adjustValue++;
-            } while (horizontal != 0 && vertical != 0);
+            } while ((horizontal != 0 && vertical != 0) || (horizontal > 1 || vertical > 1));
+
+            // FIXME: 通过回退逻辑，会将四方联通的房间类型去掉，等待优化
 
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
@@ -144,7 +145,6 @@ public class MapManager : MonoBehaviour {
                 Vector2Int downEnd = new Vector2Int (nextRoomCenter.x + this.passwayHeight / 2, nextRoomCenter.y - direct * nextRoomData.roomHeight / 2);
 
                 int distance = Mathf.Abs (downEnd.y - upStart.y) + 1;
-                Debug.Log ("distance: " + distance);
                 for (int k = 0; k < distance; k++) {
                     for (int j = 0; j < this.passwayHeight; j++) {
                         this.tilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), floor);
