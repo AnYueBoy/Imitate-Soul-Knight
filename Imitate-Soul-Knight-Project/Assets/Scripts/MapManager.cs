@@ -64,14 +64,11 @@ public class MapManager : MonoBehaviour {
 
     private void generateMapRoom () {
         int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
-        int[, ] roomMap = this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
-        for (int i = 0; i < mapRowCount; i++) {
-            for (int j = 0; j < mapColumnCount; j++) {
-                if (roomMap[i, j] == 1) {
-                    // 生成房间
-                    this.drawRoom (i, j);
-                }
-            }
+        this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
+        for (int i = 0; i < this.roomOrderList.Count; i++) {
+            Vector2Int roomPoint = this.roomOrderList[i];
+            // 生成房间
+            this.drawRoom (roomPoint.x, roomPoint.y);
         }
     }
 
@@ -101,20 +98,23 @@ public class MapManager : MonoBehaviour {
 
     private void drawPassway () {
         for (int i = 0; i < this.roomOrderList.Count - 1; i++) {
-            Vector2Int curRoomVec = this.roomOrderList[i];
             Vector2Int nextRoomVec = this.roomOrderList[i + 1];
-            RoomData curRoomData = this.roomDic[curRoomVec];
             RoomData nextRoomData = this.roomDic[nextRoomVec];
 
             // 根据房间在地图中的位置坐标，判断方向。
-            int horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
-            int vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
-            if (horizontal != 0 && vertical != 0) {
-                curRoomVec = this.roomOrderList[i - 1];
+            int horizontal = 0;
+            int vertical = 0;
+            int adjustValue = 0;
+            Vector2Int curRoomVec = Vector2Int.zero;
+            RoomData curRoomData = null;
+            do {
+                curRoomVec = this.roomOrderList[i - adjustValue];
                 curRoomData = this.roomDic[curRoomVec];
+
                 horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
                 vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
-            }
+                adjustValue++;
+            } while (horizontal != 0 && vertical != 0);
 
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
@@ -144,11 +144,12 @@ public class MapManager : MonoBehaviour {
                 Vector2Int downEnd = new Vector2Int (nextRoomCenter.x + this.passwayHeight / 2, nextRoomCenter.y - direct * nextRoomData.roomHeight / 2);
 
                 int distance = Mathf.Abs (downEnd.y - upStart.y) + 1;
+                Debug.Log ("distance: " + distance);
                 for (int k = 0; k < distance; k++) {
                     for (int j = 0; j < this.passwayHeight; j++) {
-                        this.tilemap.SetTile (new Vector3Int (upStart.x - direct * j, upStart.y + k, 0), floor);
+                        this.tilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), floor);
                         if (j == 0 || j == this.passwayHeight - 1) {
-                            this.tilemap.SetTile (new Vector3Int (upStart.x - direct * j, upStart.y + k, 0), wall);
+                            this.tilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), wall);
                         }
                     }
                 }
@@ -157,7 +158,7 @@ public class MapManager : MonoBehaviour {
     }
 
     //生成一个地图 （用二维 int 数组表示）
-    private int[, ] getRoomMap (int mapRow, int mapColumn, int roomCount) {
+    private void getRoomMap (int mapRow, int mapColumn, int roomCount) {
         // 随机初始位置
         Vector2Int nowPoint = new Vector2Int (CommonUtil.getRandomValue (0, mapRow - 1), CommonUtil.getRandomValue (0, mapColumn - 1));
         this.startRoomIndex = nowPoint;
@@ -180,7 +181,6 @@ public class MapManager : MonoBehaviour {
             roomOrderList.Add (nowPoint);
         }
 
-        return map;
     }
     //获取下一个房间的位置
     private Vector2Int getNextPoint (Vector2Int nowPoint, int maxW, int maxH) {
