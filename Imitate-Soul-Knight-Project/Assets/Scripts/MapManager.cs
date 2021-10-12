@@ -10,6 +10,8 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour {
 
+    #region  序列化字段
+
     [SerializeField]
     private int mapRowCount;
 
@@ -31,7 +33,28 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     private int passwayHeight;
 
+    [SerializeField]
+    private int roomHeight;
+
+    [SerializeField]
+    private int roomWidth;
+
+    [SerializeField]
+    private int roomDistance;
+
+    #endregion
+
     private Dictionary<Vector2Int, RoomData> roomDic = new Dictionary<Vector2Int, RoomData> ();
+
+    /// <summary>
+    ///记录地图房间生成顺序的列表 
+    /// </summary>
+    /// <typeparam name="Vector2Int"></typeparam>
+    private List<Vector2Int> roomOrderList = new List<Vector2Int> ();
+
+    private Vector2Int startRoomIndex = Vector2Int.zero;
+
+    private Vector2Int endRoomIndex = Vector2Int.zero;
 
     public void generateMapClick () {
         this.resetMap ();
@@ -51,15 +74,6 @@ public class MapManager : MonoBehaviour {
             }
         }
     }
-
-    [SerializeField]
-    private int roomHeight;
-
-    [SerializeField]
-    private int roomWidth;
-
-    [SerializeField]
-    private int roomDistance;
 
     private void drawRoom (int x, int y) {
         int startX = (roomWidth + roomDistance) * x;
@@ -82,6 +96,7 @@ public class MapManager : MonoBehaviour {
         Vector2Int roomCenter = new Vector2Int (startX + Mathf.FloorToInt (roomWidth / 2), startY + Mathf.FloorToInt (roomHeight / 2));
         RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
         this.roomDic.Add (roomData.roomInMapPos, roomData);
+        Debug.Log ("pos: " + new Vector2Int (x, y));
     }
 
     private void drawPassway () {
@@ -94,6 +109,13 @@ public class MapManager : MonoBehaviour {
             // 根据房间在地图中的位置坐标，判断方向。
             int horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
             int vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
+            if (horizontal != 0 && vertical != 0) {
+                curRoomVec = this.roomOrderList[i - 1];
+                curRoomData = this.roomDic[curRoomVec];
+                horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
+                vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
+            }
+
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
                 Vector2Int curRoomCenter = curRoomData.roomCenter;
@@ -130,36 +152,16 @@ public class MapManager : MonoBehaviour {
                         }
                     }
                 }
-
             }
         }
     }
-
-    //生成房间 （用二维 int 数组表示）
-    private int[, ] randomRoom (int minW, int minH, int maxW, int maxH) {
-        int randomWidth = CommonUtil.getOddNumber (minW, maxW);
-        int randomHeight = CommonUtil.getOddNumber (minH, maxH);
-
-        int[, ] room = new int[randomWidth, randomHeight];
-        for (int i = 0; i < randomWidth; i++) {
-            for (int j = 0; j < randomHeight; j++) {
-                room[i, j] = 1;
-            }
-        }
-        return room;
-    }
-
-    /// <summary>
-    ///记录地图房间生成顺序的列表 
-    /// </summary>
-    /// <typeparam name="Vector2Int"></typeparam>
-    /// <returns></returns>
-    private List<Vector2Int> roomOrderList = new List<Vector2Int> ();
 
     //生成一个地图 （用二维 int 数组表示）
     private int[, ] getRoomMap (int mapRow, int mapColumn, int roomCount) {
-        //FIXME: 初始位置可以进行随机
-        Vector2Int nowPoint = Vector2Int.zero;
+        // 随机初始位置
+        Vector2Int nowPoint = new Vector2Int (CommonUtil.getRandomValue (0, mapRow - 1), CommonUtil.getRandomValue (0, mapColumn - 1));
+        this.startRoomIndex = nowPoint;
+
         int curRoomCount = 1;
 
         int[, ] map = new int[mapRow, mapColumn];
@@ -215,5 +217,7 @@ public class MapManager : MonoBehaviour {
         this.roomDic.Clear ();
         this.tilemap.ClearAllTiles ();
         this.roomOrderList.Clear ();
+
+        this.startRoomIndex = this.endRoomIndex = Vector2Int.zero;
     }
 }
