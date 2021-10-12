@@ -113,7 +113,7 @@ public class MapManager : MonoBehaviour {
                 horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
                 vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
                 adjustValue++;
-            } while ((horizontal != 0 && vertical != 0) || (horizontal > 1 || vertical > 1));
+            } while ((horizontal != 0 && vertical != 0) || (Mathf.Abs (horizontal) > 1 || Mathf.Abs (vertical) > 1));
 
             // FIXME: 通过回退逻辑，会将四方联通的房间类型去掉，等待优化
 
