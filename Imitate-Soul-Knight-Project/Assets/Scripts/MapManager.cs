@@ -93,7 +93,7 @@ public class MapManager : MonoBehaviour {
 
             // 根据房间在地图中的位置坐标，判断方向。
             int horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
-            int vertical = nextRoomData.roomInMapPos.y - nextRoomData.roomInMapPos.y;
+            int vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
                 Vector2Int curRoomCenter = curRoomData.roomCenter;
@@ -102,16 +102,12 @@ public class MapManager : MonoBehaviour {
                 Vector2Int nextRoomCenter = nextRoomData.roomCenter;
                 Vector2Int rightEnd = new Vector2Int (nextRoomCenter.x - direct * nextRoomData.roomWidth / 2, nextRoomCenter.y + this.passwayHeight / 2);
 
-                int distance = Mathf.Abs (rightEnd.x - rightStart.x);
+                int distance = Mathf.Abs (rightEnd.x - rightStart.x) + 1;
                 for (int k = 0; k < this.passwayHeight; k++) {
                     for (int j = 0; j < distance; j++) {
+                        this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), floor);
                         if (k == 0 || k == this.passwayHeight - 1) {
-                            this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y, 0), wall);
-                        } else {
-                            this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y, 0), floor);
-                        }
-                        if (j == 0 || j == distance - 1) {
-                            this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y, 0), null);
+                            this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), wall);
                         }
                     }
                 }
@@ -123,23 +119,18 @@ public class MapManager : MonoBehaviour {
                 Vector2Int upStart = new Vector2Int (curRoomCenter.x + this.passwayHeight / 2, curRoomCenter.y + direct * curRoomData.roomHeight / 2);
 
                 Vector2Int nextRoomCenter = nextRoomData.roomCenter;
-                Vector2Int downEnd = new Vector2Int (nextRoomCenter.x + this.passwayHeight / 2, curRoomCenter.y - direct * curRoomData.roomHeight / 2);
+                Vector2Int downEnd = new Vector2Int (nextRoomCenter.x + this.passwayHeight / 2, nextRoomCenter.y - direct * nextRoomData.roomHeight / 2);
 
-                int distance = Mathf.Abs (downEnd.y - upStart.y);
-
-                for (int k = 0; k < this.passwayHeight; k++) {
-                    for (int j = 0; j < distance; j++) {
-                        if (k == 0 || k == this.passwayHeight - 1) {
-                            this.tilemap.SetTile (new Vector3Int (upStart.x, upStart.y + direct * j, 0), null);
-                        } else {
-                            this.tilemap.SetTile (new Vector3Int (upStart.x, upStart.y + direct * j, 0), floor);
-                        }
-
-                        if (j == 0 || j == distance - 1) {
-                            this.tilemap.SetTile (new Vector3Int (upStart.x, upStart.y + direct * j, 0), wall);
+                int distance = Mathf.Abs (downEnd.y - upStart.y) + 1;
+                for (int k = 0; k < distance; k++) {
+                    for (int j = 0; j < this.passwayHeight; j++) {
+                        this.tilemap.SetTile (new Vector3Int (upStart.x - direct * j, upStart.y + k, 0), floor);
+                        if (j == 0 || j == this.passwayHeight - 1) {
+                            this.tilemap.SetTile (new Vector3Int (upStart.x - direct * j, upStart.y + k, 0), wall);
                         }
                     }
                 }
+
             }
         }
     }
@@ -223,5 +214,6 @@ public class MapManager : MonoBehaviour {
     private void resetMap () {
         this.roomDic.Clear ();
         this.tilemap.ClearAllTiles ();
+        this.roomOrderList.Clear ();
     }
 }
