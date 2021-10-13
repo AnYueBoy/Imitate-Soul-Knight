@@ -73,6 +73,7 @@ public class MapManager : MonoBehaviour {
     }
 
     private void drawRoom (int x, int y) {
+        // TODO: 随机房间大小
         int startX = (roomWidth + roomDistance) * x;
         int startY = (roomHeight + roomDistance) * y;
         for (int i = 0; i < roomWidth; i++) {
@@ -115,7 +116,7 @@ public class MapManager : MonoBehaviour {
                 adjustValue++;
             } while ((horizontal != 0 && vertical != 0) || (Mathf.Abs (horizontal) > 1 || Mathf.Abs (vertical) > 1));
 
-            // FIXME: 通过回退逻辑，会将四方联通的房间类型去掉，等待优化
+            // FIXME: 通过回退逻辑，会将四方联通的房间类型去掉
 
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
