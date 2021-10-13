@@ -14,10 +14,10 @@ public class RoomData {
 
 	public Vector2Int roomInMapPos = Vector2Int.zero;
 
-	public RoomData (int roomWidth, int roomHeight, Vector2Int roomCenter, Vector2Int roomInMapPos) {
-		this.roomWidth = roomWidth;
-		this.roomHeight = roomHeight;
-		this.roomCenter = roomCenter;
+	public Vector2Int preRoomPoint = Vector2Int.zero;
+
+	public RoomData ( Vector2Int roomInMapPos) {
 		this.roomInMapPos = roomInMapPos;
+		this.preRoomPoint = Vector2Int.zero;
 	}
 }

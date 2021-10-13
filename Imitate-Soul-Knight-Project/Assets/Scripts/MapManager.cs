@@ -59,41 +59,78 @@ public class MapManager : MonoBehaviour {
     public void generateMapClick () {
         this.resetMap ();
         this.generateMapRoom ();
+        this.drawRoom ();
         this.drawPassway ();
     }
 
     private void generateMapRoom () {
         int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
         this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
-        for (int i = 0; i < this.roomOrderList.Count; i++) {
-            Vector2Int roomPoint = this.roomOrderList[i];
-            // 生成房间
-            this.drawRoom (roomPoint.x, roomPoint.y);
-        }
     }
 
-    private void drawRoom (int x, int y) {
+    private int minRoomWidth;
+    private int maxRoomWidth;
+
+    private int minRoomHeight;
+    private int maxRoomHeight;
+
+    private void drawRoom () {
         // TODO: 随机房间大小
-        int startX = (roomWidth + roomDistance) * x;
-        int startY = (roomHeight + roomDistance) * y;
-        for (int i = 0; i < roomWidth; i++) {
-            for (int j = 0; j < roomHeight; j++) {
-                // 绘制地板
-                tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
-                // 绘制墙体
-                if (i == 0 || i == roomWidth - 1) {
-                    tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
-                } else {
-                    if (j == 0 || j == roomHeight - 1) {
+
+        int x = 0;
+        int y = 0;
+        int startX = 0;
+        int startY = 0;
+
+        int horizontal = 0;
+        int vertical = 0;
+        for (int k = 0; k < this.roomOrderList.Count; k++) {
+            x = this.roomOrderList[k].x;
+            y = this.roomOrderList[k].y;
+
+            int radomWidth = CommonUtil.getOddNumber (minRoomWidth, maxRoomWidth);
+            int randomHeight = CommonUtil.getOddNumber (minRoomHeight, maxRoomHeight);
+
+            if (k > 0) {
+                int adjustValue = 0;
+                RoomData preRoomData = null;
+                Vector2Int preRoomPoint = Vector2Int.zero;
+                do {
+                    preRoomPoint = this.roomOrderList[k - 1 - adjustValue];
+                    preRoomData = this.roomDic[preRoomPoint];
+
+                    horizontal = x - preRoomPoint.x;
+                    vertical = y - preRoomPoint.y;
+                    adjustValue++;
+                } while ((horizontal != 0 && vertical != 0) || (Mathf.Abs (horizontal) > 1 || Mathf.Abs (vertical) > 1));
+
+                if (horizontal != 0) {
+
+                }
+
+                if (vertical != 0) {
+
+                }
+            }
+
+            for (int i = 0; i < roomWidth; i++) {
+                for (int j = 0; j < roomHeight; j++) {
+                    // 绘制地板
+                    tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
+                    // 绘制墙体
+                    if (i == 0 || i == roomWidth - 1) {
                         tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                    } else {
+                        if (j == 0 || j == roomHeight - 1) {
+                            tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                        }
                     }
                 }
             }
+            Vector2Int roomCenter = new Vector2Int (startX + roomWidth / 2, startY + roomHeight / 2);
+            RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
+            this.roomDic.Add (roomData.roomInMapPos, roomData);
         }
-
-        Vector2Int roomCenter = new Vector2Int (startX + roomWidth / 2, startY + roomHeight / 2);
-        RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
-        this.roomDic.Add (roomData.roomInMapPos, roomData);
     }
 
     private void drawPassway () {
@@ -171,18 +208,30 @@ public class MapManager : MonoBehaviour {
 
         roomOrderList.Add (nowPoint);
 
+        RoomData startRoomData = new RoomData (Vector2Int.zero * -1);
+        roomDic.Add (nowPoint, startRoomData);
+
+        Vector2Int connectPoint = nowPoint;
+
         while (curRoomCount < roomCount) {
             nowPoint = getNextPoint (nowPoint, mapRow, mapColumn);
             if (map[nowPoint.x, nowPoint.y] == 1) {
+                connectPoint = nowPoint;
                 continue;
             }
 
             map[nowPoint.x, nowPoint.y] = 1;
             curRoomCount++;
             roomOrderList.Add (nowPoint);
+
+            RoomData roomData = new RoomData (connectPoint);
+            roomDic.Add (nowPoint, roomData);
+
+            connectPoint = nowPoint;
         }
 
     }
+
     //获取下一个房间的位置
     private Vector2Int getNextPoint (Vector2Int nowPoint, int maxW, int maxH) {
         while (true) {
