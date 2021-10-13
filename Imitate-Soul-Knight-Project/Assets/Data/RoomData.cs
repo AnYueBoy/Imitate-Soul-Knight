@@ -16,8 +16,8 @@ public class RoomData {
 
 	public Vector2Int preRoomPoint = Vector2Int.zero;
 
-	public RoomData ( Vector2Int roomInMapPos) {
+	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint) {
 		this.roomInMapPos = roomInMapPos;
-		this.preRoomPoint = Vector2Int.zero;
+		this.preRoomPoint = preRoomPoint;
 	}
 }

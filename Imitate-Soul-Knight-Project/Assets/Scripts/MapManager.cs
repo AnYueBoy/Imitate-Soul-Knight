@@ -34,12 +34,6 @@ public class MapManager : MonoBehaviour {
     private int passwayHeight;
 
     [SerializeField]
-    private int roomHeight;
-
-    [SerializeField]
-    private int roomWidth;
-
-    [SerializeField]
     private int roomDistance;
 
     #endregion
@@ -60,7 +54,7 @@ public class MapManager : MonoBehaviour {
         this.resetMap ();
         this.generateMapRoom ();
         this.drawRoom ();
-        this.drawPassway ();
+        // this.drawPassway ();
     }
 
     private void generateMapRoom () {
@@ -68,68 +62,102 @@ public class MapManager : MonoBehaviour {
         this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
     }
 
+    [SerializeField]
     private int minRoomWidth;
+    [SerializeField]
     private int maxRoomWidth;
-
+    [SerializeField]
     private int minRoomHeight;
+    [SerializeField]
     private int maxRoomHeight;
 
     private void drawRoom () {
-        // TODO: 随机房间大小
-
-        int x = 0;
-        int y = 0;
+        //  随机房间大小
         int startX = 0;
         int startY = 0;
+        Vector2Int curRoomPoint = Vector2Int.zero;
+        Vector2Int preRoomPoint = Vector2Int.zero;
 
-        int horizontal = 0;
-        int vertical = 0;
-        for (int k = 0; k < this.roomOrderList.Count; k++) {
-            x = this.roomOrderList[k].x;
-            y = this.roomOrderList[k].y;
+        for (int i = 0; i < this.roomOrderList.Count; i++) {
+            curRoomPoint = this.roomOrderList[i];
+            RoomData curRoomData = this.roomDic[curRoomPoint];
 
-            int radomWidth = CommonUtil.getOddNumber (minRoomWidth, maxRoomWidth);
+            int randomWidth = CommonUtil.getOddNumber (minRoomWidth, maxRoomWidth);
             int randomHeight = CommonUtil.getOddNumber (minRoomHeight, maxRoomHeight);
 
-            if (k > 0) {
-                int adjustValue = 0;
-                RoomData preRoomData = null;
-                Vector2Int preRoomPoint = Vector2Int.zero;
-                do {
-                    preRoomPoint = this.roomOrderList[k - 1 - adjustValue];
-                    preRoomData = this.roomDic[preRoomPoint];
-
-                    horizontal = x - preRoomPoint.x;
-                    vertical = y - preRoomPoint.y;
-                    adjustValue++;
-                } while ((horizontal != 0 && vertical != 0) || (Mathf.Abs (horizontal) > 1 || Mathf.Abs (vertical) > 1));
-
-                if (horizontal != 0) {
-
+            int horizontal = 1;
+            int vertical = 1;
+            if (i > 0) {
+                preRoomPoint = curRoomData.preRoomPoint;
+                RoomData preRoomData = this.roomDic[preRoomPoint];
+                horizontal = curRoomPoint.x - preRoomPoint.x;
+                vertical = curRoomPoint.y - preRoomPoint.y;
+                if ((horizontal == 0 && vertical == 0) || (horizontal != 0 && vertical != 0)) {
+                    Debug.LogError ("error value.");
                 }
 
-                if (vertical != 0) {
+                if (horizontal > 0) {
+                    startX = preRoomData.roomCenter.x + preRoomData.roomWidth / 2 + roomDistance + 1;
+                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2;
+                } else if (horizontal < 0) {
+                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2 - roomDistance - 1;
+                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2;
+                }
 
+                if (vertical > 0) {
+                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2;
+                    startY = preRoomData.roomCenter.y + preRoomData.roomHeight / 2 + roomDistance + 1;
+                } else if (vertical < 0) {
+                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2;
+                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2 - roomDistance - 1;
                 }
             }
 
-            for (int i = 0; i < roomWidth; i++) {
-                for (int j = 0; j < roomHeight; j++) {
+            if (horizontal == 0) {
+                horizontal = 1;
+            }
+            if (vertical == 0) {
+                vertical = 1;
+            }
+
+            // for (int j = 0; j < randomWidth; j++) {
+            //     for (int k = 0; k < randomHeight; k++) {
+            //         // 绘制地板
+            //         tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), floor);
+            //         // 绘制墙体
+            //         if (j == 0 || j == randomWidth - 1) {
+            //             tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), wall);
+            //         } else {
+            //             if (k == 0 || k == randomHeight - 1) {
+            //                 tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), wall);
+            //             }
+            //         }
+            //     }
+            // }
+
+            for (int j = 0; j < randomHeight; j++) {
+                for (int k = 0; k < randomWidth; k++) {
                     // 绘制地板
-                    tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), floor);
+                    tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), floor);
+
                     // 绘制墙体
-                    if (i == 0 || i == roomWidth - 1) {
-                        tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                    if (j == 0 || j == randomHeight - 1) {
+                        tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
                     } else {
-                        if (j == 0 || j == roomHeight - 1) {
-                            tilemap.SetTile (new Vector3Int (startX + i, startY + j, 0), wall);
+                        if (k == 0 || k == randomWidth - 1) {
+                            tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
                         }
                     }
                 }
             }
-            Vector2Int roomCenter = new Vector2Int (startX + roomWidth / 2, startY + roomHeight / 2);
-            RoomData roomData = new RoomData (roomWidth, roomHeight, roomCenter, new Vector2Int (x, y));
-            this.roomDic.Add (roomData.roomInMapPos, roomData);
+
+            // 房间数据的赋值
+            curRoomData.roomWidth = randomWidth;
+            curRoomData.roomHeight = randomHeight;
+
+            Vector2Int roomCenter = new Vector2Int (startX + horizontal * randomWidth / 2, startY + vertical * randomHeight / 2);
+            curRoomData.roomCenter = roomCenter;
+
         }
     }
 
@@ -208,7 +236,7 @@ public class MapManager : MonoBehaviour {
 
         roomOrderList.Add (nowPoint);
 
-        RoomData startRoomData = new RoomData (Vector2Int.zero * -1);
+        RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1);
         roomDic.Add (nowPoint, startRoomData);
 
         Vector2Int connectPoint = nowPoint;
@@ -224,12 +252,17 @@ public class MapManager : MonoBehaviour {
             curRoomCount++;
             roomOrderList.Add (nowPoint);
 
-            RoomData roomData = new RoomData (connectPoint);
+            RoomData roomData = new RoomData (nowPoint, connectPoint);
             roomDic.Add (nowPoint, roomData);
 
             connectPoint = nowPoint;
         }
 
+        // FIXME: 测试逻辑等待删除
+        for (var i = 0; i < this.roomOrderList.Count; i++) {
+            Vector2Int point = this.roomOrderList[i];
+            Debug.Log ("curRoomPoint: " + this.roomDic[point].roomInMapPos + " preRoomPoint: " + this.roomDic[point].preRoomPoint);
+        }
     }
 
     //获取下一个房间的位置
