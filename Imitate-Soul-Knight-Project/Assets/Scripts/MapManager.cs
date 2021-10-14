@@ -100,15 +100,17 @@ public class MapManager : MonoBehaviour {
                 if (horizontal != 0) {
                     roomCenter.x = preRoomData.roomCenter.x + horizontal * preRoomData.roomWidth / 2 + horizontal * roomDistance + horizontal * randomWidth / 2;
                     roomCenter.y = preRoomData.roomCenter.y;
+                    startX = roomCenter.x - horizontal * randomWidth / 2;
+                    startY = roomCenter.y - randomHeight / 2;
                 }
 
                 if (vertical != 0) {
                     roomCenter.x = preRoomData.roomCenter.x;
                     roomCenter.y = preRoomData.roomCenter.y + vertical * preRoomData.roomHeight / 2 + vertical * roomDistance + vertical * randomHeight / 2;
-                }
 
-                startX = roomCenter.x - randomWidth / 2;
-                startY = roomCenter.y - randomHeight / 2;
+                    startX = roomCenter.x - randomWidth / 2;
+                    startY = roomCenter.y - vertical * randomHeight / 2;
+                }
 
             } else {
                 roomCenter = new Vector2Int (startX + randomWidth / 2, startY + randomHeight / 2);
