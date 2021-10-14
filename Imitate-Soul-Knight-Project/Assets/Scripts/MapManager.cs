@@ -77,6 +77,7 @@ public class MapManager : MonoBehaviour {
         int startY = 0;
         Vector2Int curRoomPoint = Vector2Int.zero;
         Vector2Int preRoomPoint = Vector2Int.zero;
+        Vector2Int roomCenter = Vector2Int.zero;
 
         for (int i = 0; i < this.roomOrderList.Count; i++) {
             curRoomPoint = this.roomOrderList[i];
@@ -96,21 +97,22 @@ public class MapManager : MonoBehaviour {
                     Debug.LogError ("error value.");
                 }
 
-                if (horizontal > 0) {
-                    startX = preRoomData.roomCenter.x + preRoomData.roomWidth / 2 + roomDistance + 1;
-                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2;
-                } else if (horizontal < 0) {
-                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2 - roomDistance - 1;
-                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2;
+                if (horizontal != 0) {
+                    roomCenter.x = preRoomData.roomCenter.x + horizontal * preRoomData.roomWidth / 2 + horizontal * roomDistance + horizontal * randomWidth / 2;
+                    roomCenter.y = preRoomData.roomCenter.y;
+
                 }
 
-                if (vertical > 0) {
-                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2;
-                    startY = preRoomData.roomCenter.y + preRoomData.roomHeight / 2 + roomDistance + 1;
-                } else if (vertical < 0) {
-                    startX = preRoomData.roomCenter.x - preRoomData.roomWidth / 2;
-                    startY = preRoomData.roomCenter.y - preRoomData.roomHeight / 2 - roomDistance - 1;
+                if (vertical != 0) {
+                    roomCenter.x = preRoomData.roomCenter.x;
+                    roomCenter.y = preRoomData.roomCenter.y + vertical * preRoomData.roomHeight / 2 + vertical * roomDistance + vertical * randomHeight / 2;
                 }
+
+                startX = roomCenter.x - randomWidth / 2;
+                startY = roomCenter.y - randomHeight / 2;
+
+            } else {
+                roomCenter = new Vector2Int (startX + randomWidth / 2, startY + randomHeight / 2);
             }
 
             if (horizontal == 0) {
@@ -139,10 +141,7 @@ public class MapManager : MonoBehaviour {
             // 房间数据的赋值
             curRoomData.roomWidth = randomWidth;
             curRoomData.roomHeight = randomHeight;
-
-            Vector2Int roomCenter = new Vector2Int (startX + horizontal * randomWidth / 2, startY + vertical * randomHeight / 2);
             curRoomData.roomCenter = roomCenter;
-
         }
     }
 
