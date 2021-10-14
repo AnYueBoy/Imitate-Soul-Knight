@@ -28,7 +28,10 @@ public class MapManager : MonoBehaviour {
     private TileBase wall;
 
     [SerializeField]
-    private Tilemap tilemap;
+    private Tilemap floorTilemap;
+
+    [SerializeField]
+    private Tilemap wallTileMap;
 
     [SerializeField]
     private int passwayHeight;
@@ -127,14 +130,14 @@ public class MapManager : MonoBehaviour {
             for (int j = 0; j < randomHeight; j++) {
                 for (int k = 0; k < randomWidth; k++) {
                     // 绘制地板
-                    tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), floor);
+                    floorTilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), floor);
 
                     // 绘制墙体
                     if (j == 0 || j == randomHeight - 1) {
-                        tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
+                        wallTileMap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
                     } else {
                         if (k == 0 || k == randomWidth - 1) {
-                            tilemap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
+                            wallTileMap.SetTile (new Vector3Int (startX + k * horizontal, startY + j * vertical, 0), wall);
                         }
                     }
                 }
@@ -172,9 +175,9 @@ public class MapManager : MonoBehaviour {
                 int distance = Mathf.Abs (rightEnd.x - rightStart.x) + 1;
                 for (int k = 0; k < this.passwayHeight; k++) {
                     for (int j = 0; j < distance; j++) {
-                        this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), floor);
+                        this.floorTilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), floor);
                         if (k == 0 || k == this.passwayHeight - 1) {
-                            this.tilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), wall);
+                            this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), wall);
                         }
                     }
                 }
@@ -191,9 +194,9 @@ public class MapManager : MonoBehaviour {
                 int distance = Mathf.Abs (downEnd.y - upStart.y) + 1;
                 for (int k = 0; k < distance; k++) {
                     for (int j = 0; j < this.passwayHeight; j++) {
-                        this.tilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), floor);
+                        this.floorTilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), floor);
                         if (j == 0 || j == this.passwayHeight - 1) {
-                            this.tilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), wall);
+                            this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), wall);
                         }
                     }
                 }
@@ -276,7 +279,7 @@ public class MapManager : MonoBehaviour {
 
     private void resetMap () {
         this.roomDic.Clear ();
-        this.tilemap.ClearAllTiles ();
+        this.floorTilemap.ClearAllTiles ();
         this.roomOrderList.Clear ();
 
         this.startRoomIndex = this.endRoomIndex = Vector2Int.zero;
