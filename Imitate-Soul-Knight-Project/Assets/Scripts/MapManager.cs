@@ -54,7 +54,7 @@ public class MapManager : MonoBehaviour {
         this.resetMap ();
         this.generateMapRoom ();
         this.drawRoom ();
-        // this.drawPassway ();
+        this.drawPassway ();
     }
 
     private void generateMapRoom () {
@@ -98,15 +98,16 @@ public class MapManager : MonoBehaviour {
                 }
 
                 if (horizontal != 0) {
-                    roomCenter.x = preRoomData.roomCenter.x + horizontal * preRoomData.roomWidth / 2 + horizontal * roomDistance + horizontal * randomWidth / 2;
+                    roomCenter.x = preRoomData.roomCenter.x + horizontal * maxRoomWidth + horizontal * roomDistance;
                     roomCenter.y = preRoomData.roomCenter.y;
+
                     startX = roomCenter.x - horizontal * randomWidth / 2;
                     startY = roomCenter.y - randomHeight / 2;
                 }
 
                 if (vertical != 0) {
                     roomCenter.x = preRoomData.roomCenter.x;
-                    roomCenter.y = preRoomData.roomCenter.y + vertical * preRoomData.roomHeight / 2 + vertical * roomDistance + vertical * randomHeight / 2;
+                    roomCenter.y = preRoomData.roomCenter.y + vertical * maxRoomHeight + vertical * roomDistance;
 
                     startX = roomCenter.x - randomWidth / 2;
                     startY = roomCenter.y - vertical * randomHeight / 2;
@@ -147,34 +148,26 @@ public class MapManager : MonoBehaviour {
     }
 
     private void drawPassway () {
-        for (int i = 0; i < this.roomOrderList.Count - 1; i++) {
-            Vector2Int nextRoomVec = this.roomOrderList[i + 1];
-            RoomData nextRoomData = this.roomDic[nextRoomVec];
+        int horizontal = 0;
+        int vertical = 0;
+
+        for (int i = 1; i < this.roomOrderList.Count; i++) {
+            Vector2Int curRoomVec = this.roomOrderList[i];
+            RoomData curRoomData = this.roomDic[curRoomVec];
+
+            RoomData preRoomData = this.roomDic[curRoomData.preRoomPoint];
 
             // 根据房间在地图中的位置坐标，判断方向。
-            int horizontal = 0;
-            int vertical = 0;
-            int adjustValue = 0;
-            Vector2Int curRoomVec = Vector2Int.zero;
-            RoomData curRoomData = null;
-            do {
-                curRoomVec = this.roomOrderList[i - adjustValue];
-                curRoomData = this.roomDic[curRoomVec];
-
-                horizontal = nextRoomData.roomInMapPos.x - curRoomData.roomInMapPos.x;
-                vertical = nextRoomData.roomInMapPos.y - curRoomData.roomInMapPos.y;
-                adjustValue++;
-            } while ((horizontal != 0 && vertical != 0) || (Mathf.Abs (horizontal) > 1 || Mathf.Abs (vertical) > 1));
-
-            // FIXME: 通过回退逻辑，会将四方联通的房间类型去掉
+            horizontal = curRoomData.roomInMapPos.x - preRoomData.roomInMapPos.x;
+            vertical = curRoomData.roomInMapPos.y - preRoomData.roomInMapPos.y;
 
             if (horizontal != 0) {
                 int direct = horizontal / Mathf.Abs (horizontal);
-                Vector2Int curRoomCenter = curRoomData.roomCenter;
-                Vector2Int rightStart = new Vector2Int (curRoomCenter.x + direct * curRoomData.roomWidth / 2, curRoomCenter.y + this.passwayHeight / 2);
+                Vector2Int preRoomCenter = preRoomData.roomCenter;
+                Vector2Int rightStart = new Vector2Int (preRoomCenter.x + direct * preRoomData.roomWidth / 2, preRoomCenter.y + this.passwayHeight / 2);
 
-                Vector2Int nextRoomCenter = nextRoomData.roomCenter;
-                Vector2Int rightEnd = new Vector2Int (nextRoomCenter.x - direct * nextRoomData.roomWidth / 2, nextRoomCenter.y + this.passwayHeight / 2);
+                Vector2Int curRoomCenter = curRoomData.roomCenter;
+                Vector2Int rightEnd = new Vector2Int (curRoomCenter.x - direct * curRoomData.roomWidth / 2, curRoomCenter.y + this.passwayHeight / 2);
 
                 int distance = Mathf.Abs (rightEnd.x - rightStart.x) + 1;
                 for (int k = 0; k < this.passwayHeight; k++) {
@@ -189,11 +182,11 @@ public class MapManager : MonoBehaviour {
 
             if (vertical != 0) {
                 int direct = vertical / Mathf.Abs (vertical);
-                Vector2Int curRoomCenter = curRoomData.roomCenter;
-                Vector2Int upStart = new Vector2Int (curRoomCenter.x + this.passwayHeight / 2, curRoomCenter.y + direct * curRoomData.roomHeight / 2);
+                Vector2Int preRoomCenter = preRoomData.roomCenter;
+                Vector2Int upStart = new Vector2Int (preRoomCenter.x + this.passwayHeight / 2, preRoomCenter.y + direct * preRoomData.roomHeight / 2);
 
-                Vector2Int nextRoomCenter = nextRoomData.roomCenter;
-                Vector2Int downEnd = new Vector2Int (nextRoomCenter.x + this.passwayHeight / 2, nextRoomCenter.y - direct * nextRoomData.roomHeight / 2);
+                Vector2Int curRoomCenter = curRoomData.roomCenter;
+                Vector2Int downEnd = new Vector2Int (curRoomCenter.x + this.passwayHeight / 2, curRoomCenter.y - direct * curRoomData.roomHeight / 2);
 
                 int distance = Mathf.Abs (downEnd.y - upStart.y) + 1;
                 for (int k = 0; k < distance; k++) {
