@@ -502,7 +502,7 @@ MonoBehaviour:
   floor: {fileID: 11400000, guid: 7543ba6412703d148b04d1fc935dae95, type: 2}
   wall: {fileID: 11400000, guid: 6d8234615ee8fad469cc7adc7d39dd7d, type: 2}
   tilemap: {fileID: 2114980463}
-  passwayHeight: 0
+  passwayHeight: 7
   roomDistance: 7
   minRoomWidth: 20
   maxRoomWidth: 50
@@ -813,7 +813,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710444120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5497667, y: 0.5152677, z: -10}
+  m_LocalPosition: {x: -0.33319196, y: 0.5152677, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 52525682}
@@ -1379,7 +1379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282360451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5497667, y: 0.5152677, z: -10}
+  m_LocalPosition: {x: -0.33319196, y: 0.5152677, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
