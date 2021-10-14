@@ -120,21 +120,6 @@ public class MapManager : MonoBehaviour {
                 vertical = 1;
             }
 
-            // for (int j = 0; j < randomWidth; j++) {
-            //     for (int k = 0; k < randomHeight; k++) {
-            //         // 绘制地板
-            //         tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), floor);
-            //         // 绘制墙体
-            //         if (j == 0 || j == randomWidth - 1) {
-            //             tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), wall);
-            //         } else {
-            //             if (k == 0 || k == randomHeight - 1) {
-            //                 tilemap.SetTile (new Vector3Int (startX + j * vertical, startY + k * horizontal, 0), wall);
-            //             }
-            //         }
-            //     }
-            // }
-
             for (int j = 0; j < randomHeight; j++) {
                 for (int k = 0; k < randomWidth; k++) {
                     // 绘制地板
