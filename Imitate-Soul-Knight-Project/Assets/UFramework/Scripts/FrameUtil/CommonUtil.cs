@@ -269,6 +269,10 @@ namespace UFramework.FrameUtil {
 
         //取一定范围内的一个奇数
         public static int getOddNumber (int min, int max) {
+            if (min == max && !isOddNumber (min)) {
+                min = max = max - 1;
+                Debug.LogWarning ("value error");
+            }
             while (true) {
                 int temp = Random.Range (min, max);
                 if (!isOddNumber (temp)) {
