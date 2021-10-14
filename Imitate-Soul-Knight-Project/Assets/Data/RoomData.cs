@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2021-10-09 13:27:32 
@@ -15,6 +16,8 @@ public class RoomData {
 	public Vector2Int roomInMapPos = Vector2Int.zero;
 
 	public Vector2Int preRoomPoint = Vector2Int.zero;
+
+	public List<Vector3Int> doorList = new List<Vector3Int> ();
 
 	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint) {
 		this.roomInMapPos = roomInMapPos;

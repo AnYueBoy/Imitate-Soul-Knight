@@ -178,6 +178,11 @@ public class MapManager : MonoBehaviour {
                         this.floorTilemap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), floor);
                         if (k == 0 || k == this.passwayHeight - 1) {
                             this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), wall);
+                        } else {
+                            if (j == 0 || j == distance - 1) {
+                                // TODO: 设置门
+                                this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), null);
+                            }
                         }
                     }
                 }
@@ -197,6 +202,11 @@ public class MapManager : MonoBehaviour {
                         this.floorTilemap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), floor);
                         if (j == 0 || j == this.passwayHeight - 1) {
                             this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), wall);
+                        } else {
+                            if (k == 0 || k == distance - 1) {
+                                // TODO: 设置门
+                                this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), null);
+                            }
                         }
                     }
                 }
