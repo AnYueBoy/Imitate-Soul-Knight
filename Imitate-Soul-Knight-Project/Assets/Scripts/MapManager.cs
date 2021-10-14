@@ -100,7 +100,6 @@ public class MapManager : MonoBehaviour {
                 if (horizontal != 0) {
                     roomCenter.x = preRoomData.roomCenter.x + horizontal * preRoomData.roomWidth / 2 + horizontal * roomDistance + horizontal * randomWidth / 2;
                     roomCenter.y = preRoomData.roomCenter.y;
-
                 }
 
                 if (vertical != 0) {
