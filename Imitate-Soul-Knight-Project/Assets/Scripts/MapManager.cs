@@ -42,6 +42,9 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     private int roomDistance;
 
+    [SerializeField]
+    private Transform roleTrans;
+
     #endregion
 
     private Dictionary<Vector2Int, Room> roomDic = new Dictionary<Vector2Int, Room> ();
@@ -61,6 +64,12 @@ public class MapManager : MonoBehaviour {
         this.generateMapRoom ();
         this.drawRoom ();
         this.drawPassway ();
+
+        // this.wallTileMap.GetTile(Vector3Int.zero).
+        Room startRoom = this.roomDic[this.startRoomIndex];
+        RoomData startRoomData = startRoom.roomData;
+        Vector3 worldPos = this.wallTileMap.CellToWorld (new Vector3Int (startRoomData.roomCenter.x, startRoomData.roomCenter.y, 0));
+        this.roleTrans.position = worldPos;
     }
 
     private void generateMapRoom () {
@@ -76,6 +85,10 @@ public class MapManager : MonoBehaviour {
     private int minRoomHeight;
     [SerializeField]
     private int maxRoomHeight;
+
+    public void localUpdate (float dt) {
+
+    }
 
     private void drawRoom () {
         //  随机房间大小

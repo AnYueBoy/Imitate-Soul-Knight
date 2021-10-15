@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-09-17 16:29:54
+ * @Last Modified time: 2021-10-15 11:18:37
  */
 
 namespace UFramework {
@@ -24,6 +24,8 @@ namespace UFramework {
 
         #region mono模块
         public InputManager inputManager;
+
+        public MapManager mapManager;
 
         #endregion
 
@@ -50,6 +52,7 @@ namespace UFramework {
             this.guiConsole?.localUpdate (dt);
             this.promiseTimer?.localUpdate (dt);
             this.inputManager.localUpdate (dt);
+            this.mapManager.localUpdate (dt);
         }
 
         private void LateUpdate () {
