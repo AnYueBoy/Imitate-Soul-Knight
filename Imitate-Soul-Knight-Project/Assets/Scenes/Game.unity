@@ -1114,6 +1114,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1207011531411687324, guid: 28411f20d99dc054ebe9f3bdc16f773f,
+        type: 3}
+      propertyPath: checkDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1207011531411687324, guid: 28411f20d99dc054ebe9f3bdc16f773f,
+        type: 3}
+      propertyPath: checkLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 5964078763514089749, guid: 28411f20d99dc054ebe9f3bdc16f773f,
         type: 3}
       propertyPath: m_SortingLayer
@@ -1204,6 +1214,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8957799045882509755, guid: 28411f20d99dc054ebe9f3bdc16f773f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9080219856250794297, guid: 28411f20d99dc054ebe9f3bdc16f773f,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1229,7 +1244,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -26.740002
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8957799045882509755, guid: 28411f20d99dc054ebe9f3bdc16f773f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 28411f20d99dc054ebe9f3bdc16f773f, type: 3}
 --- !u!1 &1238538100
 GameObject:
@@ -1970,7 +1986,7 @@ GameObject:
   - component: {fileID: 2114980466}
   - component: {fileID: 2114980465}
   - component: {fileID: 2114980464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

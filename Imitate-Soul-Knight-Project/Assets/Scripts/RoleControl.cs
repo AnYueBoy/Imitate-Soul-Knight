@@ -3,16 +3,23 @@
  * @Date: 2021-09-17 14:00:13 
  * @Description: 角色控制
  */
-using System.Collections;
-using System.Collections.Generic;
 using UFramework;
+using UFramework.FrameUtil;
 using UnityEngine;
 
 public class RoleControl : MonoBehaviour {
 
+    [SerializeField]
+    private Transform selfTrans;
+
+    [SerializeField]
+    private float checkDistance = 0.4f;
+
+    public LayerMask checkLayer;
+
     public SpriteRenderer weaponSprite;
 
-    private readonly float moveSpeed = 2;
+    private readonly float moveSpeed = 15;
 
     private Animator animator;
 
@@ -31,6 +38,20 @@ public class RoleControl : MonoBehaviour {
             return;
         }
 
+        if (moveDir.x != 0) {
+            float horizontal = Mathf.Abs (moveDir.x) / moveDir.x;
+            if (CommonUtil.ray2DCheck (selfTrans.position, new Vector2 (horizontal, 0), checkDistance, checkLayer)) {
+                moveDir.x = 0;
+            }
+        }
+
+        if (moveDir.y != 0) {
+            float vertical = Mathf.Abs (moveDir.y) / moveDir.y;
+            if (CommonUtil.ray2DCheck (selfTrans.position, new Vector2 (0, vertical), checkDistance, checkLayer)) {
+                moveDir.y = 0;
+            }
+        }
+
         transform.Translate (moveDir * dt * moveSpeed);
 
         if (moveDir.x != 0) {
@@ -39,6 +60,11 @@ public class RoleControl : MonoBehaviour {
         }
 
         this.weaponRotate (new Vector2 (transform.localScale.x, 0), moveDir);
+    }
+
+    private bool checkBlock () {
+        // CommonUtil.ray2DCheck()
+        return true;
     }
 
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {

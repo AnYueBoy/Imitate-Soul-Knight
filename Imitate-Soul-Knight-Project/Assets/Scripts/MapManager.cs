@@ -65,7 +65,6 @@ public class MapManager : MonoBehaviour {
         this.drawRoom ();
         this.drawPassway ();
 
-        // this.wallTileMap.GetTile(Vector3Int.zero).
         Room startRoom = this.roomDic[this.startRoomIndex];
         RoomData startRoomData = startRoom.roomData;
         Vector3 worldPos = this.wallTileMap.CellToWorld (new Vector3Int (startRoomData.roomCenter.x, startRoomData.roomCenter.y, 0));
@@ -87,7 +86,13 @@ public class MapManager : MonoBehaviour {
     private int maxRoomHeight;
 
     public void localUpdate (float dt) {
+        foreach (Room room in this.roomDic.Values) {
+            if (room == null) {
+                continue;
+            }
 
+            room.localUpdate (dt);
+        }
     }
 
     private void drawRoom () {
@@ -305,8 +310,9 @@ public class MapManager : MonoBehaviour {
     }
 
     private void resetMap () {
-        this.roomDic.Clear ();
+        this.roomDic.Clear();
         this.floorTilemap.ClearAllTiles ();
+        this.wallTileMap.ClearAllTiles();
         this.roomOrderList.Clear ();
 
         this.startRoomIndex = this.endRoomIndex = Vector2Int.zero;

@@ -10,4 +10,8 @@ public class Room {
 	public Room (RoomData roomData) {
 		this.roomData = roomData;
 	}
+
+	public void localUpdate(float dt){
+		
+	}
 }
