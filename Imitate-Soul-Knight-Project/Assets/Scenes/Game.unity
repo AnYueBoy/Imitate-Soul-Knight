@@ -814,7 +814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 710444120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5497667, y: 0.5152677, z: -10}
+  m_LocalPosition: {x: -0.33319196, y: 0.5152677, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 52525682}
@@ -1381,7 +1381,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282360451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5497667, y: 0.5152677, z: -10}
+  m_LocalPosition: {x: -0.33319196, y: 0.5152677, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1844,18 +1844,17 @@ Tilemap:
       e11: 0
       e12: 0
       e13: NaN
-      e20: 0.0000017580896
+      e20: 0
       e21: 0
-      e22: 0.00000077673394
-      e23: 8.457254e+32
-      e30: 4.57e-43
+      e22: 0
+      e23: 0
+      e30: 0
       e31: 0
-      e32: 4.57e-43
-      e33: 4.5905e-41
+      e32: 0
+      e33: 0
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -0.0000000010184387, g: -0.0000000010184387, b: -0.0000000010184387,
-      a: -0.0000000010184387}
+    m_Data: {r: 4.976364, g: 4.976364, b: 4.976364, a: 4.976364}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2093,18 +2092,17 @@ Tilemap:
       e11: 0
       e12: 0
       e13: NaN
-      e20: 0.0000029688708
+      e20: -428.31592
       e21: 0
-      e22: 0.0000031464224
-      e23: 8.457254e+32
-      e30: 4.57e-43
+      e22: -3.2358017
+      e23: -0.0000000022815938
+      e30: 6.54e-43
       e31: 0
-      e32: 4.57e-43
-      e33: 4.5905e-41
+      e32: 6.54e-43
+      e33: 4.5904e-41
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -0.0000000017556694, g: -0.0000000017556694, b: -0.0000000017556694,
-      a: -0.0000000017556694}
+    m_Data: {r: 5.016464, g: 5.016464, b: 5.016464, a: 5.016464}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
