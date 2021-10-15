@@ -44,7 +44,7 @@ public class MapManager : MonoBehaviour {
 
     #endregion
 
-    private Dictionary<Vector2Int, RoomData> roomDic = new Dictionary<Vector2Int, RoomData> ();
+    private Dictionary<Vector2Int, Room> roomDic = new Dictionary<Vector2Int, Room> ();
 
     /// <summary>
     ///记录地图房间生成顺序的列表 
@@ -87,7 +87,7 @@ public class MapManager : MonoBehaviour {
 
         for (int i = 0; i < this.roomOrderList.Count; i++) {
             curRoomPoint = this.roomOrderList[i];
-            RoomData curRoomData = this.roomDic[curRoomPoint];
+            RoomData curRoomData = this.roomDic[curRoomPoint].roomData;
 
             int randomWidth = CommonUtil.getOddNumber (minRoomWidth, maxRoomWidth);
             int randomHeight = CommonUtil.getOddNumber (minRoomHeight, maxRoomHeight);
@@ -96,7 +96,7 @@ public class MapManager : MonoBehaviour {
             int vertical = 1;
             if (i > 0) {
                 preRoomPoint = curRoomData.preRoomPoint;
-                RoomData preRoomData = this.roomDic[preRoomPoint];
+                RoomData preRoomData = this.roomDic[preRoomPoint].roomData;
                 horizontal = curRoomPoint.x - preRoomPoint.x;
                 vertical = curRoomPoint.y - preRoomPoint.y;
                 if ((horizontal == 0 && vertical == 0) || (horizontal != 0 && vertical != 0)) {
@@ -159,9 +159,9 @@ public class MapManager : MonoBehaviour {
 
         for (int i = 1; i < this.roomOrderList.Count; i++) {
             Vector2Int curRoomVec = this.roomOrderList[i];
-            RoomData curRoomData = this.roomDic[curRoomVec];
+            RoomData curRoomData = this.roomDic[curRoomVec].roomData;
 
-            RoomData preRoomData = this.roomDic[curRoomData.preRoomPoint];
+            RoomData preRoomData = this.roomDic[curRoomData.preRoomPoint].roomData;
 
             // 根据房间在地图中的位置坐标，判断方向。
             horizontal = curRoomData.roomInMapPos.x - preRoomData.roomInMapPos.x;
@@ -184,7 +184,9 @@ public class MapManager : MonoBehaviour {
                         } else {
                             if (j == 0 || j == distance - 1) {
                                 // 设置门
-                                this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), doorOpen);
+                                Vector3Int doorTilePoint = new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0);
+                                this.wallTileMap.SetTile (doorTilePoint, doorOpen);
+                                curRoomData.doorList.Add (doorTilePoint);
                             }
                         }
                     }
@@ -208,7 +210,9 @@ public class MapManager : MonoBehaviour {
                         } else {
                             if (k == 0 || k == distance - 1) {
                                 // 设置门
-                                this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), doorOpen);
+                                Vector3Int doorTilePoint = new Vector3Int (upStart.x - j, upStart.y + direct * k, 0);
+                                this.wallTileMap.SetTile (doorTilePoint, doorOpen);
+                                curRoomData.doorList.Add (doorTilePoint);
                             }
                         }
                     }
@@ -231,7 +235,9 @@ public class MapManager : MonoBehaviour {
         roomOrderList.Add (nowPoint);
 
         RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1);
-        roomDic.Add (nowPoint, startRoomData);
+
+        Room startRoom = new Room (startRoomData);
+        roomDic.Add (nowPoint, startRoom);
 
         Vector2Int connectPoint = nowPoint;
 
@@ -247,15 +253,10 @@ public class MapManager : MonoBehaviour {
             roomOrderList.Add (nowPoint);
 
             RoomData roomData = new RoomData (nowPoint, connectPoint);
-            roomDic.Add (nowPoint, roomData);
+            Room room = new Room (roomData);
+            roomDic.Add (nowPoint, room);
 
             connectPoint = nowPoint;
-        }
-
-        // FIXME: 测试逻辑等待删除
-        for (var i = 0; i < this.roomOrderList.Count; i++) {
-            Vector2Int point = this.roomOrderList[i];
-            Debug.Log ("curRoomPoint: " + this.roomDic[point].roomInMapPos + " preRoomPoint: " + this.roomDic[point].preRoomPoint);
         }
     }
 
