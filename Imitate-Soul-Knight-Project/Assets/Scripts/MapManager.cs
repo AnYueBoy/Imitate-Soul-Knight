@@ -28,6 +28,9 @@ public class MapManager : MonoBehaviour {
     private TileBase wall;
 
     [SerializeField]
+    private TileBase doorOpen;
+
+    [SerializeField]
     private Tilemap floorTilemap;
 
     [SerializeField]
@@ -180,8 +183,8 @@ public class MapManager : MonoBehaviour {
                             this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), wall);
                         } else {
                             if (j == 0 || j == distance - 1) {
-                                // TODO: 设置门
-                                this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), null);
+                                // 设置门
+                                this.wallTileMap.SetTile (new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0), doorOpen);
                             }
                         }
                     }
@@ -204,8 +207,8 @@ public class MapManager : MonoBehaviour {
                             this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), wall);
                         } else {
                             if (k == 0 || k == distance - 1) {
-                                // TODO: 设置门
-                                this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), null);
+                                // 设置门
+                                this.wallTileMap.SetTile (new Vector3Int (upStart.x - j, upStart.y + direct * k, 0), doorOpen);
                             }
                         }
                     }
