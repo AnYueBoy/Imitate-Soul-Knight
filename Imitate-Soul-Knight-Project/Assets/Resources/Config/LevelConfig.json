@@ -1,0 +1,30 @@
+{
+	"chapterList": [
+		{
+			"chapter": 1,
+			"levelList": [
+				{
+					"level": 1,
+					"totalRoomCount": 5
+				},
+				{
+					"level": 2,
+					"totalRoomCount": 5
+				}
+			]
+		},
+		{
+			"chapter": 2,
+			"levelList": [
+				{
+					"level": 1,
+					"totalRoomCount": 5
+				},
+				{
+					"level": 2,
+					"totalRoomCount": 7
+				}
+			]
+		}
+	]
+}
