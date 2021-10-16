@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-15 11:18:37
+ * @Last Modified time: 2021-10-16 16:54:59
  */
 
 namespace UFramework {
@@ -27,6 +27,9 @@ namespace UFramework {
 
         public MapManager mapManager;
 
+        [HideInInspector]
+        public ConfigManager configManager = new ConfigManager ();
+
         #endregion
 
         #region 非mono模块
@@ -44,7 +47,7 @@ namespace UFramework {
         }
 
         private void Start () {
-
+            this.configManager.init ();
         }
 
         private void Update () {
