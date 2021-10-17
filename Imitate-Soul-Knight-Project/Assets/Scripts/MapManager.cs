@@ -4,6 +4,7 @@
  * @Description: 地图生成管理
  */
 using System.Collections.Generic;
+using UFramework;
 using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
@@ -14,37 +15,36 @@ public class MapManager : MonoBehaviour {
     #region  序列化字段
 
     [SerializeField]
-    private int mapRowCount;
-
-    [SerializeField]
-    private int mapColumnCount;
-
-    [SerializeField]
-    private int totalRoomCount;
-
-    [SerializeField]
     private Tilemap floorTilemap;
 
     [SerializeField]
     private Tilemap wallTileMap;
 
     [SerializeField]
-    private int passwayHeight;
-
-    [SerializeField]
-    private int roomDistance;
-
-    [SerializeField]
     private Transform roleTrans;
 
     #endregion
 
+    private int mapRowCount;
+
+    private int mapColumnCount;
+
+    private int totalRoomCount;
+
+    private int passwayHeight;
+
+    private int roomDistance;
+
+    private int minRoomWidth;
+
+    private int maxRoomWidth;
+
+    private int minRoomHeight;
+
+    private int maxRoomHeight;
+
     private Dictionary<Vector2Int, Room> roomDic = new Dictionary<Vector2Int, Room> ();
 
-    /// <summary>
-    ///记录地图房间生成顺序的列表 
-    /// </summary>
-    /// <typeparam name="Vector2Int"></typeparam>
     private List<Vector2Int> roomOrderList = new List<Vector2Int> ();
 
     private Vector2Int startRoomIndex = Vector2Int.zero;
@@ -60,8 +60,26 @@ public class MapManager : MonoBehaviour {
         doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
     }
 
+    private void initMapParams () {
+        int chapter = ModuleManager.instance.playerDataManager.getCurChapter ();
+        int level = ModuleManager.instance.playerDataManager.getCurLevel ();
+        ChapterData chapterData = ModuleManager.instance.configManager.levelConfig.getChapterData (chapter);
+        LevelData levelData = ModuleManager.instance.configManager.levelConfig.getLevelDataByChapterLevel (chapter, level);
+
+        this.mapRowCount = levelData.mapRowCount;
+        this.mapColumnCount = levelData.mapColumnCount;
+        this.passwayHeight = levelData.passwayHeight;
+        this.roomDistance = levelData.roomDistance;
+        this.minRoomWidth = levelData.minRoomWidth;
+        this.maxRoomWidth = levelData.maxRoomWidth;
+        this.minRoomHeight = levelData.minRoomHeight;
+        this.maxRoomHeight = levelData.maxRoomHeight;
+        this.totalRoomCount = levelData.totalRoomCount;
+    }
+
     public void generateMapClick () {
-        this.init();
+        this.init ();
+        this.initMapParams ();
         this.resetMap ();
         this.generateMapRoom ();
         this.drawRoom ();
@@ -77,15 +95,6 @@ public class MapManager : MonoBehaviour {
         int spawnRoomCount = Mathf.Min (mapRowCount * mapColumnCount, totalRoomCount);
         this.getRoomMap (mapRowCount, mapColumnCount, spawnRoomCount);
     }
-
-    [SerializeField]
-    private int minRoomWidth;
-    [SerializeField]
-    private int maxRoomWidth;
-    [SerializeField]
-    private int minRoomHeight;
-    [SerializeField]
-    private int maxRoomHeight;
 
     public void localUpdate (float dt) {
         foreach (Room room in this.roomDic.Values) {

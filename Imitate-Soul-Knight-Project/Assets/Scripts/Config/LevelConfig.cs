@@ -17,4 +17,8 @@ public class LevelConfig {
 		LevelData levelData = chapterData.levelList[level - 1];
 		return levelData;
 	}
+
+	public ChapterData getChapterData (int chapter) {
+		return this.chapterList[chapter - 1];
+	}
 }

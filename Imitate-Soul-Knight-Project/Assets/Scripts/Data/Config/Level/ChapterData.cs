@@ -8,5 +8,6 @@ using System.Collections.Generic;
 public class ChapterData {
 
 	public int chapter;
+
 	public List<LevelData> levelList = new List<LevelData> ();
 }

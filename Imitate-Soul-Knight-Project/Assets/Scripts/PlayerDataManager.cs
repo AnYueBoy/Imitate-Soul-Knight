@@ -3,7 +3,7 @@
  * @Date: 2021-10-17 14:05:02 
  * @Description: 玩家数据管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-17 14:30:12
+ * @Last Modified time: 2021-10-17 18:15:50
  */
 
 using System.IO;
@@ -45,9 +45,14 @@ public class PlayerDataManager {
 
     #endregion
 
-
     #region  数据访问
 
+    public int getCurChapter () {
+        return this.playerData.chapter;
+    }
 
+    public int getCurLevel () {
+        return this.playerData.level;
+    }
     #endregion
 }
