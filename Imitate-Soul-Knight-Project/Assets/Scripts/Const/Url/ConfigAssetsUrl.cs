@@ -7,4 +7,5 @@
 public class ConfigAssetsUrl {
 
 	public const string levelConfig = "Config/LevelConfig";
+
 }

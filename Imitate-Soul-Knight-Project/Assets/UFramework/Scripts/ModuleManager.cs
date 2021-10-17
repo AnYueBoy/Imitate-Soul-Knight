@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-16 16:54:59
+ * @Last Modified time: 2021-10-17 14:14:20
  */
 
 namespace UFramework {
@@ -27,6 +27,8 @@ namespace UFramework {
 
         public MapManager mapManager;
 
+        public PlayerDataManager playerDataManager = new PlayerDataManager ();
+
         [HideInInspector]
         public ConfigManager configManager = new ConfigManager ();
 
@@ -47,6 +49,7 @@ namespace UFramework {
         }
 
         private void Start () {
+            this.playerDataManager.init ();
             this.configManager.init ();
         }
 
