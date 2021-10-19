@@ -12,15 +12,9 @@ using UnityEngine.Tilemaps;
 
 public class MapManager : MonoBehaviour {
 
-    #region  序列化字段
+    public Tilemap floorTilemap;
 
-    [SerializeField]
-    private Tilemap floorTilemap;
-
-    [SerializeField]
-    private Tilemap wallTileMap;
-
-    #endregion
+    public Tilemap wallTileMap;
 
     private int mapRowCount;
 
