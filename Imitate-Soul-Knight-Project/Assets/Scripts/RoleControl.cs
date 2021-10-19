@@ -62,11 +62,6 @@ public class RoleControl : MonoBehaviour {
         this.weaponRotate (new Vector2 (transform.localScale.x, 0), moveDir);
     }
 
-    private bool checkBlock () {
-        // CommonUtil.ray2DCheck()
-        return true;
-    }
-
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
         // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
