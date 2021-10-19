@@ -184,7 +184,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5e4ce5478b1e95646a6faf0af7b52a1b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -228,6 +228,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfTrans: {fileID: 4513805140932964293}
+  checkDistance: 0.4
+  checkLayer:
+    serializedVersion: 2
+    m_Bits: 256
   weaponSprite: {fileID: 5964078763514089749}
 --- !u!1 &8872654483371053356
 GameObject:

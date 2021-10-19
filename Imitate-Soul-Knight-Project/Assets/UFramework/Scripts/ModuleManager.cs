@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-17 14:14:20
+ * @Last Modified time: 2021-10-19 18:46:07
  */
 
 namespace UFramework {
@@ -22,19 +22,20 @@ namespace UFramework {
             }
         }
 
-        #region mono模块
+        #region 业务模块
         public InputManager inputManager;
 
         public MapManager mapManager;
 
         public PlayerDataManager playerDataManager = new PlayerDataManager ();
 
-        [HideInInspector]
         public ConfigManager configManager = new ConfigManager ();
+
+        public PlayerManager playerManager;
 
         #endregion
 
-        #region 非mono模块
+        #region 系统模块
         private GUIConsole guiConsole = null;
         public PromiseTimer promiseTimer = new PromiseTimer ();
         #endregion
@@ -51,6 +52,8 @@ namespace UFramework {
         private void Start () {
             this.playerDataManager.init ();
             this.configManager.init ();
+            this.playerManager.init ();
+            this.mapManager.init ();
         }
 
         private void Update () {
@@ -58,6 +61,7 @@ namespace UFramework {
             this.guiConsole?.localUpdate (dt);
             this.promiseTimer?.localUpdate (dt);
             this.inputManager.localUpdate (dt);
+            this.playerManager?.localUpdate (dt);
             this.mapManager.localUpdate (dt);
         }
 

@@ -27,9 +27,9 @@ public class RoleControl : MonoBehaviour {
         this.animator = transform.GetComponent<Animator> ();
     }
 
-    private void Update () {
+    public void localUpdate (float dt) {
         this.roleAni ();
-        this.roleMove (Time.deltaTime);
+        this.roleMove (dt);
     }
 
     private void roleMove (float dt) {

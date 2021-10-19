@@ -20,9 +20,6 @@ public class MapManager : MonoBehaviour {
     [SerializeField]
     private Tilemap wallTileMap;
 
-    [SerializeField]
-    private Transform roleTrans;
-
     #endregion
 
     private int mapRowCount;
@@ -55,9 +52,7 @@ public class MapManager : MonoBehaviour {
     private TileBase doorOpenTile;
     private TileBase wallTile;
     public void init () {
-        floorTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.floorTile);
-        wallTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.wallTile);
-        doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
+        this.generateMapClick ();
     }
 
     private void initMapParams () {
@@ -77,8 +72,14 @@ public class MapManager : MonoBehaviour {
         this.totalRoomCount = levelData.totalRoomCount;
     }
 
+    private void initMapTile () {
+        floorTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.floorTile);
+        wallTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.wallTile);
+        doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
+    }
+
     public void generateMapClick () {
-        this.init ();
+        this.initMapTile ();
         this.initMapParams ();
         this.resetMap ();
         this.generateMapRoom ();
@@ -88,7 +89,7 @@ public class MapManager : MonoBehaviour {
         Room startRoom = this.roomDic[this.startRoomIndex];
         RoomData startRoomData = startRoom.roomData;
         Vector3 worldPos = this.wallTileMap.CellToWorld (new Vector3Int (startRoomData.roomCenter.x, startRoomData.roomCenter.y, 0));
-        this.roleTrans.position = worldPos;
+        ModuleManager.instance.playerManager.getPlayerTrans ().position = worldPos;
     }
 
     private void generateMapRoom () {
