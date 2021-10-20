@@ -174,6 +174,9 @@ public class MapManager : MonoBehaviour {
             curRoomData.roomWidth = randomWidth;
             curRoomData.roomHeight = randomHeight;
             curRoomData.roomCenter = roomCenter;
+
+            // 计算房间内相关数据
+            this.roomDic[curRoomPoint].refreshPoints ();
         }
     }
 

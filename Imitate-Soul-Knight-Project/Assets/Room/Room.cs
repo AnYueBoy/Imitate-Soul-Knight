@@ -14,18 +14,54 @@ public class Room {
 	private TileBase doorOpenTile;
 	private TileBase doorCloseTile;
 
+	private Vector3 leftTilePoint;
+	private Vector3 rightTilePoint;
+	private Vector3 upTilePoint;
+	private Vector3 downTilePoint;
+
+	private bool curDoorClose = true;
+
+	private float monsterTimer = 0;
+
 	public Room (RoomData roomData) {
 		this.roomData = roomData;
 		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
 		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
 	}
 
-	public void localUpdate (float dt) {
-		this.checkRoomDoor ();
+	public void refreshPoints () {
+		this.leftTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 1, this.roomData.roomCenter.y, 0));
+		this.rightTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 1, this.roomData.roomCenter.y, 0));
+		this.upTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 1, 0));
+		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
 	}
 
-	private void checkRoomDoor () {
+	public void localUpdate (float dt) {
+		this.checkRoomDoor (dt);
+	}
 
+	private void checkRoomDoor (float dt) {
+		if (!this.isInRoom ()) {
+			if (this.curDoorClose) {
+				this.openDoor ();
+			}
+			return;
+		}
+
+		this.monsterTimer += dt;
+
+		// TODO: 当前怪物全部清理完成,则打开房门
+
+		if (this.monsterTimer > 5) {
+			if (this.curDoorClose) {
+				this.openDoor ();
+			}
+			return;
+		}
+
+		if (!this.curDoorClose) {
+			this.closeDoor ();
+		}
 	}
 
 	private void openDoor () {
@@ -34,6 +70,8 @@ public class Room {
 			ModuleManager.instance.mapManager.wallTileMap.SetTile (tilePoint, null);
 			ModuleManager.instance.mapManager.floorTilemap.SetTile (tilePoint, doorCloseTile);
 		}
+
+		this.curDoorClose = false;
 	}
 
 	private void closeDoor () {
@@ -42,13 +80,17 @@ public class Room {
 			ModuleManager.instance.mapManager.wallTileMap.SetTile (tilePoint, doorOpenTile);
 			ModuleManager.instance.mapManager.floorTilemap.SetTile (tilePoint, null);
 		}
+		this.curDoorClose = true;
 	}
 
 	private bool isInRoom () {
-		int leftPointX = this.roomData.roomCenter.x - this.roomData.roomWidth / 2;
-		int rightPointX = this.roomData.roomCenter.x + this.roomData.roomWidth / 2;
-		int upPointY = this.roomData.roomCenter.y + this.roomData.roomHeight / 2;
-		int downPointX = this.roomData.roomCenter.y - this.roomData.roomHeight / 2;
-		
+		Transform roleTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+		if (roleTrans.position.x > this.leftTilePoint.x &&
+			roleTrans.position.x < this.rightTilePoint.x &&
+			roleTrans.position.y < this.upTilePoint.y &&
+			roleTrans.position.y > this.downTilePoint.y) {
+			return true;
+		}
+		return false;
 	}
 }
