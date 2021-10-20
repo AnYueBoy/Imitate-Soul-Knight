@@ -1,3 +1,4 @@
+using System;
 /*
  * @Author: l hy 
  * @Date: 2021-09-17 15:52:27 
@@ -15,6 +16,10 @@ public class InputManager : MonoBehaviour {
 	public RectTransform canvasRect;
 
 	public RectTransform moveRocker;
+
+	private Action attackHandler;
+
+	private Action skillHandler;
 
 	public void localUpdate (float dt) {
 		this.editorControl ();
@@ -109,4 +114,19 @@ public class InputManager : MonoBehaviour {
 
 	#endregion
 
+	public void registerAttack (Action attackCallback) {
+		this.attackHandler = attackCallback;
+	}
+
+	public void registerSkill (Action skillCallback) {
+		this.skillHandler = skillCallback;
+	}
+
+	public void triggerAttack () {
+		this.attackHandler?.Invoke ();
+	}
+
+	public void triggerSkill () {
+		this.skillHandler?.Invoke ();
+	}
 }
