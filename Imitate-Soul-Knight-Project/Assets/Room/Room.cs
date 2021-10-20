@@ -21,12 +21,15 @@ public class Room {
 
 	private bool curDoorClose = true;
 
+	private bool roomActive = false;
+
 	private float monsterTimer = 0;
 
 	public Room (RoomData roomData) {
 		this.roomData = roomData;
 		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
 		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
+		this.roomActive = false;
 	}
 
 	public void refreshPoints () {
@@ -41,12 +44,14 @@ public class Room {
 	}
 
 	private void checkRoomDoor (float dt) {
-		if (!this.isInRoom ()) {
+		if (!this.isInRoom () && !this.roomActive) {
 			if (this.curDoorClose) {
 				this.openDoor ();
 			}
 			return;
 		}
+
+		this.roomActive = true;
 
 		this.monsterTimer += dt;
 
