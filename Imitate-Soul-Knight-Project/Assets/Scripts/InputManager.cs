@@ -21,6 +21,8 @@ public class InputManager : MonoBehaviour {
 
 	private Action skillHandler;
 
+	private Action switchHandler;
+
 	public void localUpdate (float dt) {
 		this.editorControl ();
 		this.mobileControl ();
@@ -122,11 +124,19 @@ public class InputManager : MonoBehaviour {
 		this.skillHandler = skillCallback;
 	}
 
+	public void registerSwitch (Action switchCallback) {
+		this.switchHandler = switchCallback;
+	}
+
 	public void triggerAttack () {
 		this.attackHandler?.Invoke ();
 	}
 
 	public void triggerSkill () {
 		this.skillHandler?.Invoke ();
+	}
+
+	public void triggerSwitch () {
+		this.switchHandler?.Invoke ();
 	}
 }
