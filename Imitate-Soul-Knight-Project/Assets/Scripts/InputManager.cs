@@ -10,7 +10,8 @@ using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour {
 
-	public Button attackButton;
+	[SerializeField]
+	private ActionButton attackBtn;
 
 	private Vector2 _moveDir = Vector2.zero;
 
@@ -19,8 +20,6 @@ public class InputManager : MonoBehaviour {
 	public RectTransform canvasRect;
 
 	public RectTransform moveRocker;
-
-	private Action attackHandler;
 
 	private Action skillHandler;
 
@@ -121,7 +120,11 @@ public class InputManager : MonoBehaviour {
 
 	#region  注册/解注册
 	public void registerAttack (Action attackCallback) {
-		this.attackHandler = attackCallback;
+		this.attackBtn.registerPressed (attackCallback);
+	}
+
+	public void unRegisterAttack () {
+		this.attackBtn.unRegisterPressed ();
 	}
 
 	public void registerSkill (Action skillCallback) {
@@ -141,17 +144,15 @@ public class InputManager : MonoBehaviour {
 	}
 	#endregion
 
-
-	public void triggerAttack () {
-		this.attackHandler?.Invoke ();
-	}
-
+	#region  按钮触发
 	public void triggerSkill () {
 		this.skillHandler?.Invoke ();
 	}
 
 	public void triggerSwitch () {
-		// this.attackButton.
 		this.switchHandler?.Invoke ();
 	}
+	#endregion
+
+	
 }

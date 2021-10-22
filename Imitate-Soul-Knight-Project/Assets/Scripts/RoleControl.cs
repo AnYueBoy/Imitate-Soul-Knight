@@ -26,6 +26,8 @@ public class RoleControl : MonoBehaviour {
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
         ModuleManager.instance.inputManager.registerSwitch (this.switchWeapon);
+        ModuleManager.instance.inputManager.registerSkill (this.useSkill);
+        ModuleManager.instance.inputManager.registerAttack (this.attack);
     }
 
     public void localUpdate (float dt) {
@@ -35,6 +37,8 @@ public class RoleControl : MonoBehaviour {
 
     private void OnDisable () {
         ModuleManager.instance.inputManager.unRegisterSwitch ();
+        ModuleManager.instance.inputManager.unRegisterSkill ();
+        ModuleManager.instance.inputManager.unRegisterAttack ();
     }
 
     private void roleMove (float dt) {
@@ -94,5 +98,13 @@ public class RoleControl : MonoBehaviour {
 
     private void switchWeapon () {
 
+    }
+
+    private void useSkill () {
+
+    }
+
+    private void attack () {
+        Debug.Log ("attack");
     }
 }
