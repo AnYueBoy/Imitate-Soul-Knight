@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 22:31:20
+ * @Last Modified time: 2021-10-22 22:47:53
  */
 
 using System.Collections;
@@ -20,6 +20,6 @@ public class NormalBullet : BaseBullet {
     }
     protected override void move (float dt) {
         base.move (dt);
-        this.transform.Translate (new Vector3 (this.transform.position.x, this.transform.position.y + moveSpeed * dt, 0));
+        this.transform.Translate (new Vector3 (moveSpeed * dt, 0, 0));
     }
 }

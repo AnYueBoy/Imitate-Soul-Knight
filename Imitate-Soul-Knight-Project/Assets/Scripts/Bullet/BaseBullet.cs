@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:33:18 
  * @Description: 子弹基类
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 22:17:27
+ * @Last Modified time: 2021-10-22 23:11:43
  */
 
 using System.Collections;
@@ -24,11 +24,11 @@ public class BaseBullet : MonoBehaviour {
         this.move (dt);
     }
 
-    private void OnCollisionEnter2D (Collision2D other) {
-        this.collisionHandler ();
+    private void OnTriggerEnter2D (Collider2D other) {
+        this.triggerHandler ();
     }
 
-    protected virtual void collisionHandler () {
+    protected virtual void triggerHandler () {
         this.isDie = true;
     }
 

@@ -17,7 +17,7 @@ public class BaseWeapon : MonoBehaviour {
     [SerializeField]
     protected string bulletUrl = "";
 
-    private readonly float bulletSpeed = 10;
+    private readonly float bulletSpeed = 3f;
 
     private readonly float launchInterval = 0.5f;
 
