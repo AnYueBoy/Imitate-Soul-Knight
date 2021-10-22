@@ -5,6 +5,7 @@
  */
 using System.Collections;
 using System.Collections.Generic;
+using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
 
@@ -16,9 +17,21 @@ public class BaseWeapon : MonoBehaviour {
     [SerializeField]
     protected string bulletUrl = "";
 
-    protected void launchBullet () {
-        GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (this.bulletUrl);
-        GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
-        
+    private readonly float bulletSpeed = 10;
+
+    private readonly float launchInterval = 0.5f;
+
+    private float launchTimer = 0.5f;
+
+    public void localUpdate (float dt) {
+        this.launchTimer += dt;
+    }
+
+    public void launchBullet () {
+        if (this.launchTimer < this.launchInterval) {
+            return;
+        }
+        this.launchTimer = 0;
+        ModuleManager.instance.bulletManager.spawnBullet (this.bulletUrl, launchTrans, bulletSpeed);
     }
 }

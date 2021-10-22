@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 18:30:18
+ * @Last Modified time: 2021-10-22 21:43:02
  */
 
 namespace UFramework {
@@ -32,6 +32,8 @@ namespace UFramework {
         public ConfigManager configManager = new ConfigManager ();
 
         public PlayerManager playerManager;
+
+        public BulletManager bulletManager = new BulletManager ();
 
         #endregion
 
@@ -63,6 +65,7 @@ namespace UFramework {
             this.inputManager.localUpdate (dt);
             this.playerManager?.localUpdate (dt);
             this.mapManager.localUpdate (dt);
+            this.bulletManager?.localUpdate (dt);
         }
 
         private void LateUpdate () {

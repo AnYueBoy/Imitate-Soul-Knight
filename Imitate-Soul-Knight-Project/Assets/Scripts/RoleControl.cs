@@ -23,6 +23,9 @@ public class RoleControl : MonoBehaviour {
 
     private Animator animator;
 
+    [SerializeField]
+    private BaseWeapon curWeapon;
+
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
         ModuleManager.instance.inputManager.registerSwitch (this.switchWeapon);
@@ -33,6 +36,7 @@ public class RoleControl : MonoBehaviour {
     public void localUpdate (float dt) {
         this.roleAni ();
         this.roleMove (dt);
+        this.curWeapon.localUpdate (dt);
     }
 
     private void OnDisable () {
@@ -105,6 +109,6 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void attack () {
-        
+        this.curWeapon.launchBullet ();
     }
 }
