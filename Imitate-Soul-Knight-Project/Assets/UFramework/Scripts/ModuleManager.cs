@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-19 18:46:07
+ * @Last Modified time: 2021-10-22 18:30:18
  */
 
 namespace UFramework {
@@ -77,6 +77,8 @@ namespace UFramework {
             this.guiConsole?.quit ();
         }
         #endregion 
+
+        public Transform gameObjectTrans;
 
     }
 }

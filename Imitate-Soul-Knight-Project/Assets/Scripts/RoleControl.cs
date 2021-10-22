@@ -105,6 +105,6 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void attack () {
-        Debug.Log ("attack");
+        
     }
 }
