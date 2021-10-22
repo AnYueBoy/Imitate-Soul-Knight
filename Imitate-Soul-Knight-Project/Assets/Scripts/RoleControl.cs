@@ -25,11 +25,16 @@ public class RoleControl : MonoBehaviour {
 
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
+        ModuleManager.instance.inputManager.registerSwitch (this.switchWeapon);
     }
 
     public void localUpdate (float dt) {
         this.roleAni ();
         this.roleMove (dt);
+    }
+
+    private void OnDisable () {
+        ModuleManager.instance.inputManager.unRegisterSwitch ();
     }
 
     private void roleMove (float dt) {
@@ -84,6 +89,10 @@ public class RoleControl : MonoBehaviour {
         if (!inMoveState) {
             this.animator.SetBool ("IsMove", true);
         }
+
+    }
+
+    private void switchWeapon () {
 
     }
 }

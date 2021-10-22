@@ -1,13 +1,16 @@
-using System;
 /*
  * @Author: l hy 
  * @Date: 2021-09-17 15:52:27 
  * @Description: 输入管理
  */
 
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour {
+
+	public Button attackButton;
 
 	private Vector2 _moveDir = Vector2.zero;
 
@@ -116,6 +119,7 @@ public class InputManager : MonoBehaviour {
 
 	#endregion
 
+	#region  注册/解注册
 	public void registerAttack (Action attackCallback) {
 		this.attackHandler = attackCallback;
 	}
@@ -124,9 +128,19 @@ public class InputManager : MonoBehaviour {
 		this.skillHandler = skillCallback;
 	}
 
+	public void unRegisterSkill () {
+		this.skillHandler = null;
+	}
+
 	public void registerSwitch (Action switchCallback) {
 		this.switchHandler = switchCallback;
 	}
+
+	public void unRegisterSwitch () {
+		this.switchHandler = null;
+	}
+	#endregion
+
 
 	public void triggerAttack () {
 		this.attackHandler?.Invoke ();
@@ -137,6 +151,7 @@ public class InputManager : MonoBehaviour {
 	}
 
 	public void triggerSwitch () {
+		// this.attackButton.
 		this.switchHandler?.Invoke ();
 	}
 }

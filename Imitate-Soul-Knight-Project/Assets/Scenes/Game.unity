@@ -728,6 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a91ef32d15c45478a57b3749b925c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackButton: {fileID: 0}
   canvasRect: {fileID: 1944031416}
   moveRocker: {fileID: 26273831}
   movePointer: {fileID: 260314170}
@@ -1336,7 +1337,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1413452785}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 468d96a586ed48945b747d78cac8e1f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1369,18 +1370,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2036807071}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 671483816}
-        m_MethodName: triggerAttack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1471752328
 GameObject:
   m_ObjectHideFlags: 0
