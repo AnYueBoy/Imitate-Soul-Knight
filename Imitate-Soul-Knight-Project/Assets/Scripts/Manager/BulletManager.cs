@@ -12,7 +12,7 @@ public class BulletManager {
 
     public void localUpdate (float dt) {
         foreach (BaseBullet bullet in bulletSet) {
-            if (bullet.isDie) {
+            if (bullet.bulletData.isDie) {
                 this.removeBullets.Add (bullet);
             } else {
                 bullet.localUpdate (dt);
@@ -30,7 +30,7 @@ public class BulletManager {
 
     }
 
-    public void spawnBullet (string bulletUrl, Transform bulletTrans, float bulletSpeed) {
+    public void spawnBullet (string bulletUrl, Transform bulletTrans, float bulletSpeed, Vector3 bulletDir) {
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
@@ -39,6 +39,8 @@ public class BulletManager {
 
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
-        bullet.init (bulletSpeed);
+
+        BulletData bulletData = new BulletData (bulletDir, bulletSpeed);
+        bullet.init (bulletData);
     }
 }

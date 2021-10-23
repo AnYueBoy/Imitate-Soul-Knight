@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 22:47:53
+ * @Last Modified time: 2021-10-23 08:50:16
  */
 
 using System.Collections;
@@ -11,15 +11,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalBullet : BaseBullet {
-    private float moveSpeed;
+    private Vector2 moveDir;
 
-    public override void init (float moveSpeed) {
-        base.init (moveSpeed);
-        this.moveSpeed = moveSpeed;
-
-    }
     protected override void move (float dt) {
-        base.move (dt);
-        this.transform.Translate (new Vector3 (moveSpeed * dt, 0, 0));
+        float moveSpeed = this.bulletData.moveSpeed;
+        Vector3 bulletDir = this.bulletData.bulletDir;
+        this.transform.Translate (bulletDir * dt * moveSpeed);
     }
 }

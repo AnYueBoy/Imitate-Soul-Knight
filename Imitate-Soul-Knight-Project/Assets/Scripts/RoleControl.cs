@@ -19,7 +19,7 @@ public class RoleControl : MonoBehaviour {
 
     public SpriteRenderer weaponSprite;
 
-    private readonly float moveSpeed = 15;
+    private readonly float moveSpeed = 7;
 
     private Animator animator;
 
@@ -109,6 +109,8 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void attack () {
-        this.curWeapon.launchBullet ();
+        float radians = Mathf.PI / 180 * this.weaponSprite.transform.parent.eulerAngles.z;
+        Vector3 bulletMoveDir = new Vector3 (transform.localScale.x * Mathf.Cos (radians), Mathf.Sin (radians), 0);
+        this.curWeapon.launchBullet (bulletMoveDir);
     }
 }

@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:33:18 
  * @Description: 子弹基类
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 23:11:43
+ * @Last Modified time: 2021-10-23 08:49:12
  */
 
 using System.Collections;
@@ -13,11 +13,10 @@ using UnityEngine;
 
 public class BaseBullet : MonoBehaviour {
 
-    [HideInInspector]
-    public bool isDie = false;
+    public BulletData bulletData;
 
-    public virtual void init (float moveSpeed) {
-        this.isDie = false;
+    public virtual void init (BulletData bulletData) {
+        this.bulletData = bulletData;
     }
 
     public void localUpdate (float dt) {
@@ -29,7 +28,7 @@ public class BaseBullet : MonoBehaviour {
     }
 
     protected virtual void triggerHandler () {
-        this.isDie = true;
+        this.bulletData.isDie = true;
     }
 
     protected virtual void move (float dt) {
