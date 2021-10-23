@@ -1,0 +1,12 @@
+{
+	"weaponList":[
+		{
+			"id":1,
+			"name":"破旧短枪",
+			"describe":"一把普通的枪",
+			"launchInterval":0.5,
+			"damage":4,
+			"launchCount":1
+		}
+	]
+}

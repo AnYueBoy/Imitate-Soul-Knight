@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class BulletManager {
 
-    private HashSet<BaseBullet> bulletSet = new HashSet<BaseBullet> ();
+    private HashSet<Bullet> bulletSet = new HashSet<Bullet> ();
 
-    private List<BaseBullet> removeBullets = new List<BaseBullet> ();
+    private List<Bullet> removeBullets = new List<Bullet> ();
 
     public void localUpdate (float dt) {
-        foreach (BaseBullet bullet in bulletSet) {
+        foreach (Bullet bullet in bulletSet) {
             if (bullet.bulletData.isDie) {
                 this.removeBullets.Add (bullet);
             } else {
@@ -19,7 +19,7 @@ public class BulletManager {
             }
         }
 
-        foreach (BaseBullet removeBullet in removeBullets) {
+        foreach (Bullet removeBullet in removeBullets) {
             this.bulletSet.Remove (removeBullet);
             ObjectPool.instance.returnInstance (removeBullet.gameObject);
         }
@@ -38,7 +38,7 @@ public class BulletManager {
         bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 
-        BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
+        Bullet bullet = bulletNode.GetComponent<Bullet> ();
         this.bulletSet.Add (bullet);
 
         BulletData bulletData = new BulletData (bulletDir, bulletSpeed);

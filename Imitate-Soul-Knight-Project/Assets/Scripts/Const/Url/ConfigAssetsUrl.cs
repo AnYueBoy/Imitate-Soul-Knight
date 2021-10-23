@@ -8,4 +8,6 @@ public class ConfigAssetsUrl {
 
 	public const string levelConfig = "Config/LevelConfig";
 
+	public const string weaponConfig = "Config/WeaponConfig";
+
 }

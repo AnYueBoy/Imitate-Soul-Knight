@@ -12,9 +12,11 @@ public class ConfigManager {
 
 	public LevelConfig levelConfig;
 
+	public WeaponConfig weaponConfig;
+
 	public void init () {
 		levelConfig = this.loadConfig<LevelConfig> (ConfigAssetsUrl.levelConfig);
-		LevelData testData = levelConfig.getLevelDataByChapterLevel (1, 1);
+		weaponConfig = this.loadConfig<WeaponConfig> (ConfigAssetsUrl.weaponConfig);
 	}
 
 	public T loadConfig<T> (string configUrl) {
