@@ -6,14 +6,14 @@
 
 using UnityEngine;
 public class BulletData {
-	public Vector3 bulletDir;
-
 	public float moveSpeed;
 
 	public bool isDie;
 
-	public BulletData (Vector3 bulletDir, float moveSpeed) {
-		this.bulletDir = bulletDir;
+	public float moveDir;
+
+	public BulletData (float moveDir, float moveSpeed) {
+		this.moveDir = moveDir;
 		this.moveSpeed = moveSpeed;
 		this.isDie = false;
 	}

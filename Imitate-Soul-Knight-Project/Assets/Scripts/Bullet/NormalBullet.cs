@@ -15,7 +15,9 @@ public class NormalBullet : BaseBullet {
 
     protected override void move (float dt) {
         float moveSpeed = this.bulletData.moveSpeed;
-        Vector3 bulletDir = this.bulletData.bulletDir;
-        this.transform.Translate (bulletDir * dt * moveSpeed);
+        float moveDir = this.bulletData.moveDir;
+        // translate 不是简单的坐标值增加，而是对当前物体向某个方向移动一块距离 
+        // （x,y,z）为当前的方向性和大小，unity对方向和大小确认后，在当前向量的基础上，进行增加
+        this.transform.Translate (new Vector3 (moveDir * dt * moveSpeed, 0, 0));
     }
 }

@@ -27,7 +27,7 @@ public class BaseWeapon : MonoBehaviour {
         this.launchTimer += dt;
     }
 
-    public void launchBullet (Vector3 bulletDir) {
+    public void launchBullet (float bulletDir) {
         if (this.launchTimer < this.launchInterval) {
             return;
         }

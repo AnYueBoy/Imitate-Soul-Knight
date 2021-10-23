@@ -30,12 +30,13 @@ public class BulletManager {
 
     }
 
-    public void spawnBullet (string bulletUrl, Transform bulletTrans, float bulletSpeed, Vector3 bulletDir) {
+    public void spawnBullet (string bulletUrl, Transform bulletTrans, float bulletSpeed, float bulletDir) {
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
-        bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
         bulletNode.transform.position = bulletTrans.position;
         bulletNode.transform.eulerAngles = bulletTrans.eulerAngles;
+        bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
+        bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);

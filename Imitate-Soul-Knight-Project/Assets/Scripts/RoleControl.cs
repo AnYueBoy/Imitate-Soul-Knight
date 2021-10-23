@@ -109,8 +109,6 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void attack () {
-        float radians = Mathf.PI / 180 * this.weaponSprite.transform.parent.eulerAngles.z;
-        Vector3 bulletMoveDir = new Vector3 (transform.localScale.x * Mathf.Cos (radians), Mathf.Sin (radians), 0);
-        this.curWeapon.launchBullet (bulletMoveDir);
+        this.curWeapon.launchBullet (transform.localScale.x);
     }
 }
