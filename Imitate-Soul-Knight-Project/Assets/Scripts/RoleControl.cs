@@ -31,6 +31,8 @@ public class RoleControl : MonoBehaviour {
         ModuleManager.instance.inputManager.registerSwitch (this.switchWeapon);
         ModuleManager.instance.inputManager.registerSkill (this.useSkill);
         ModuleManager.instance.inputManager.registerAttack (this.attack);
+
+        this.switchWeapon ();
     }
 
     public void localUpdate (float dt) {
@@ -101,7 +103,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void switchWeapon () {
-
+        this.curWeapon.init ();
     }
 
     private void useSkill () {
