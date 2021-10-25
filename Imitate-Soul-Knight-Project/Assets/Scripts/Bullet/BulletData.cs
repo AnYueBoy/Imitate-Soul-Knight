@@ -11,9 +11,12 @@ public class BulletData {
 
 	public float moveDir;
 
-	public BulletData (float moveDir, float moveSpeed) {
+	public string tag;
+
+	public BulletData (float moveDir, float moveSpeed, string tag) {
 		this.moveDir = moveDir;
 		this.moveSpeed = moveSpeed;
 		this.isDie = false;
+		this.tag = tag;
 	}
 }

@@ -103,7 +103,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void switchWeapon () {
-        this.curWeapon.init ();
+        this.curWeapon.init ("player");
     }
 
     private void useSkill () {

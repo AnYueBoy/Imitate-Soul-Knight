@@ -20,10 +20,13 @@ public class BaseWeapon : MonoBehaviour {
 
     protected WeaponConfigData weaponConfigData;
 
-    public virtual void init () {
+    protected string weaponTag;
+
+    public virtual void init (string tag) {
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
         this.launchInterval = weaponConfigData.launchInterval;
         this.launchTimer = this.launchInterval;
+        this.weaponTag = tag;
     }
 
     public virtual void localUpdate (float dt) {
@@ -35,6 +38,6 @@ public class BaseWeapon : MonoBehaviour {
             return;
         }
         this.launchTimer = 0;
-        ModuleManager.instance.bulletManager.spawnBullet (launchTrans, bulletDir, this.weaponConfigData);
+        ModuleManager.instance.bulletManager.spawnBullet (launchTrans, bulletDir, this.weaponTag, this.weaponConfigData);
     }
 }

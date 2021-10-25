@@ -20,7 +20,7 @@ public class BaseBullet : MonoBehaviour {
         this.move (dt);
     }
 
-    private void OnTriggerEnter2D (Collider2D other) {
+    protected virtual void OnTriggerEnter2D (Collider2D other) {
         this.triggerHandler ();
     }
 

@@ -6,12 +6,18 @@
  * @Last Modified time: 2021-10-23 08:50:16
  */
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NormalBullet : BaseBullet {
     private Vector2 moveDir;
+
+    protected override void OnTriggerEnter2D (Collider2D other) {
+        if (other.tag == this.bulletData.tag) {
+            return;
+        }
+
+        this.triggerHandler ();
+    }
 
     protected override void move (float dt) {
         float moveSpeed = this.bulletData.moveSpeed;
