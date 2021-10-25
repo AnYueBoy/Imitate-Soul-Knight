@@ -30,7 +30,8 @@ public class BulletManager {
 
     }
 
-    public void spawnBullet (string bulletUrl, Transform bulletTrans, float bulletSpeed, float bulletDir) {
+    public void spawnBullet (Transform bulletTrans, float bulletDir, WeaponConfigData weaponConfigData) {
+        string bulletUrl = weaponConfigData.bulletUrl;
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
         bulletNode.transform.position = bulletTrans.position;
@@ -41,7 +42,7 @@ public class BulletManager {
         Bullet bullet = bulletNode.GetComponent<Bullet> ();
         this.bulletSet.Add (bullet);
 
-        BulletData bulletData = new BulletData (bulletDir, bulletSpeed);
+        BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed);
         bullet.init (bulletData);
     }
 }

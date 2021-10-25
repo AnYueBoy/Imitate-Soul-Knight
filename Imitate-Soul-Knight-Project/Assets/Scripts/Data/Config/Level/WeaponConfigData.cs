@@ -17,4 +17,8 @@ public class WeaponConfigData {
 	public float damage;
 
 	public int launchCount;
+
+	public float bulletSpeed;
+
+	public string bulletUrl;
 }

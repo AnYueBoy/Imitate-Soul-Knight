@@ -17,6 +17,7 @@ public class ConfigManager {
 	public void init () {
 		levelConfig = this.loadConfig<LevelConfig> (ConfigAssetsUrl.levelConfig);
 		weaponConfig = this.loadConfig<WeaponConfig> (ConfigAssetsUrl.weaponConfig);
+		weaponConfig.convertDate ();
 	}
 
 	public T loadConfig<T> (string configUrl) {

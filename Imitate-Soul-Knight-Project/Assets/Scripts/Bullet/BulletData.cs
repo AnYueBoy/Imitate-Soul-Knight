@@ -4,7 +4,6 @@
  * @Description: 子弹数据
  */
 
-using UnityEngine;
 public class BulletData {
 	public float moveSpeed;
 
