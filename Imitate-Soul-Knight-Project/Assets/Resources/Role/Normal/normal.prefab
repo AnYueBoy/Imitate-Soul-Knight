@@ -179,6 +179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selfTrans: {fileID: 4513805140932964293}
   checkDistance: 0.4
+  weaponRotaionTrans: {fileID: 9080219856250794297}
   checkLayer:
     serializedVersion: 2
     m_Bits: 256

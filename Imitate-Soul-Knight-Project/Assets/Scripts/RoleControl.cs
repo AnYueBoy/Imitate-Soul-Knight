@@ -15,6 +15,9 @@ public class RoleControl : MonoBehaviour {
     [SerializeField]
     private float checkDistance = 0.4f;
 
+    [SerializeField]
+    private Transform weaponRotaionTrans;
+
     public LayerMask checkLayer;
 
     public SpriteRenderer weaponSprite;
@@ -80,7 +83,7 @@ public class RoleControl : MonoBehaviour {
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
         // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
-        this.weaponSprite.transform.parent.eulerAngles = new Vector3 (0, 0, rotationAngle);
+        this.weaponRotaionTrans.eulerAngles = new Vector3 (0, 0, rotationAngle);
     }
 
     private void roleAni () {
