@@ -12,6 +12,8 @@ public class WeaponConfigData {
 
 	public string describe;
 
+	public string weaponUrl;
+
 	public float launchInterval;
 
 	public float damage;

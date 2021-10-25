@@ -4,6 +4,7 @@
 			"id": 1,
 			"name": "破旧短枪",
 			"describe": "一把破旧的枪",
+			"weaponUrl":"Weapon/weapon_1",
 			"launchInterval": 0.5,
 			"damage": 4,
 			"launchCount": 1,
