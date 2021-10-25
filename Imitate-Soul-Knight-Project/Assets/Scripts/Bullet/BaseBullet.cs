@@ -6,9 +6,6 @@
  * @Last Modified time: 2021-10-23 08:49:12
  */
 
-using System.Collections;
-using System.Collections.Generic;
-using UFramework.GameCommon;
 using UnityEngine;
 
 public class BaseBullet : MonoBehaviour {

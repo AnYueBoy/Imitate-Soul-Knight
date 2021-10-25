@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
 
 public class BulletManager {
 
-    private HashSet<Bullet> bulletSet = new HashSet<Bullet> ();
+    private HashSet<BaseBullet> bulletSet = new HashSet<BaseBullet> ();
 
-    private List<Bullet> removeBullets = new List<Bullet> ();
+    private List<BaseBullet> removeBullets = new List<BaseBullet> ();
 
     public void localUpdate (float dt) {
-        foreach (Bullet bullet in bulletSet) {
+        foreach (BaseBullet bullet in bulletSet) {
             if (bullet.bulletData.isDie) {
                 this.removeBullets.Add (bullet);
             } else {
@@ -19,7 +18,7 @@ public class BulletManager {
             }
         }
 
-        foreach (Bullet removeBullet in removeBullets) {
+        foreach (BaseBullet removeBullet in removeBullets) {
             this.bulletSet.Remove (removeBullet);
             ObjectPool.instance.returnInstance (removeBullet.gameObject);
         }
@@ -39,7 +38,7 @@ public class BulletManager {
         bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 
-        Bullet bullet = bulletNode.GetComponent<Bullet> ();
+        BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
 
         BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed);

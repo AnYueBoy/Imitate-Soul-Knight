@@ -16,7 +16,7 @@ public class BaseWeapon : MonoBehaviour {
 
     protected float launchInterval = 0;
 
-    protected float launchTimer = 0.5f;
+    protected float launchTimer = 0;
 
     protected WeaponConfigData weaponConfigData;
 
