@@ -25,6 +25,9 @@ public class BaseWeapon : MonoBehaviour {
 
     protected string weaponTag;
 
+    protected float shotGunEffectInterval;
+
+    protected float shotGunEffectSpeed;
     protected float shotGunTimer = 0;
 
     public virtual void init (string tag) {
@@ -33,6 +36,9 @@ public class BaseWeapon : MonoBehaviour {
         this.launchTimer = this.launchInterval;
         this.weaponTag = tag;
         this.shotGunEffect.gameObject.SetActive (false);
+
+        this.shotGunEffectInterval = this.launchInterval / 2;
+        this.shotGunEffectSpeed = 1 / shotGunEffectInterval;
     }
 
     public virtual void localUpdate (float dt) {
@@ -47,8 +53,8 @@ public class BaseWeapon : MonoBehaviour {
         }
 
         this.shotGunTimer += dt;
-        this.shotGunEffect.color = new Color (1, 1, 1, (1 / this.launchInterval / 2) * this.shotGunTimer);
-        if (this.shotGunTimer > this.launchInterval / 3) {
+        this.shotGunEffect.color = new Color (1, 1, 1, this.shotGunEffectSpeed * this.shotGunTimer);
+        if (this.shotGunTimer > this.shotGunEffectInterval) {
             this.shotGunEffect.gameObject.SetActive (false);
             this.shotGunTimer = 0;
         }
