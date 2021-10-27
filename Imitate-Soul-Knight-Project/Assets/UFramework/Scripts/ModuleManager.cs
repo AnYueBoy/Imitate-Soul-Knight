@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-22 21:43:02
+ * @Last Modified time: 2021-10-27 18:13:11
  */
 
 namespace UFramework {
@@ -34,6 +34,8 @@ namespace UFramework {
         public PlayerManager playerManager;
 
         public BulletManager bulletManager = new BulletManager ();
+
+        public EnemyManager enemyManager = new EnemyManager ();
 
         #endregion
 
@@ -66,6 +68,7 @@ namespace UFramework {
             this.playerManager?.localUpdate (dt);
             this.mapManager.localUpdate (dt);
             this.bulletManager?.localUpdate (dt);
+            this.enemyManager?.localUpdate (dt);
         }
 
         private void LateUpdate () {
