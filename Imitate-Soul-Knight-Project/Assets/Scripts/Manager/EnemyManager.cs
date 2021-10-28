@@ -12,7 +12,9 @@ public class EnemyManager {
 
     private HashSet<BaseEnemy> enemySet = new HashSet<BaseEnemy> ();
 
-    public void localUpdate(float dt){
-        
+    public void localUpdate (float dt) {
+        foreach (BaseEnemy enemy in enemySet) {
+            enemy.localUpdate (dt);
+        }
     }
 }
