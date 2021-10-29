@@ -4,6 +4,10 @@
  * @Description: 蓝精怪
  */
 
+using UFramework.AI.BlackBoard;
 public class LanJingGuai : BaseEnemy {
 
+	private void Start () {
+		blackboardMemory = new BlackBoardMemory ();
+	}
 }

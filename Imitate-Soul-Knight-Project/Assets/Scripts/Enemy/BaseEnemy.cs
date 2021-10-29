@@ -1,8 +1,8 @@
 ﻿using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
 using UnityEngine;
+using UFramework.AI.BlackBoard;
 
 public class BaseEnemy : MonoBehaviour, IAgent {
 
