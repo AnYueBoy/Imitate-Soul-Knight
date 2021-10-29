@@ -1,15 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UFramework.AI.BehaviourTree;
+using UFramework.AI.BehaviourTree.Agent;
+using UFramework.AI.BehaviourTree.Node;
+using UFramework.AI.BlackBoard;
 using UnityEngine;
 
-public class BaseEnemy : MonoBehaviour {
+public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
 	}
 
-	public virtual void localUpdate (float dt) {
+	protected BlackBoardMemory blackboardMemory;
 
+	protected BaseNode BTNode;
+
+	public virtual void localUpdate (float dt) {
+		BehaviourTreeRunner.execute (BTNode, this, blackboardMemory);
 	}
 }
