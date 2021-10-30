@@ -1,0 +1,11 @@
+{
+	"enemyList": [
+		{
+			"id": 1,
+			"name": "蓝精怪",
+			"describe": "怪如其名",
+			"damage": 10,
+			"hp": 100
+		}
+	]
+}
