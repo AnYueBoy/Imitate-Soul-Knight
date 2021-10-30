@@ -30,6 +30,9 @@ public class Room {
 		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
 		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
 		this.roomActive = false;
+
+		// 创建敌人
+		this.spawnEnemy ();
 	}
 
 	public void refreshPoints () {
@@ -97,5 +100,9 @@ public class Room {
 			return true;
 		}
 		return false;
+	}
+
+	private void spawnEnemy () {
+
 	}
 }
