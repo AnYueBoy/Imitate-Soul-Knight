@@ -15,7 +15,11 @@
 			"enemyList": [
 				1
 			],
-			"boss": -1
+			"boss": -1,
+			"specialRoomCount": 1,
+			"dropWeapon": [
+				1
+			]
 		},
 		{
 			"chapter": 1,
@@ -32,7 +36,11 @@
 			"enemyList": [
 				1
 			],
-			"boss": 1
+			"boss": 1,
+			"specialRoomCount": 1,
+			"dropWeapon": [
+				1
+			]
 		},
 		{
 			"chapter": 2,
@@ -49,7 +57,11 @@
 			"enemyList": [
 				1
 			],
-			"boss": -1
+			"boss": -1,
+			"specialRoomCount": 1,
+			"dropWeapon": [
+				1
+			]
 		},
 		{
 			"chapter": 2,
@@ -66,7 +78,11 @@
 			"enemyList": [
 				1
 			],
-			"boss": 1
+			"boss": 1,
+			"specialRoomCount": 1,
+			"dropWeapon": [
+				1
+			]
 		}
 	]
 }
