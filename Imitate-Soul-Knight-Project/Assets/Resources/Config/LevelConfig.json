@@ -11,7 +11,11 @@
 			"maxRoomWidth": 39,
 			"minRoomHeight": 39,
 			"maxRoomHeight": 39,
-			"totalRoomCount": 5
+			"totalRoomCount": 5,
+			"enemyList": [
+				1
+			],
+			"boss": -1
 		},
 		{
 			"chapter": 1,
@@ -24,7 +28,11 @@
 			"maxRoomWidth": 39,
 			"minRoomHeight": 39,
 			"maxRoomHeight": 39,
-			"totalRoomCount": 5
+			"totalRoomCount": 5,
+			"enemyList": [
+				1
+			],
+			"boss": 1
 		},
 		{
 			"chapter": 2,
@@ -37,7 +45,11 @@
 			"maxRoomWidth": 39,
 			"minRoomHeight": 39,
 			"maxRoomHeight": 39,
-			"totalRoomCount": 5
+			"totalRoomCount": 5,
+			"enemyList": [
+				1
+			],
+			"boss": -1
 		},
 		{
 			"chapter": 2,
@@ -50,7 +62,11 @@
 			"maxRoomWidth": 39,
 			"minRoomHeight": 39,
 			"maxRoomHeight": 39,
-			"totalRoomCount": 5
+			"totalRoomCount": 5,
+			"enemyList": [
+				1
+			],
+			"boss": 1
 		}
 	]
 }
