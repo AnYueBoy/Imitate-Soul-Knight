@@ -11,6 +11,8 @@ public class RoomData {
 
 	public int roomHeight;
 
+	public RoomTypeEnum roomType;
+
 	public Vector2Int roomCenter = Vector2Int.zero;
 
 	public Vector2Int roomInMapPos = Vector2Int.zero;
@@ -19,8 +21,9 @@ public class RoomData {
 
 	public List<Vector3Int> doorList = new List<Vector3Int> ();
 
-	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint) {
+	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint, RoomTypeEnum roomType) {
 		this.roomInMapPos = roomInMapPos;
 		this.preRoomPoint = preRoomPoint;
+		this.roomType = roomType;
 	}
 }

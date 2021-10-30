@@ -4,6 +4,7 @@
  * @Description: 地图生成管理
  */
 using System.Collections.Generic;
+using System.Linq;
 using UFramework;
 using UFramework.FrameUtil;
 using UFramework.GameCommon;
@@ -16,6 +17,7 @@ public class MapManager : MonoBehaviour {
 
     public Tilemap wallTileMap;
 
+    #region  房间参数
     private int mapRowCount;
 
     private int mapColumnCount;
@@ -33,6 +35,16 @@ public class MapManager : MonoBehaviour {
     private int minRoomHeight;
 
     private int maxRoomHeight;
+
+    private int specialRoomCount;
+
+    private List<int> enemyList;
+
+    private List<int> dropWeapon;
+
+    private int boos;
+
+    #endregion
 
     private Dictionary<Vector2Int, Room> roomDic = new Dictionary<Vector2Int, Room> ();
 
@@ -63,6 +75,10 @@ public class MapManager : MonoBehaviour {
         this.minRoomHeight = levelData.minRoomHeight;
         this.maxRoomHeight = levelData.maxRoomHeight;
         this.totalRoomCount = levelData.totalRoomCount;
+        this.specialRoomCount = levelData.specialRoomCount;
+        this.enemyList = levelData.enemyList;
+        this.dropWeapon = levelData.dropWeapon;
+        this.boos = levelData.boss;
     }
 
     private void initMapTile () {
@@ -260,7 +276,7 @@ public class MapManager : MonoBehaviour {
 
         roomOrderList.Add (nowPoint);
 
-        RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1);
+        RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1, RoomTypeEnum.BORN);
 
         Room startRoom = new Room (startRoomData);
         roomDic.Add (nowPoint, startRoom);
