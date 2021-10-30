@@ -38,12 +38,6 @@ public class MapManager : MonoBehaviour {
 
     private int specialRoomCount;
 
-    private List<int> enemyList;
-
-    private List<int> dropWeapon;
-
-    private int boos;
-
     #endregion
 
     private Dictionary<Vector2Int, Room> roomDic = new Dictionary<Vector2Int, Room> ();
@@ -57,6 +51,9 @@ public class MapManager : MonoBehaviour {
     private TileBase floorTile;
     private TileBase doorOpenTile;
     private TileBase wallTile;
+
+    private LevelData levelData;
+
     public void init () {
         this.generateMapClick ();
     }
@@ -64,7 +61,7 @@ public class MapManager : MonoBehaviour {
     private void initMapParams () {
         int chapter = ModuleManager.instance.playerDataManager.getCurChapter ();
         int level = ModuleManager.instance.playerDataManager.getCurLevel ();
-        LevelData levelData = ModuleManager.instance.configManager.levelConfig.getLevelDataByChapterLevel (chapter, level);
+        this.levelData = ModuleManager.instance.configManager.levelConfig.getLevelDataByChapterLevel (chapter, level);
 
         this.mapRowCount = levelData.mapRowCount;
         this.mapColumnCount = levelData.mapColumnCount;
@@ -76,9 +73,6 @@ public class MapManager : MonoBehaviour {
         this.maxRoomHeight = levelData.maxRoomHeight;
         this.totalRoomCount = levelData.totalRoomCount;
         this.specialRoomCount = levelData.specialRoomCount;
-        this.enemyList = levelData.enemyList;
-        this.dropWeapon = levelData.dropWeapon;
-        this.boos = levelData.boss;
     }
 
     private void initMapTile () {
@@ -276,12 +270,14 @@ public class MapManager : MonoBehaviour {
 
         roomOrderList.Add (nowPoint);
 
-        RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1, RoomTypeEnum.BORN);
+        RoomData startRoomData = new RoomData (nowPoint, Vector2Int.one * -1, RoomTypeEnum.BORN, levelData);
 
         Room startRoom = new Room (startRoomData);
         roomDic.Add (nowPoint, startRoom);
 
         Vector2Int connectPoint = nowPoint;
+
+        List<RoomTypeEnum> roomTypeList = this.getRandomRoomType ();
 
         while (curRoomCount < roomCount) {
             nowPoint = getNextPoint (nowPoint, mapRow, mapColumn);
@@ -294,7 +290,14 @@ public class MapManager : MonoBehaviour {
             curRoomCount++;
             roomOrderList.Add (nowPoint);
 
-            RoomData roomData = new RoomData (nowPoint, connectPoint);
+            // 获取随机的房间类型
+            RoomTypeEnum roomType = RoomTypeEnum.BATTLE;
+            if (curRoomCount >= roomCount) {
+                roomType = RoomTypeEnum.PORTAL;
+            } else {
+                roomType = roomTypeList[curRoomCount - 2];
+            }
+            RoomData roomData = new RoomData (nowPoint, connectPoint, roomType, levelData);
             Room room = new Room (roomData);
             roomDic.Add (nowPoint, room);
 
@@ -340,5 +343,20 @@ public class MapManager : MonoBehaviour {
         this.roomOrderList.Clear ();
 
         this.startRoomIndex = this.endRoomIndex = Vector2Int.zero;
+    }
+
+    private List<RoomTypeEnum> getRandomRoomType () {
+        List<RoomTypeEnum> roomTypeList = new List<RoomTypeEnum> ();
+        for (int i = 0; i < specialRoomCount; i++) {
+            RoomTypeEnum roomType = (RoomTypeEnum) CommonUtil.getRandomValue ((int) RoomTypeEnum.CHEST, (int) RoomTypeEnum.BLESS);
+            roomTypeList.Add (roomType);
+        }
+
+        for (var i = 0; i < totalRoomCount - 2 - specialRoomCount; i++) {
+            roomTypeList.Add (RoomTypeEnum.BATTLE);
+        }
+
+        CommonUtil.confusionElement<RoomTypeEnum> (roomTypeList);
+        return roomTypeList;
     }
 }

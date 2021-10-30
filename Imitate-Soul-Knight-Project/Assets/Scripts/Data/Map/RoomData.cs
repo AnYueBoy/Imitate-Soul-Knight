@@ -21,9 +21,19 @@ public class RoomData {
 
 	public List<Vector3Int> doorList = new List<Vector3Int> ();
 
-	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint, RoomTypeEnum roomType) {
+	public List<int> enemyList = new List<int> ();
+
+	public List<int> dropWeapon = new List<int> ();
+
+	public int boos;
+
+	public RoomData (Vector2Int roomInMapPos, Vector2Int preRoomPoint, RoomTypeEnum roomType, LevelData levelData) {
 		this.roomInMapPos = roomInMapPos;
 		this.preRoomPoint = preRoomPoint;
 		this.roomType = roomType;
+
+		this.enemyList = levelData.enemyList;
+		this.dropWeapon = levelData.dropWeapon;
+		this.boos = levelData.boss;
 	}
 }
