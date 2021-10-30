@@ -7,7 +7,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
 using UnityEngine;
 

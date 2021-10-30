@@ -4,10 +4,20 @@
  * @Description: 蓝精怪
  */
 
+using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
 public class LanJingGuai : BaseEnemy {
 
 	private void Start () {
 		blackboardMemory = new BlackBoardMemory ();
+		BTNode = new ParallelNode (1).addChild (
+			new SelectorNode ().addChild (
+
+			)
+		);
+	}
+
+	public void playIdleAni () {
+		this.animator.SetBool ("IsMove", false);
 	}
 }
