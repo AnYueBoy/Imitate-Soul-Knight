@@ -7,10 +7,10 @@
 			"mapColumnCount": 5,
 			"passwayHeight": 7,
 			"roomDistance": 12,
-			"minRoomWidth": 39,
-			"maxRoomWidth": 39,
-			"minRoomHeight": 39,
-			"maxRoomHeight": 39,
+			"minRoomWidth": 19,
+			"maxRoomWidth": 19,
+			"minRoomHeight": 19,
+			"maxRoomHeight": 19,
 			"totalRoomCount": 5,
 			"enemyList": [
 				1
@@ -28,10 +28,10 @@
 			"mapColumnCount": 5,
 			"passwayHeight": 7,
 			"roomDistance": 12,
-			"minRoomWidth": 39,
-			"maxRoomWidth": 39,
-			"minRoomHeight": 39,
-			"maxRoomHeight": 39,
+			"minRoomWidth": 19,
+			"maxRoomWidth": 19,
+			"minRoomHeight": 19,
+			"maxRoomHeight": 19,
 			"totalRoomCount": 5,
 			"enemyList": [
 				1
@@ -49,10 +49,10 @@
 			"mapColumnCount": 5,
 			"passwayHeight": 7,
 			"roomDistance": 12,
-			"minRoomWidth": 39,
-			"maxRoomWidth": 39,
-			"minRoomHeight": 39,
-			"maxRoomHeight": 39,
+			"minRoomWidth": 19,
+			"maxRoomWidth": 19,
+			"minRoomHeight": 19,
+			"maxRoomHeight": 19,
 			"totalRoomCount": 5,
 			"enemyList": [
 				1
@@ -70,10 +70,10 @@
 			"mapColumnCount": 5,
 			"passwayHeight": 7,
 			"roomDistance": 12,
-			"minRoomWidth": 39,
-			"maxRoomWidth": 39,
-			"minRoomHeight": 39,
-			"maxRoomHeight": 39,
+			"minRoomWidth": 19,
+			"maxRoomWidth": 19,
+			"minRoomHeight": 19,
+			"maxRoomHeight": 19,
 			"totalRoomCount": 5,
 			"enemyList": [
 				1
