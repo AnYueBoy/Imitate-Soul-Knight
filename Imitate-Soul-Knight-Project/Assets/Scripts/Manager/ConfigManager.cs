@@ -17,13 +17,13 @@ public class ConfigManager {
 	public void init () {
 		levelConfig = this.loadConfig<LevelConfig> (ConfigAssetsUrl.levelConfig);
 		weaponConfig = this.loadConfig<WeaponConfig> (ConfigAssetsUrl.weaponConfig);
-		weaponConfig.convertDate ();
 	}
 
 	public T loadConfig<T> (string configUrl) {
 		TextAsset configContext = AssetsManager.instance.getAssetByUrlSync<TextAsset> (configUrl);
 		string context = configContext.text;
 		T configData = JsonMapper.ToObject<T> (context);
+		(configData as IConfig).convertData ();
 		return configData;
 	}
 }

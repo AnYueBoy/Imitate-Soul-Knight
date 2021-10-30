@@ -3,8 +3,8 @@
 		{
 			"id": 1,
 			"name": "破旧短枪",
-			"describe": "一把破旧的枪",
-			"weaponUrl":"Weapon/weapon_1",
+			"describe": "一把破旧的短枪",
+			"weaponUrl": "Weapon/weapon_1",
 			"launchInterval": 0.3,
 			"damage": 4,
 			"launchCount": 1,

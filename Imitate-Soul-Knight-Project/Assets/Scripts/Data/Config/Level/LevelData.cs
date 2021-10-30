@@ -6,23 +6,15 @@
 
 public class LevelData {
 
-	public int level;
-
-	public int totalRoomCount;
-
-	public int mapRowCount;
-
-	public int mapColumnCount;
-
-	public int passwayHeight;
-
-	public int roomDistance;
-
-	public int minRoomWidth;
-
-	public int maxRoomWidth;
-
-	public int minRoomHeight;
-
-	public int maxRoomHeight;
+	public int chapter; // 章节
+	public int level; // 关卡
+	public int mapRowCount; // 地图行数量
+	public int mapColumnCount; // 地图列数量
+	public int passwayHeight; // 通道高度
+	public int roomDistance; // 房间距离
+	public int minRoomWidth; // 房间最小宽度
+	public int maxRoomWidth; // 房间最大宽度
+	public int minRoomHeight; // 房间最小高度
+	public int maxRoomHeight; // 房间最大高度
+	public int totalRoomCount; // 总房间数
 }

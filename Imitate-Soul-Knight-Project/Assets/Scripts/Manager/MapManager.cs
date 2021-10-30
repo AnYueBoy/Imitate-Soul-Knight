@@ -52,7 +52,6 @@ public class MapManager : MonoBehaviour {
     private void initMapParams () {
         int chapter = ModuleManager.instance.playerDataManager.getCurChapter ();
         int level = ModuleManager.instance.playerDataManager.getCurLevel ();
-        ChapterData chapterData = ModuleManager.instance.configManager.levelConfig.getChapterData (chapter);
         LevelData levelData = ModuleManager.instance.configManager.levelConfig.getLevelDataByChapterLevel (chapter, level);
 
         this.mapRowCount = levelData.mapRowCount;

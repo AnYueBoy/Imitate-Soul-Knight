@@ -4,13 +4,13 @@
  * @Description: 武器配置
  */
 using System.Collections.Generic;
-public class WeaponConfig {
+public class WeaponConfig : IConfig {
 
 	public List<WeaponConfigData> weaponList = new List<WeaponConfigData> ();
 
 	private Dictionary<int, WeaponConfigData> weaponDic = new Dictionary<int, WeaponConfigData> ();
 
-	public void convertDate () {
+	public void convertData () {
 		foreach (WeaponConfigData weaponConfigData in weaponList) {
 			weaponDic.Add (weaponConfigData.id, weaponConfigData);
 		}

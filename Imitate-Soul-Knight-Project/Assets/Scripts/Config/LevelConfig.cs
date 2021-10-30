@@ -8,17 +8,29 @@ using UnityEngine;
  * @Description: 章节关卡配置
  */
 
-public class LevelConfig {
+public class LevelConfig : IConfig {
 
-	public List<ChapterData> chapterList = new List<ChapterData> ();
+	public List<LevelData> chapterList = new List<LevelData> ();
+
+	private Dictionary<int, Dictionary<int, LevelData>> levelDataDic = new Dictionary<int, Dictionary<int, LevelData>> ();
 
 	public LevelData getLevelDataByChapterLevel (int chapter, int level) {
-		ChapterData chapterData = this.chapterList[chapter - 1];
-		LevelData levelData = chapterData.levelList[level - 1];
-		return levelData;
+		Dictionary<int, LevelData> chapterDic = this.levelDataDic[chapter];
+		return chapterDic[level];
 	}
 
-	public ChapterData getChapterData (int chapter) {
-		return this.chapterList[chapter - 1];
+	public void convertData () {
+		foreach (LevelData levelData in this.chapterList) {
+			Dictionary<int, LevelData> levelDic = null;
+			if (!this.levelDataDic.ContainsKey (levelData.chapter)) {
+				levelDic = new Dictionary<int, LevelData> ();
+				levelDic.Add (levelData.level, levelData);
+				this.levelDataDic.Add (levelData.chapter, levelDic);
+				continue;
+			}
+
+			levelDic = this.levelDataDic[levelData.chapter];
+			levelDic.Add (levelData.level, levelData);
+		}
 	}
 }

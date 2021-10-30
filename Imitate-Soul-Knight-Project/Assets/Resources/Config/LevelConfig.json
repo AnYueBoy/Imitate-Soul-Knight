@@ -2,61 +2,55 @@
 	"chapterList": [
 		{
 			"chapter": 1,
-			"levelList": [
-				{
-					"level": 1,
-					"mapRowCount": 5,
-					"mapColumnCount": 5,
-					"passwayHeight": 7,
-					"roomDistance": 12,
-					"minRoomWidth": 39,
-					"maxRoomWidth": 39,
-					"minRoomHeight": 39,
-					"maxRoomHeight": 39,
-					"totalRoomCount": 5
-				},
-				{
-					"level": 2,
-					"mapRowCount": 5,
-					"mapColumnCount": 5,
-					"passwayHeight": 7,
-					"roomDistance": 12,
-					"minRoomWidth": 39,
-					"maxRoomWidth": 39,
-					"minRoomHeight": 39,
-					"maxRoomHeight": 39,
-					"totalRoomCount": 5
-				}
-			]
+			"level": 1,
+			"mapRowCount": 5,
+			"mapColumnCount": 5,
+			"passwayHeight": 7,
+			"roomDistance": 12,
+			"minRoomWidth": 39,
+			"maxRoomWidth": 39,
+			"minRoomHeight": 39,
+			"maxRoomHeight": 39,
+			"totalRoomCount": 5
+		},
+		{
+			"chapter": 1,
+			"level": 2,
+			"mapRowCount": 5,
+			"mapColumnCount": 5,
+			"passwayHeight": 7,
+			"roomDistance": 12,
+			"minRoomWidth": 39,
+			"maxRoomWidth": 39,
+			"minRoomHeight": 39,
+			"maxRoomHeight": 39,
+			"totalRoomCount": 5
 		},
 		{
 			"chapter": 2,
-			"levelList": [
-				{
-					"level": 1,
-					"mapRowCount": 5,
-					"mapColumnCount": 5,
-					"passwayHeight": 7,
-					"roomDistance": 12,
-					"minRoomWidth": 39,
-					"maxRoomWidth": 39,
-					"minRoomHeight": 39,
-					"maxRoomHeight": 39,
-					"totalRoomCount": 5
-				},
-				{
-					"level": 2,
-					"mapRowCount": 5,
-					"mapColumnCount": 5,
-					"passwayHeight": 7,
-					"roomDistance": 12,
-					"minRoomWidth": 39,
-					"maxRoomWidth": 39,
-					"minRoomHeight": 39,
-					"maxRoomHeight": 39,
-					"totalRoomCount": 5
-				}
-			]
+			"level": 1,
+			"mapRowCount": 5,
+			"mapColumnCount": 5,
+			"passwayHeight": 7,
+			"roomDistance": 12,
+			"minRoomWidth": 39,
+			"maxRoomWidth": 39,
+			"minRoomHeight": 39,
+			"maxRoomHeight": 39,
+			"totalRoomCount": 5
+		},
+		{
+			"chapter": 2,
+			"level": 2,
+			"mapRowCount": 5,
+			"mapColumnCount": 5,
+			"passwayHeight": 7,
+			"roomDistance": 12,
+			"minRoomWidth": 39,
+			"maxRoomWidth": 39,
+			"minRoomHeight": 39,
+			"maxRoomHeight": 39,
+			"totalRoomCount": 5
 		}
 	]
 }
