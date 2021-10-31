@@ -3,7 +3,7 @@
  * @Date: 2019-12-16 23:05:55 
  * @Description: 工具类
  * @Last Modified by: l hy
- * @Last Modified time: 2020-12-21 16:44:12
+ * @Last Modified time: 2021-10-31 22:13:35
  */
 
 namespace UFramework.FrameUtil {
@@ -222,6 +222,36 @@ namespace UFramework.FrameUtil {
             max = max < min?min : max;
             int result = Random.Range (min, max + 1);
             return result;
+        }
+
+        /// <summary>
+        ///获取List中随机元素 
+        /// </summary>
+        /// <param name="elementList"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T getRandomElement<T> (List<T> elementList) {
+            int randomIndex = getRandomValue (0, elementList.Count - 1);
+            return elementList[randomIndex];
+        }
+
+        /// <summary>
+        /// 获取随机数量的元素，已随机到的元素不会再随机到
+        /// </summary>
+        /// <param name="elementList"></param>
+        /// <param name="randomCount"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static List<T> getRandomElementList<T> (List<T> elementList, int randomCount) {
+            List<T> cloneList = new List<T> (elementList);
+            List<T> resultList = new List<T> ();
+            for (int i = 0; i < randomCount; i++) {
+                int randomIndex = getRandomValue (0, cloneList.Count - 1);
+                T randomValue = cloneList[randomIndex];
+                resultList.Add (randomValue);
+                cloneList.Remove (randomValue);
+            }
+            return resultList;
         }
 
         /// <summary>

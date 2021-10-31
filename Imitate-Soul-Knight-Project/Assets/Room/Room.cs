@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2021-10-15 09:20:55 
  * @Description: 房间
  */
 using UFramework;
+using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -124,7 +126,7 @@ public class Room {
 
 			case RoomTypeEnum.BORN:
 				// 设置玩家出现在出生房间
-				Vector3 worldPos = ModuleManager.instance.mapManager.wallTileMap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
+				Vector3 worldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
 				ModuleManager.instance.playerManager.getPlayerTrans ().position = worldPos;
 				break;
 			default:
@@ -133,5 +135,37 @@ public class Room {
 
 	}
 
-	private void spawnEnemy () { }
+	private void spawnEnemy () {
+		List<Vector3> randomPosList = this.getRandomPos (ConstValue.enemySpawnCount);
+		for (int i = 0; i < ConstValue.enemySpawnCount; i++) {
+			// 获取随机敌人id
+			int enemyId = CommonUtil.getRandomElement<int> (this.roomData.enemyList);
+			Vector3 enemyPos = randomPosList[i];
+			ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos);
+		}
+	}
+
+	private List<Vector3> getRandomPos (int randomCount) {
+		List<Vector2Int> sampleList = new List<Vector2Int> ();
+		int horizontalStart = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
+		int horizontalEnd = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
+		int verticalStart = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
+		int verticalEnd = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
+		for (int i = horizontalStart; i < horizontalEnd; i++) {
+			for (int j = verticalStart; j < verticalEnd; j++) {
+				sampleList.Add (new Vector2Int (i, j));
+			}
+		}
+
+		List<Vector3> resultList = new List<Vector3> ();
+		Vector2Int randomPos = Vector2Int.zero;
+		sampleList = CommonUtil.getRandomElementList<Vector2Int> (sampleList, randomCount);
+		for (int i = 0; i < sampleList.Count; i++) {
+			randomPos = sampleList[i];
+			Vector3 resultRandomPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (randomPos.x, randomPos.y, 0));
+			resultList.Add (resultRandomPos);
+		}
+
+		return resultList;
+	}
 }

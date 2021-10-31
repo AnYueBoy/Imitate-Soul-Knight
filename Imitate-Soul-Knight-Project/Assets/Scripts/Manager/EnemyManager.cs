@@ -6,6 +6,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UFramework;
+using UFramework.GameCommon;
 using UnityEngine;
 
 public class EnemyManager {
@@ -16,5 +18,17 @@ public class EnemyManager {
         foreach (BaseEnemy enemy in enemySet) {
             enemy.localUpdate (dt);
         }
+    }
+
+    public void spawnEnemyById (int enemyId, Vector3 pos) {
+        EnemyConfigData enemyConfigData = ModuleManager.instance.configManager.enemyConfig.getEnemyConfigById (enemyId);
+        string enemyUrl = enemyConfigData.url;
+        GameObject enemyPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (enemyUrl);
+        GameObject enemyNode = ObjectPool.instance.requestInstance (enemyPrefab);
+        enemyNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+        enemyNode.transform.position = pos;
+
+        BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();
+        enemySet.Add (enemy);
     }
 }
