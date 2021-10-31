@@ -222,7 +222,13 @@ public class MapManager : MonoBehaviour {
                                 // 设置门
                                 Vector3Int doorTilePoint = new Vector3Int (rightStart.x + direct * j, rightStart.y - k, 0);
                                 this.wallTileMap.SetTile (doorTilePoint, doorOpenTile);
-                                curRoomData.doorList.Add (doorTilePoint);
+
+                                if (j == 0) {
+                                    preRoomData.doorList.Add (doorTilePoint);
+                                }
+                                if (j == distance - 1) {
+                                    curRoomData.doorList.Add (doorTilePoint);
+                                }
                             }
                         }
                     }
@@ -248,7 +254,13 @@ public class MapManager : MonoBehaviour {
                                 // 设置门
                                 Vector3Int doorTilePoint = new Vector3Int (upStart.x - j, upStart.y + direct * k, 0);
                                 this.wallTileMap.SetTile (doorTilePoint, doorOpenTile);
-                                curRoomData.doorList.Add (doorTilePoint);
+                                if (k == 0) {
+                                    preRoomData.doorList.Add (doorTilePoint);
+                                }
+
+                                if (k == distance - 1) {
+                                    curRoomData.doorList.Add (doorTilePoint);
+                                }
                             }
                         }
                     }
