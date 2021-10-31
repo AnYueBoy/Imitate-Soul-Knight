@@ -5,7 +5,8 @@
 			"name": "蓝精怪",
 			"describe": "怪如其名",
 			"damage": 10,
-			"hp": 100
+			"hp": 100,
+			"url": "Role/Enemy/lanJingGuai"
 		}
 	]
 }

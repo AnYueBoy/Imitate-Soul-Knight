@@ -4,4 +4,5 @@ public class EnemyConfigData {
 	public string describe; // 描述
 	public float damage; // 伤害
 	public float hp; // 血量
+	public string url; // 路径
 }
