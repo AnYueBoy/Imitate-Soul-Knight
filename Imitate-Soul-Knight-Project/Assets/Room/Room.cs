@@ -31,15 +31,16 @@ public class Room {
 		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
 		this.roomActive = false;
 
-		// 创建敌人
-		this.spawnEnemy ();
+		// 此时房间的数据并未完全赋值
 	}
 
-	public void refreshPoints () {
+	public void init () {
 		this.leftTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 1, this.roomData.roomCenter.y, 0));
 		this.rightTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 1, this.roomData.roomCenter.y, 0));
 		this.upTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 1, 0));
 		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
+
+		this.createRoomItem ();
 	}
 
 	public void localUpdate (float dt) {
@@ -102,7 +103,35 @@ public class Room {
 		return false;
 	}
 
-	private void spawnEnemy () {
+	private void createRoomItem () {
+		RoomTypeEnum roomType = this.roomData.roomType;
+		switch (roomType) {
+			case RoomTypeEnum.BATTLE:
+				this.spawnEnemy ();
+				break;
+
+			case RoomTypeEnum.CHEST:
+				// TODO: 生成宝箱
+				break;
+
+			case RoomTypeEnum.BLESS:
+				// TODO: 生成祝福雕像
+				break;
+
+			case RoomTypeEnum.PORTAL:
+				// TODO: 生成传送门
+				break;
+
+			case RoomTypeEnum.BORN:
+				// 设置玩家出现在出生房间
+				Vector3 worldPos = ModuleManager.instance.mapManager.wallTileMap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
+				ModuleManager.instance.playerManager.getPlayerTrans ().position = worldPos;
+				break;
+			default:
+				break;
+		}
 
 	}
+
+	private void spawnEnemy () { }
 }

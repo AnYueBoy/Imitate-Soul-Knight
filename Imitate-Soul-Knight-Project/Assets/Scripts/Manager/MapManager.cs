@@ -44,10 +44,6 @@ public class MapManager : MonoBehaviour {
 
     private List<Vector2Int> roomOrderList = new List<Vector2Int> ();
 
-    private Vector2Int startRoomIndex = Vector2Int.zero;
-
-    private Vector2Int endRoomIndex = Vector2Int.zero;
-
     private TileBase floorTile;
     private TileBase doorOpenTile;
     private TileBase wallTile;
@@ -88,11 +84,6 @@ public class MapManager : MonoBehaviour {
         this.generateMapRoom ();
         this.drawRoom ();
         this.drawPassway ();
-
-        Room startRoom = this.roomDic[this.startRoomIndex];
-        RoomData startRoomData = startRoom.roomData;
-        Vector3 worldPos = this.wallTileMap.CellToWorld (new Vector3Int (startRoomData.roomCenter.x, startRoomData.roomCenter.y, 0));
-        ModuleManager.instance.playerManager.getPlayerTrans ().position = worldPos;
     }
 
     private void generateMapRoom () {
@@ -184,8 +175,8 @@ public class MapManager : MonoBehaviour {
             curRoomData.roomHeight = randomHeight;
             curRoomData.roomCenter = roomCenter;
 
-            // 计算房间内相关数据
-            this.roomDic[curRoomPoint].refreshPoints ();
+            // 房间初始化。计算房间内相关数据
+            this.roomDic[curRoomPoint].init ();
         }
     }
 
@@ -273,7 +264,6 @@ public class MapManager : MonoBehaviour {
     private void getRoomMap (int mapRow, int mapColumn, int roomCount) {
         // 随机初始位置
         Vector2Int nowPoint = new Vector2Int (CommonUtil.getRandomValue (0, mapRow - 1), CommonUtil.getRandomValue (0, mapColumn - 1));
-        this.startRoomIndex = nowPoint;
 
         int curRoomCount = 1;
 
@@ -353,8 +343,6 @@ public class MapManager : MonoBehaviour {
         this.floorTilemap.ClearAllTiles ();
         this.wallTileMap.ClearAllTiles ();
         this.roomOrderList.Clear ();
-
-        this.startRoomIndex = this.endRoomIndex = Vector2Int.zero;
     }
 
     private List<RoomTypeEnum> getRandomRoomType () {
