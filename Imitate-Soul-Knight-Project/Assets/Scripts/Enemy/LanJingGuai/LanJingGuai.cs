@@ -12,12 +12,17 @@ public class LanJingGuai : BaseEnemy {
 		blackboardMemory = new BlackBoardMemory ();
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
-
+				new IdleAction (),
+				new MoveAction ()
 			)
 		);
 	}
 
 	public void playIdleAni () {
 		this.animator.SetBool ("IsMove", false);
+	}
+
+	public void playMoveAni () {
+		this.animator.SetBool ("IsMove", true);
 	}
 }

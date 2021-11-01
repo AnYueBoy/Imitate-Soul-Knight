@@ -16,7 +16,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected BaseNode BTNode;
 
-	protected Func<bool> callback;
+	public Func<bool> callback;
 
 	public virtual void init (Func<bool> callback) {
 		this.callback = callback;
