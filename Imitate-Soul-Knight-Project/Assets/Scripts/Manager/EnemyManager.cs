@@ -20,7 +20,7 @@ public class EnemyManager {
         }
     }
 
-    public void spawnEnemyById (int enemyId, Vector3 pos) {
+    public BaseEnemy spawnEnemyById (int enemyId, Vector3 pos) {
         EnemyConfigData enemyConfigData = ModuleManager.instance.configManager.enemyConfig.getEnemyConfigById (enemyId);
         string enemyUrl = enemyConfigData.url;
         GameObject enemyPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (enemyUrl);
@@ -30,5 +30,6 @@ public class EnemyManager {
 
         BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();
         enemySet.Add (enemy);
+        return enemy;
     }
 }

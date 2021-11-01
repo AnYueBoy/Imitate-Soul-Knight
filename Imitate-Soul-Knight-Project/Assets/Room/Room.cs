@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2021-10-15 09:20:55 
  * @Description: 房间
  */
 using UFramework;
+using System.Collections.Generic;
 using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
@@ -141,11 +141,15 @@ public class Room {
 			// 获取随机敌人id
 			int enemyId = CommonUtil.getRandomElement<int> (this.roomData.enemyList);
 			Vector3 enemyPos = randomPosList[i];
-			ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos);
+			BaseEnemy enemy = ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos);
+			enemy.init (() => {
+				return this.isInRoom ();
+			});
 		}
 	}
 
 	private List<Vector3> getRandomPos (int randomCount) {
+		// FIXME: 更好，更快的随机算法
 		List<Vector2Int> sampleList = new List<Vector2Int> ();
 		int horizontalStart = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
 		int horizontalEnd = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
