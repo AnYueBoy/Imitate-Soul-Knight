@@ -1,26 +1,28 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * @Author: l hy 
+ * @Date: 2021-11-01 08:47:22 
+ * @Description:  
+ */
+
 using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
-using UnityEngine;
 
-public class IdleAction : ActionNode {
-
+public class LanJingGuaiMoveAction : ActionNode {
     protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
-        // 玩家未进入此房间时，角色处于待机状态
+        //TODO: 玩家进入此房间，且相隔距离超出则移动
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        return !lanJingGuai.callback();
+        return true;
     }
 
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        lanJingGuai.playIdleAni ();
+        lanJingGuai.playMoveAni ();
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
+        LanJingGuai lanJingGuai = (LanJingGuai) agent;
 
         return RunningStatus.Finished;
     }

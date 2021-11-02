@@ -12,8 +12,9 @@ public class LanJingGuai : BaseEnemy {
 		blackboardMemory = new BlackBoardMemory ();
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
-				new IdleAction (),
-				new MoveAction ()
+				new LanJingGuaiIdleAction (),
+				new LanJingGuaiMoveAction (),
+				new LanJingGuaiAttackAction ()
 			)
 		);
 	}
