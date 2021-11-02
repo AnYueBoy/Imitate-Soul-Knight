@@ -231,6 +231,13 @@ namespace UFramework.FrameUtil {
             return result;
         }
 
+        public static bool fuzzyEqual (Vector3 origin, Vector3 target, float value) {
+            if (Mathf.Abs (origin.x - target.x) <= value && (Mathf.Abs (origin.y - target.y) <= value && Mathf.Abs (origin.z - target.z) <= value)) {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         ///获取List中随机元素 
         /// </summary>

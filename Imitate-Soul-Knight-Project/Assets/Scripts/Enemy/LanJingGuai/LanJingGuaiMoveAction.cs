@@ -18,7 +18,10 @@ public class LanJingGuaiMoveAction : ActionNode {
             lanJingGuai.randomAttackDistance ();
             return true;
         }
-        // TODO: targetPos存在值的情况
+
+        if (lanJingGuai.targetPos != Vector3.zero) {
+            return !lanJingGuai.isMoveToTarget ();
+        }
         return false;
     }
 
@@ -29,6 +32,7 @@ public class LanJingGuaiMoveAction : ActionNode {
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
+        lanJingGuai.moveToTargetPos();
         return RunningStatus.Finished;
     }
 

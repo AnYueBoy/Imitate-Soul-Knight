@@ -11,5 +11,5 @@ public class ConstValue {
     /// <summary>
     ///敌人生成数量 
     /// </summary>
-    public const int enemySpawnCount = 6;
+    public const int enemySpawnCount = 1;
 }

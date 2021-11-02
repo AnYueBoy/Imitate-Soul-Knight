@@ -17,13 +17,13 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected BaseNode BTNode;
 
-	public Func<bool> callback;
+	public Func<bool> isInRoom;
 
 	protected EnemyConfigData enemyConfigData;
 
-	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> callback) {
+	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isInRoom) {
 		this.enemyConfigData = enemyConfigData;
-		this.callback = callback;
+		this.isInRoom = isInRoom;
 	}
 
 	public virtual void localUpdate (float dt) {

@@ -7,8 +7,8 @@
 			"damage": 10,
 			"hp": 100,
 			"url": "Role/Enemy/lanJingGuai",
-			"minAttackDistance": 3,
-			"maxAttackDistance": 6,
+			"minAttackDistance": 2,
+			"maxAttackDistance": 4,
 			"moveSpeed": 3
 		}
 	]

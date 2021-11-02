@@ -43,7 +43,17 @@ public class LanJingGuai : BaseEnemy {
 
 	public void moveToTargetPos () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
-		this.transform.position += this.enemyConfigData.moveSpeed * dt * this.tempMoveDir;
+		float step = this.enemyConfigData.moveSpeed * dt;
+		this.transform.position += step * this.tempMoveDir;
+
+		float distance = (this.transform.position - targetPos).magnitude;
+		if (distance < step) {
+			this.transform.position = targetPos;
+		}
+	}
+
+	public bool isMoveToTarget () {
+		return this.transform.position == targetPos;
 	}
 
 	public void resetTargetPos () {

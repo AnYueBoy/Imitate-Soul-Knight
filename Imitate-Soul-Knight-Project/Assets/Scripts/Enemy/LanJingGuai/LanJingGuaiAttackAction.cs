@@ -13,12 +13,12 @@ public class LanJingGuaiAttackAction : ActionNode {
 	protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
 		// 玩家未进入此房间时，角色处于待机状态
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return lanJingGuai.callback ();
+		return true;
 	}
 
 	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		lanJingGuai.playMoveAni ();
+		lanJingGuai.playIdleAni ();
 	}
 
 	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
