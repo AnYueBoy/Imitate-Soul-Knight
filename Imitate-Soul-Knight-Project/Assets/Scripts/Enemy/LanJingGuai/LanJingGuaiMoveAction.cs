@@ -8,12 +8,18 @@ using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
+using UnityEngine;
 
 public class LanJingGuaiMoveAction : ActionNode {
     protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
-        //TODO: 玩家进入此房间，且相隔距离超出则移动
+        // 玩家进入此房间，且相隔距离超出则移动
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        return true;
+        if (lanJingGuai.targetPos == Vector3.zero && !lanJingGuai.isInAttackRange ()) {
+            lanJingGuai.randomAttackDistance ();
+            return true;
+        }
+        // TODO: targetPos存在值的情况
+        return false;
     }
 
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
@@ -23,8 +29,12 @@ public class LanJingGuaiMoveAction : ActionNode {
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
-
         return RunningStatus.Finished;
+    }
+
+    protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
+        LanJingGuai lanJingGuai = (LanJingGuai) agent;
+        lanJingGuai.resetTargetPos ();
     }
 
 }

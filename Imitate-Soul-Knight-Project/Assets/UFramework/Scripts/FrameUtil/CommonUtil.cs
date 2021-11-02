@@ -224,6 +224,13 @@ namespace UFramework.FrameUtil {
             return result;
         }
 
+        public static float getRandomValue (float min, float max) {
+            min = min > max?max : min;
+            max = max < min?min : max;
+            float result = Random.Range (min, max + 1);
+            return result;
+        }
+
         /// <summary>
         ///获取List中随机元素 
         /// </summary>

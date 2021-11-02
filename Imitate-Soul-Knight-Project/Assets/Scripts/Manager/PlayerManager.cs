@@ -4,6 +4,7 @@
  * @Description: 玩家管理
  */
 using Cinemachine;
+using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
 public class PlayerManager : MonoBehaviour {
@@ -16,6 +17,7 @@ public class PlayerManager : MonoBehaviour {
 	public void init () {
 		GameObject playerPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (RoleAssetsUrl.player);
 		GameObject playerNode = ObjectPool.instance.requestInstance (playerPrefab);
+		playerNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 		this.roleControl = playerNode.GetComponent<RoleControl> ();
 		cinemaCamera.Follow = this.roleControl.transform;
 	}

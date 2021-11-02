@@ -3,8 +3,8 @@
  * @Date: 2021-10-15 09:20:55 
  * @Description: 房间
  */
-using UFramework;
 using System.Collections.Generic;
+using UFramework;
 using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
@@ -141,8 +141,7 @@ public class Room {
 			// 获取随机敌人id
 			int enemyId = CommonUtil.getRandomElement<int> (this.roomData.enemyList);
 			Vector3 enemyPos = randomPosList[i];
-			BaseEnemy enemy = ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos);
-			enemy.init (() => {
+			BaseEnemy enemy = ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos, () => {
 				return this.isInRoom ();
 			});
 		}

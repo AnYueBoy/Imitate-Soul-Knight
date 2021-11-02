@@ -6,7 +6,10 @@
 			"describe": "怪如其名",
 			"damage": 10,
 			"hp": 100,
-			"url": "Role/Enemy/lanJingGuai"
+			"url": "Role/Enemy/lanJingGuai",
+			"minAttackDistance": 3,
+			"maxAttackDistance": 6,
+			"moveSpeed": 3
 		}
 	]
 }
