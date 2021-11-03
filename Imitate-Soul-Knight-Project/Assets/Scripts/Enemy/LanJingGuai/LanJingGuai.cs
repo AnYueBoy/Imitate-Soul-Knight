@@ -35,7 +35,7 @@ public class LanJingGuai : BaseEnemy {
 	protected Vector3 tempMoveDir = Vector3.zero;
 
 	public void randomAttackDistance () {
-		float randomValue = CommonUtil.getRandomValue (enemyConfigData.minAttackDistance, enemyConfigData.maxAttackDistance);
+		float randomValue = this.aimToPlayerDistance ();
 		Vector3 moveDir = this.aimToPlayerDir ();
 		targetPos = this.transform.position + moveDir * randomValue;
 		tempMoveDir = moveDir;
@@ -43,13 +43,41 @@ public class LanJingGuai : BaseEnemy {
 
 	public void moveToTargetPos () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
+		// 步长
 		float step = this.enemyConfigData.moveSpeed * dt;
-		this.transform.position += step * this.tempMoveDir;
+
+		// 笛卡尔分量
+		float horizontalStep = step * this.tempMoveDir.x;
+		float verticalStep = step * this.tempMoveDir.y;
+		if (horizontalStep > 0) {
+			// 水平右方射线检测
+		} else {
+			// 水平左方射线检测
+		}
+
+		if (verticalStep > 0) {
+			// 垂直上方射线检测
+		} else {
+			// 垂直下发射线检测
+		}
+
+		this.transform.position += new Vector3 (horizontalStep, verticalStep, 0);
 
 		float distance = (this.transform.position - targetPos).magnitude;
 		if (distance < step) {
 			this.transform.position = targetPos;
 		}
+	}
+
+	private bool isRandomMove = false;
+
+	public void genRandomTargetPos () {
+		// 产生随机移动的目标位置
+	}
+
+	public void randomMove () {
+		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
+
 	}
 
 	public bool isMoveToTarget () {
