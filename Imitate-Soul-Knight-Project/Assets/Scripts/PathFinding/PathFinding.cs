@@ -20,7 +20,16 @@ public class PathFinding {
 
 	private readonly float diagonalCost = 14;
 
-	public void init (int roomWidth, int roomHeight) {
+	private int roomWidth;
+
+	private int roomHeight;
+
+	private Vector3Int roomCenter;
+
+	public void init (int roomWidth, int roomHeight, Vector3Int roomCenter) {
+		this.roomWidth = roomWidth;
+		this.roomHeight = roomHeight;
+		this.roomCenter = roomCenter;
 		gridInfoArray = new Grid[roomWidth, roomHeight];
 	}
 
@@ -33,7 +42,10 @@ public class PathFinding {
 
 	private Grid getGridByPos (Vector3 targetPos) {
 		Vector3Int cellPos = ModuleManager.instance.mapManager.floorTilemap.WorldToCell (targetPos);
-		
+
+		// 映射到数组
+		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
+
 	}
 
 }
