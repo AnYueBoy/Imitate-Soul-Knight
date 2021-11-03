@@ -45,7 +45,9 @@ public class PathFinding {
 
 		// 映射到数组
 		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
+		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
 
+		return this.gridInfoArray[x, y];
 	}
 
 }
