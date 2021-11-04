@@ -14,7 +14,7 @@ public class PathFinding {
 
 	public List<Vector3> resultList = new List<Vector3> ();
 
-	private Grid[, ] gridInfoArray;
+	private Cell[, ] cellInfoArray;
 
 	private readonly float horAndVerCost = 10;
 
@@ -30,7 +30,7 @@ public class PathFinding {
 		this.roomWidth = roomWidth;
 		this.roomHeight = roomHeight;
 		this.roomCenter = roomCenter;
-		gridInfoArray = new Grid[roomWidth, roomHeight];
+		cellInfoArray = new Cell[roomWidth, roomHeight];
 	}
 
 	public void findPath (Vector3 origin, Vector3 target) {
@@ -38,16 +38,25 @@ public class PathFinding {
 		this.closeList.Clear ();
 		this.resultList.Clear ();
 
+		Cell startGrid = this.getGridByPos (origin);
+		Cell endGrid = this.getGridByPos (target);
+
+		this.openList.Add (startGrid);
+
+		while (this.openList.Count > 0) {
+			Cell curCell = this.openList[0];
+		}
+
 	}
 
-	private Grid getGridByPos (Vector3 targetPos) {
+	private Cell getGridByPos (Vector3 targetPos) {
 		Vector3Int cellPos = ModuleManager.instance.mapManager.floorTilemap.WorldToCell (targetPos);
 
 		// 映射到数组
 		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
 		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
 
-		return this.gridInfoArray[x, y];
+		return this.cellInfoArray[x, y];
 	}
 
 }
