@@ -12,8 +12,6 @@ public class PathFinding {
 
 	private List<Cell> closeList = new List<Cell> ();
 
-	public List<Vector3> resultList = new List<Vector3> ();
-
 	private Cell[, ] cellInfoArray;
 
 	private readonly float horAndVerCost = 10;
@@ -33,19 +31,59 @@ public class PathFinding {
 		cellInfoArray = new Cell[roomWidth, roomHeight];
 	}
 
-	public void findPath (Vector3 origin, Vector3 target) {
+	public List<Vector3> findPath (Vector3 origin, Vector3 target) {
 		this.openList.Clear ();
 		this.closeList.Clear ();
-		this.resultList.Clear ();
 
-		Cell startGrid = this.getGridByPos (origin);
-		Cell endGrid = this.getGridByPos (target);
+		Cell startCell = this.getGridByPos (origin);
+		Cell endCell = this.getGridByPos (target);
 
-		this.openList.Add (startGrid);
+		// 首位元素不用，以便于二叉堆的排序
+		this.openList.Add (new Cell (false, Vector3.zero, -1, -1));
 
-		while (this.openList.Count > 0) {
-			Cell curCell = this.openList[0];
+		this.openList.Add (startCell);
+
+		while (this.openList.Count > 1) {
+			Cell curCell = this.openList[1];
+
+			this.binaryHeapRemove ();
+
+			this.closeList.Add (curCell);
+
+			if (curCell == endCell) {
+				return generatePath (startCell, endCell);
+			}
+
+			// TODO:
 		}
+
+	}
+
+	private List<Vector3> generatePath (Cell startCell, Cell endCell) {
+		if (endCell == null) {
+			return null;
+		}
+
+		List<Cell> path = new List<Cell> ();
+
+		while (endCell != startCell) {
+			path.Add (endCell);
+			endCell = endCell.parent;
+		}
+
+		// 翻转路径
+		path.Reverse ();
+
+		List<Vector3> pathInfo = new List<Vector3> ();
+		for (int i = 0; i < path.Count; i++) {
+			Cell cell = path[i];
+			if (cell == null) {
+				continue;
+			}
+			pathInfo.Add (cell.pos);
+		}
+
+		return pathInfo;
 
 	}
 
@@ -59,4 +97,85 @@ public class PathFinding {
 		return this.cellInfoArray[x, y];
 	}
 
+	public List<Cell> getAroundCell (Cell targetCell) {
+		List<Cell> cellList = new List<Cell> ();
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				if (i == 0 && j == 0) {
+					continue;
+				}
+
+				int indexX = targetCell.x + i;
+				int indexY = targetCell.y + j;
+				if (indexX >= 0 && indexX < this.roomWidth && indexY >= 0 && indexY < this.roomHeight) {
+					cellList.Add (this.cellInfoArray[indexX, indexY]);
+				}
+			}
+		}
+		return cellList;
+	}
+
+	private void binaryHeapAdd (Cell cell) {
+		int lastIndex = this.openList.Count;
+		this.openList.Add (cell);
+
+		while (lastIndex > 1) {
+			int halfIndex = lastIndex >> 1;
+			if (this.openList[lastIndex].fCost >= this.openList[halfIndex].fCost) {
+				return;
+			}
+
+			Cell tempCell = this.openList[lastIndex];
+			this.openList[lastIndex] = this.openList[halfIndex];
+			this.openList[halfIndex] = tempCell;
+
+			lastIndex = halfIndex;
+		}
+	}
+
+	private void binaryHeapRemove () {
+		int lastIndex = this.openList.Count - 1;
+		this.openList[1] = this.openList[lastIndex];
+
+		this.openList.RemoveAt (lastIndex);
+
+		lastIndex = this.openList.Count - 1;
+
+		int headIndex = 1;
+		while ((headIndex << 1) + 1 <= lastIndex) {
+			int leftChildIndex = headIndex << 1;
+			int rightChildIndex = leftChildIndex + 1;
+
+			int minIndex = this.openList[leftChildIndex].fCost <= this.openList[rightChildIndex].fCost?leftChildIndex : rightChildIndex;
+
+			if (this.openList[headIndex].fCost <= this.openList[minIndex].fCost) {
+				return;
+			}
+
+			Cell tempCell = this.openList[headIndex];
+			this.openList[headIndex] = this.openList[minIndex];
+			this.openList[minIndex] = tempCell;
+			headIndex = minIndex;
+		}
+	}
+
+	private void binaryHeapReorder (Cell cell) {
+		int lastIndex = this.openList.IndexOf (cell);
+		if (lastIndex == -1) {
+			Debug.LogError ("需要重排序的单元不存在");
+			return;
+		}
+
+		while (lastIndex > 1) {
+			int halfIndex = lastIndex >> 1;
+			if (this.openList[lastIndex].fCost >= this.openList[halfIndex].fCost) {
+				return;
+			}
+
+			Cell tempCell = this.openList[lastIndex];
+			this.openList[lastIndex] = this.openList[halfIndex];
+			this.openList[halfIndex] = tempCell;
+			lastIndex = halfIndex;
+		}
+	}
 }
