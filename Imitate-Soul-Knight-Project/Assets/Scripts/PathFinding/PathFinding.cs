@@ -54,9 +54,40 @@ public class PathFinding {
 				return generatePath (startCell, endCell);
 			}
 
-			// TODO:
+			List<Cell> aroundCellList = this.getAroundCell (curCell);
+			for (int i = 0; i < aroundCellList.Count; i++) {
+				Cell cell = aroundCellList[i];
+				if (cell == null) {
+					continue;
+				}
+
+				if (cell.isObstacle || this.closeList.IndexOf (cell) != -1) {
+					continue;
+				}
+
+				float newCost = curCell.gCost + this.getManhattan (curCell, cell);
+				if (newCost < cell.gCost || this.openList.IndexOf (cell) == -1) {
+					cell.gCost = newCost;
+
+					cell.hCost = this.getManhattan (cell, endCell);
+
+					cell.parent = curCell;
+					if (this.openList.IndexOf (cell) == -1) {
+						this.binaryHeapAdd (cell);
+					} else {
+						this.binaryHeapReorder (cell);
+					}
+				}
+			}
 		}
 
+		return null;
+	}
+
+	private float getManhattan (Cell firstCell, Cell secondCell) {
+		int centX = Mathf.Abs (firstCell.x - secondCell.x);
+		int centY = Mathf.Abs (firstCell.y - secondCell.y);
+		return this.horAndVerCost * (centX + centY);
 	}
 
 	private List<Vector3> generatePath (Cell startCell, Cell endCell) {
