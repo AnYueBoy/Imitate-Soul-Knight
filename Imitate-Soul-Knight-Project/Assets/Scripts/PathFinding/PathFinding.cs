@@ -29,6 +29,10 @@ public class PathFinding {
 		this.roomHeight = roomHeight;
 		this.roomCenter = roomCenter;
 		cellInfoArray = new Cell[roomWidth, roomHeight];
+		for (int i = 0; i < this.roomWidth; i++) {
+			for (int j = 0; j < this.roomHeight; j++) {
+			}
+		}
 	}
 
 	public List<Vector3> findPath (Vector3 origin, Vector3 target) {
