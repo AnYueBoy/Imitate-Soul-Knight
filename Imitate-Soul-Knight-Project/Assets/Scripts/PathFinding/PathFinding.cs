@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UFramework;
+using UFramework.GameCommon;
 /*
  * @Author: l hy 
  * @Date: 2021-11-03 17:18:04 
@@ -34,17 +35,27 @@ public class PathFinding {
 		int horizontalEnd = roomCenter.x + roomWidth / 2;
 		int verticalStart = roomCenter.y + roomHeight / 2;
 		int verticalEnd = roomCenter.y - roomHeight / 2;
-		for (int i = verticalStart, k = 0; i >= verticalEnd; i--, k++) {
-			for (int j = horizontalStart, m = 0; j <= horizontalEnd; j++, m++) {
+
+		GameObject redPointPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> ("redPoint");
+
+		// 列扫描
+		for (int i = horizontalStart, k = 0; i <= horizontalEnd; i++, k++) {
+			for (int j = verticalStart, m = 0; j >= verticalEnd; j--, m++) {
 				Vector3Int tilePos = new Vector3Int (i, j, 0);
 				bool isObstacle = true;
-				if (ModuleManager.instance.mapManager.floorTilemap.HasTile (tilePos)) {
+
+				if (ModuleManager.instance.mapManager.wallTileMap.HasTile (tilePos)) {
+					isObstacle = true;
+				} else {
 					isObstacle = false;
 				}
 
-				Vector3 worldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (tilePos);
+				Vector3 worldPos = ModuleManager.instance.mapManager.cellToWorldPos (tilePos);
 				Cell cellInfo = new Cell (isObstacle, worldPos, k, m);
 				cellInfoArray[k, m] = cellInfo;
+				// GameObject redPointNode = ObjectPool.instance.requestInstance (redPointPrefab);
+				// redPointNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+				// redPointNode.transform.position = worldPos;
 			}
 		}
 	}
@@ -55,6 +66,10 @@ public class PathFinding {
 
 		Cell startCell = this.getGridByPos (origin);
 		Cell endCell = this.getGridByPos (target);
+
+		if (startCell == null || endCell == null) {
+			return null;
+		}
 
 		// 首位元素不用，以便于二叉堆的排序
 		this.openList.Add (new Cell (false, Vector3.zero, -1, -1));
@@ -143,6 +158,11 @@ public class PathFinding {
 		// 映射到数组
 		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
 		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
+
+		if (x < 0 || x >= this.roomWidth || y < 0 || y >= this.roomHeight) {
+			Debug.Log ("越界");
+			return null;
+		}
 
 		return this.cellInfoArray[x, y];
 	}

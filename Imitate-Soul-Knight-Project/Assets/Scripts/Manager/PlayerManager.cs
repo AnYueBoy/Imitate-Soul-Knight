@@ -36,7 +36,6 @@ public class PlayerManager : MonoBehaviour {
 		Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
 		List<Vector3> posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
 		this.drawPath (posList);
-
 	}
 
 	public Transform getPlayerTrans () {
@@ -59,8 +58,5 @@ public class PlayerManager : MonoBehaviour {
 
 			CommonUtil.drawLine (curPos, nextPos, Color.red);
 		}
-
-		// this.roleControl.transform.position = posList[posList.Count - 1];
-
 	}
 }

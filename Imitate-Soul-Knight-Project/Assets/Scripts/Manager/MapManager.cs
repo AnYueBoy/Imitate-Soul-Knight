@@ -359,4 +359,15 @@ public class MapManager : MonoBehaviour {
         CommonUtil.confusionElement<RoomTypeEnum> (roomTypeList);
         return roomTypeList;
     }
+
+    /// <summary>
+    /// 返回tile的世界坐标，中心在tile中心
+    /// </summary>
+    /// <param name="tilePos"></param>
+    /// <returns></returns>
+    public Vector3 cellToWorldPos (Vector3Int tilePos) {
+        Vector3 worldPosLeftDown = this.floorTilemap.CellToWorld (tilePos);
+        Vector3 worldPosCenter = new Vector3 (worldPosLeftDown.x + this.wallTileMap.cellSize.x / 2, worldPosLeftDown.y + this.wallTileMap.cellSize.y / 2, 0);
+        return worldPosCenter;
+    }
 }

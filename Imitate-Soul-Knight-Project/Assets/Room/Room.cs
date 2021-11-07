@@ -47,9 +47,6 @@ public class Room {
 
 		this.createRoomItem ();
 
-		Vector3 world = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
-
-		Debug.Log ("world: " + world + " roomCenter:" + this.roomData.roomCenter);
 		// 初始化房间的寻路信息
 		this.pathFinding.init (this.roomData.roomWidth, this.roomData.roomHeight, this.roomData.roomCenter);
 	}
