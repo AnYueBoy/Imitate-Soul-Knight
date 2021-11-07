@@ -21,6 +21,8 @@ public class Room {
 	private Vector3 upTilePoint;
 	private Vector3 downTilePoint;
 
+	private PathFinding pathFinding;
+
 	private bool curDoorClose = true;
 
 	private bool roomActive = false;
@@ -32,6 +34,7 @@ public class Room {
 		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
 		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
 		this.roomActive = false;
+		this.pathFinding = new PathFinding ();
 
 		// 此时房间的数据并未完全赋值
 	}
@@ -43,6 +46,9 @@ public class Room {
 		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
 
 		this.createRoomItem ();
+
+		// 初始化房间的寻路信息
+		this.pathFinding.init (this.roomData.roomWidth, this.roomData.roomHeight, this.roomData.roomCenter);
 	}
 
 	public void localUpdate (float dt) {
