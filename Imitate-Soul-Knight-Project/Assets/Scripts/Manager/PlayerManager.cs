@@ -24,11 +24,8 @@ public class PlayerManager : MonoBehaviour {
 		cinemaCamera.Follow = this.roleControl.transform;
 	}
 
-	List<Vector3> posList = new List<Vector3> ();
 	public void localUpdate (float dt) {
 		this.roleControl?.localUpdate (dt);
-
-		this.drawPath (posList);
 
 		if (Input.touchCount <= 0) {
 			return;
@@ -37,7 +34,8 @@ public class PlayerManager : MonoBehaviour {
 		Touch touch = Input.touches[0];
 		Vector3 touchPos = touch.position;
 		Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
-		posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
+		List<Vector3> posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
+		this.drawPath (posList);
 
 	}
 
@@ -61,6 +59,8 @@ public class PlayerManager : MonoBehaviour {
 
 			CommonUtil.drawLine (curPos, nextPos, Color.red);
 		}
+
+		// this.roleControl.transform.position = posList[posList.Count - 1];
 
 	}
 }
