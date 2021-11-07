@@ -21,9 +21,15 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected EnemyConfigData enemyConfigData;
 
+	protected PathFinding pathFinding;
+
 	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isInRoom) {
 		this.enemyConfigData = enemyConfigData;
 		this.isInRoom = isInRoom;
+	}
+
+	public void setPathFinding (PathFinding pathFinding) {
+		this.pathFinding = pathFinding;
 	}
 
 	public virtual void localUpdate (float dt) {

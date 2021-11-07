@@ -355,6 +355,10 @@ namespace UFramework.FrameUtil {
             Debug.DrawLine (startPos, endPos, color);
         }
 
+        public static void drawLine (Vector3 startPos, Vector3 endPos, Color color) {
+            Debug.DrawLine (startPos, endPos, color);
+        }
+
         public static string getCurPlatformName () {
             RuntimePlatform runtimePlatform = Application.platform;
             switch (runtimePlatform) {

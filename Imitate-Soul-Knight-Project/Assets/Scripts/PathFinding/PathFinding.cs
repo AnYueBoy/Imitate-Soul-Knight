@@ -34,13 +34,17 @@ public class PathFinding {
 		int horizontalEnd = roomCenter.x + roomWidth / 2;
 		int verticalStart = roomCenter.y + roomHeight / 2;
 		int verticalEnd = roomCenter.y - roomHeight / 2;
-		for (int i = verticalStart, k = 0; i <= verticalEnd; i--, k++) {
+		for (int i = verticalStart, k = 0; i >= verticalEnd; i--, k++) {
 			for (int j = horizontalStart, m = 0; j <= horizontalEnd; j++, m++) {
 				Vector3Int tilePos = new Vector3Int (i, j, 0);
+				bool isObstacle = true;
 				if (ModuleManager.instance.mapManager.floorTilemap.HasTile (tilePos)) {
-					Vector3 worldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (tilePos);
-					Cell cellInfo = new Cell (false, worldPos, k, m);
+					isObstacle = false;
 				}
+
+				Vector3 worldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (tilePos);
+				Cell cellInfo = new Cell (isObstacle, worldPos, k, m);
+				cellInfoArray[k, m] = cellInfo;
 			}
 		}
 	}
@@ -95,6 +99,7 @@ public class PathFinding {
 			}
 		}
 
+		Debug.Log ("未找到路径");
 		return null;
 	}
 

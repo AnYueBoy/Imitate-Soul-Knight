@@ -3,8 +3,10 @@
  * @Date: 2021-10-19 17:22:16 
  * @Description: 玩家管理
  */
+using System.Collections.Generic;
 using Cinemachine;
 using UFramework;
+using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
 public class PlayerManager : MonoBehaviour {
@@ -22,11 +24,43 @@ public class PlayerManager : MonoBehaviour {
 		cinemaCamera.Follow = this.roleControl.transform;
 	}
 
+	List<Vector3> posList = new List<Vector3> ();
 	public void localUpdate (float dt) {
 		this.roleControl?.localUpdate (dt);
+
+		this.drawPath (posList);
+
+		if (Input.touchCount <= 0) {
+			return;
+		}
+
+		Touch touch = Input.touches[0];
+		Vector3 touchPos = touch.position;
+		Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
+		posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
+
 	}
 
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
+	}
+
+	protected PathFinding pathFinding;
+
+	public void setPathFinding (PathFinding pathFinding) {
+		this.pathFinding = pathFinding;
+	}
+
+	private void drawPath (List<Vector3> posList) {
+		if (posList == null) {
+			return;
+		}
+		for (int i = 0; i < posList.Count - 1; i++) {
+			Vector3 curPos = posList[i];
+			Vector3 nextPos = posList[i + 1];
+
+			CommonUtil.drawLine (curPos, nextPos, Color.red);
+		}
+
 	}
 }

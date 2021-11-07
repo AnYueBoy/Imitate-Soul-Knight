@@ -47,6 +47,9 @@ public class Room {
 
 		this.createRoomItem ();
 
+		Vector3 world = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
+
+		Debug.Log ("world: " + world + " roomCenter:" + this.roomData.roomCenter);
 		// 初始化房间的寻路信息
 		this.pathFinding.init (this.roomData.roomWidth, this.roomData.roomHeight, this.roomData.roomCenter);
 	}
@@ -75,7 +78,7 @@ public class Room {
 			}
 			return;
 		}
-
+		ModuleManager.instance.playerManager.setPathFinding (this.pathFinding);
 		if (!this.curDoorClose) {
 			this.closeDoor ();
 		}
@@ -150,6 +153,9 @@ public class Room {
 			BaseEnemy enemy = ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos, () => {
 				return this.isInRoom ();
 			});
+
+			// 设置敌人的寻路组件
+			enemy.setPathFinding (this.pathFinding);
 		}
 	}
 
