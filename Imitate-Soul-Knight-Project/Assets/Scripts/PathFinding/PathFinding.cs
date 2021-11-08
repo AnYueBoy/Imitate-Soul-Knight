@@ -29,14 +29,17 @@ public class PathFinding {
 		this.roomWidth = roomWidth;
 		this.roomHeight = roomHeight;
 		this.roomCenter = roomCenter;
-		cellInfoArray = new Cell[roomWidth, roomHeight];
 
+		// 扫描房间信息
+		this.scanningRoomInfo ();
+	}
+
+	private void scanningRoomInfo () {
+		cellInfoArray = new Cell[roomWidth, roomHeight];
 		int horizontalStart = roomCenter.x - roomWidth / 2;
 		int horizontalEnd = roomCenter.x + roomWidth / 2;
 		int verticalStart = roomCenter.y + roomHeight / 2;
 		int verticalEnd = roomCenter.y - roomHeight / 2;
-
-		GameObject redPointPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> ("redPoint");
 
 		// 列扫描
 		for (int i = horizontalStart, k = 0; i <= horizontalEnd; i++, k++) {
@@ -53,11 +56,13 @@ public class PathFinding {
 				Vector3 worldPos = ModuleManager.instance.mapManager.cellToWorldPos (tilePos);
 				Cell cellInfo = new Cell (isObstacle, worldPos, k, m);
 				cellInfoArray[k, m] = cellInfo;
-				// GameObject redPointNode = ObjectPool.instance.requestInstance (redPointPrefab);
-				// redPointNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
-				// redPointNode.transform.position = worldPos;
 			}
 		}
+	}
+
+	public void updateCellInfo (Vector3Int cellPos, bool isObstacle) {
+		Cell cellInfo = this.getGridByCellPos (cellPos);
+		cellInfo.isObstacle = isObstacle;
 	}
 
 	public List<Vector3> findPath (Vector3 origin, Vector3 target) {
@@ -154,7 +159,10 @@ public class PathFinding {
 
 	private Cell getGridByPos (Vector3 targetPos) {
 		Vector3Int cellPos = ModuleManager.instance.mapManager.floorTilemap.WorldToCell (targetPos);
+		return this.getGridByCellPos (cellPos);
+	}
 
+	private Cell getGridByCellPos (Vector3Int cellPos) {
 		// 映射到数组
 		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
 		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
