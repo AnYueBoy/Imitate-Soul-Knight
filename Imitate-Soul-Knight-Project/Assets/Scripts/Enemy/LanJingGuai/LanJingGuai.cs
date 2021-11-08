@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2021-10-28 17:20:41 
@@ -6,7 +7,6 @@
 
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
-using UFramework.FrameUtil;
 using UnityEngine;
 
 public class LanJingGuai : BaseEnemy {
@@ -16,7 +16,6 @@ public class LanJingGuai : BaseEnemy {
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
 				new LanJingGuaiIdleAction (),
-				new LanJingGuaiMoveAction (),
 				new LanJingGuaiAttackAction ()
 			)
 		);
@@ -33,14 +32,6 @@ public class LanJingGuai : BaseEnemy {
 	public Vector3 targetPos = Vector3.zero;
 
 	protected Vector3 tempMoveDir = Vector3.zero;
-
-	public void randomAttackDistance () {
-		float randomValue = this.aimToPlayerDistance ();
-		Vector3 moveDir = this.aimToPlayerDir ();
-		targetPos = this.transform.position + moveDir * randomValue;
-		tempMoveDir = moveDir;
-	}
-
 	public void moveToTargetPos () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
 		// 步长
@@ -49,17 +40,6 @@ public class LanJingGuai : BaseEnemy {
 		// 笛卡尔分量
 		float horizontalStep = step * this.tempMoveDir.x;
 		float verticalStep = step * this.tempMoveDir.y;
-		if (horizontalStep > 0) {
-			// 水平右方射线检测
-		} else {
-			// 水平左方射线检测
-		}
-
-		if (verticalStep > 0) {
-			// 垂直上方射线检测
-		} else {
-			// 垂直下发射线检测
-		}
 
 		this.transform.position += new Vector3 (horizontalStep, verticalStep, 0);
 
@@ -69,10 +49,11 @@ public class LanJingGuai : BaseEnemy {
 		}
 	}
 
-	private bool isRandomMove = false;
-
+	private List<Vector3> pathPosList = new List<Vector3> ();
 	public void genRandomTargetPos () {
 		// 产生随机移动的目标位置
+		Vector3 worldPos = this.pathFinding.getRandomCellPos ();
+		this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
 	}
 
 	public void randomMove () {

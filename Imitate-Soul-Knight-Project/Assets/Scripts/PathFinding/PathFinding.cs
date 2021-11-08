@@ -5,6 +5,7 @@
  */
 using System.Collections.Generic;
 using UFramework;
+using UFramework.FrameUtil;
 using UnityEngine;
 public class PathFinding {
 
@@ -62,6 +63,13 @@ public class PathFinding {
 	public void updateCellInfo (Vector3Int cellPos, bool isObstacle) {
 		Cell cellInfo = this.getGridByCellPos (cellPos);
 		cellInfo.isObstacle = isObstacle;
+	}
+
+	public Vector3 getRandomCellPos () {
+		int x = CommonUtil.getRandomValue (0, this.roomWidth - 1);
+		int y = CommonUtil.getRandomValue (0, this.roomHeight - 1);
+
+		return this.cellInfoArray[x, y].pos;
 	}
 
 	public List<Vector3> findPath (Vector3 origin, Vector3 target) {
