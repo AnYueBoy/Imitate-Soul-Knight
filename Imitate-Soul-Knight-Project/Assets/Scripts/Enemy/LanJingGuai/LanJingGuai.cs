@@ -80,8 +80,7 @@ public class LanJingGuai : BaseEnemy {
 
 	public void attack () {
 		GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (this.enemyConfigData.bulletUrl);
-
-	
+		// TODO: 发射子弹
 
 	}
 

@@ -47,4 +47,22 @@ public class BulletManager {
         BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed, tag);
         bullet.init (bulletData);
     }
+
+    public void spawnBullet (Transform bulletTrans, float bulletDir, string tag, string bulletUrl, float bulletSpeed) {
+        GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
+        GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
+
+        bulletNode.transform.position = bulletTrans.position;
+        bulletNode.transform.eulerAngles = bulletTrans.eulerAngles;
+        bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
+        bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+
+        bulletNode.tag = tag;
+
+        BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
+        this.bulletSet.Add (bullet);
+
+        BulletData bulletData = new BulletData (bulletDir, bulletSpeed, tag);
+        bullet.init (bulletData);
+    }
 }
