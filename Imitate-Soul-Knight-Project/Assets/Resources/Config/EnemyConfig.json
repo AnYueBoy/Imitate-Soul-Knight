@@ -9,7 +9,8 @@
 			"url": "Role/Enemy/lanJingGuai",
 			"minAttackDistance": 2,
 			"maxAttackDistance": 4,
-			"moveSpeed": 3
+			"moveSpeed": 3,
+			"bulletUrl": "Bullet/bullet_33"
 		}
 	]
 }
