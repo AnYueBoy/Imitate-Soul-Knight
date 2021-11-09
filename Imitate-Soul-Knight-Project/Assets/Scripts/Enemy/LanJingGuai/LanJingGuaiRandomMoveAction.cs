@@ -13,7 +13,11 @@ public class LanJingGuaiRandomMoveAction : ActionNode {
 
 	protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return false;
+		if (lanJingGuai.curMoveIndex == -1) {
+			lanJingGuai.genRandomTargetPos ();
+		}
+
+		return !lanJingGuai.isReachEnd ();
 	}
 
 	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
@@ -23,10 +27,12 @@ public class LanJingGuaiRandomMoveAction : ActionNode {
 
 	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
+		lanJingGuai.moveToTargetPos ();
 		return RunningStatus.Finished;
 	}
 
 	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
+		lanJingGuai.resetTargetPos ();
 	}
 }

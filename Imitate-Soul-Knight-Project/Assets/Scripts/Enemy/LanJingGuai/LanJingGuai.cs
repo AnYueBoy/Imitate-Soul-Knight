@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
+using UFramework.GameCommon;
 using UnityEngine;
 
 public class LanJingGuai : BaseEnemy {
@@ -16,6 +17,7 @@ public class LanJingGuai : BaseEnemy {
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
 				new LanJingGuaiIdleAction (),
+				new LanJingGuaiRandomMoveAction (),
 				new LanJingGuaiAttackAction ()
 			)
 		);
@@ -29,9 +31,12 @@ public class LanJingGuai : BaseEnemy {
 		this.animator.SetBool ("IsMove", true);
 	}
 
-	public Vector3 targetPos = Vector3.zero;
+	private Vector3 targetPos = Vector3.zero;
 
-	protected Vector3 tempMoveDir = Vector3.zero;
+	private Vector3 tempMoveDir = Vector3.zero;
+
+	public int curMoveIndex = -1;
+
 	public void moveToTargetPos () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
 		// 步长
@@ -46,6 +51,8 @@ public class LanJingGuai : BaseEnemy {
 		float distance = (this.transform.position - targetPos).magnitude;
 		if (distance < step) {
 			this.transform.position = targetPos;
+			this.curMoveIndex++;
+			this.getNextTargetPos ();
 		}
 	}
 
@@ -54,18 +61,31 @@ public class LanJingGuai : BaseEnemy {
 		// 产生随机移动的目标位置
 		Vector3 worldPos = this.pathFinding.getRandomCellPos ();
 		this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
+
+		this.curMoveIndex = 0;
+		this.getNextTargetPos ();
 	}
 
-	public void randomMove () {
-		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
-
+	private void getNextTargetPos () {
+		if (this.curMoveIndex >= this.pathPosList.Count) {
+			return;
+		}
+		this.targetPos = this.pathPosList[this.curMoveIndex];
+		this.tempMoveDir = (this.targetPos - this.transform.position).normalized;
 	}
 
-	public bool isMoveToTarget () {
-		return this.transform.position == targetPos;
+	public bool isReachEnd () {
+		return this.curMoveIndex >= this.pathPosList.Count;
+	}
+
+	public void attack () {
+		GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (this.enemyConfigData.bulletUrl);
+
+	
+
 	}
 
 	public void resetTargetPos () {
-		this.targetPos = Vector3.zero;
+		this.curMoveIndex = -1;
 	}
 }

@@ -11,7 +11,6 @@ using UFramework.AI.BlackBoard;
 
 public class LanJingGuaiAttackAction : ActionNode {
 	protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
-		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		return true;
 	}
 
