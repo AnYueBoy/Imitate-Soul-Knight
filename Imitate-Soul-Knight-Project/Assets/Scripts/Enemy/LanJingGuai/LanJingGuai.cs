@@ -63,6 +63,9 @@ public class LanJingGuai : BaseEnemy {
 		// 产生随机移动的目标位置
 		Vector3 worldPos = this.pathFinding.getRandomCellPos ();
 		this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
+		if (this.pathPosList == null) {
+			return;
+		}
 
 		this.curMoveIndex = 0;
 		this.getNextTargetPos ();
@@ -77,7 +80,7 @@ public class LanJingGuai : BaseEnemy {
 	}
 
 	public bool isReachEnd () {
-		return this.curMoveIndex >= this.pathPosList.Count;
+		return this.pathPosList == null || this.curMoveIndex >= this.pathPosList.Count;
 	}
 
 	private readonly float attackOffset = 0.7f;
@@ -98,15 +101,23 @@ public class LanJingGuai : BaseEnemy {
 
 		// 上
 		Vector3 upEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, 90));
-		ModuleManager.instance.bulletManager.spawnBullet (upPos, Vector3.zero, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (upPos, upEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
 
 		// 下
 		Vector3 downEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, -90));
-		ModuleManager.instance.bulletManager.spawnBullet (downPos, Vector3.zero, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+
+		this.isAttack = true;
 
 	}
 
-	public void resetTargetPos () {
+	public void resetRandomMoveState () {
 		this.curMoveIndex = -1;
+	}
+
+	public bool isAttack = false;
+
+	public void resetAttackState () {
+		this.isAttack = false;
 	}
 }

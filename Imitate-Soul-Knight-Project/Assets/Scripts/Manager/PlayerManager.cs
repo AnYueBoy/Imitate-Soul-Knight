@@ -31,11 +31,11 @@ public class PlayerManager : MonoBehaviour {
 			return;
 		}
 
-		Touch touch = Input.touches[0];
-		Vector3 touchPos = touch.position;
-		Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
-		List<Vector3> posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
-		this.drawPath (posList);
+		// Touch touch = Input.touches[0];
+		// Vector3 touchPos = touch.position;
+		// Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
+		// List<Vector3> posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
+		// this.drawPath (posList);
 	}
 
 	public Transform getPlayerTrans () {

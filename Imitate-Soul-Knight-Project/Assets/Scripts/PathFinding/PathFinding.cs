@@ -66,8 +66,8 @@ public class PathFinding {
 	}
 
 	public Vector3 getRandomCellPos () {
-		int x = CommonUtil.getRandomValue (0, this.roomWidth - 1);
-		int y = CommonUtil.getRandomValue (0, this.roomHeight - 1);
+		int x = CommonUtil.getRandomValue (2, this.roomWidth - 2);
+		int y = CommonUtil.getRandomValue (2, this.roomHeight - 2);
 
 		return this.cellInfoArray[x, y].pos;
 	}
