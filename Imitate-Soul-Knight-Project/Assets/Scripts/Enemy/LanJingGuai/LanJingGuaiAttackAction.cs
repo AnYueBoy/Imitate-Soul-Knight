@@ -17,6 +17,7 @@ public class LanJingGuaiAttackAction : ActionNode {
 	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.playIdleAni ();
+		lanJingGuai.attack ();
 	}
 
 	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {

@@ -9,6 +9,9 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
+
+	protected string bulletTag = "enemy";
+
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
 	}

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UFramework;
 /*
  * @Author: l hy 
  * @Date: 2021-10-28 17:20:41 
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
+using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
 
@@ -78,9 +80,29 @@ public class LanJingGuai : BaseEnemy {
 		return this.curMoveIndex >= this.pathPosList.Count;
 	}
 
+	private readonly float attackOffset = 0.7f;
+
 	public void attack () {
-		GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (this.enemyConfigData.bulletUrl);
-		// TODO: 发射子弹
+		Vector3 leftPos = this.transform.position + Vector3.left * this.attackOffset;
+		Vector3 rightPos = this.transform.position + Vector3.right * this.attackOffset;
+		Vector3 upPos = this.transform.position + Vector3.up * this.attackOffset;
+		Vector3 downPos = this.transform.position + Vector3.down * this.attackOffset;
+
+		// 左
+		Vector3 leftEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, Vector3.zero);
+		ModuleManager.instance.bulletManager.spawnBullet (leftPos, leftEulerAngles, -1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+
+		// 右
+		Vector3 rightEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, Vector3.zero);
+		ModuleManager.instance.bulletManager.spawnBullet (rightPos, rightEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+
+		// 上
+		Vector3 upEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, 90));
+		ModuleManager.instance.bulletManager.spawnBullet (upPos, Vector3.zero, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+
+		// 下
+		Vector3 downEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, -90));
+		ModuleManager.instance.bulletManager.spawnBullet (downPos, Vector3.zero, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
 
 	}
 

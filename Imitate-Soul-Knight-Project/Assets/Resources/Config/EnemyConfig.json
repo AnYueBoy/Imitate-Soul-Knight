@@ -10,7 +10,8 @@
 			"minAttackDistance": 2,
 			"maxAttackDistance": 4,
 			"moveSpeed": 3,
-			"bulletUrl": "Bullet/bullet_33"
+			"bulletUrl": "Bullet/bullet_33",
+			"bulletSpeed": 5
 		}
 	]
 }

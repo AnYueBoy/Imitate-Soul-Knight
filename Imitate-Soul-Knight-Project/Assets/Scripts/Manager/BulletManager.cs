@@ -29,13 +29,18 @@ public class BulletManager {
 
     }
 
-    public void spawnBullet (Transform bulletTrans, float bulletDir, string tag, WeaponConfigData weaponConfigData) {
+    public void spawnBullet (
+        Vector3 position,
+        Vector3 eulerAngles,
+        float bulletDir,
+        string tag,
+        WeaponConfigData weaponConfigData) {
         string bulletUrl = weaponConfigData.bulletUrl;
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
 
-        bulletNode.transform.position = bulletTrans.position;
-        bulletNode.transform.eulerAngles = bulletTrans.eulerAngles;
+        bulletNode.transform.position = position;
+        bulletNode.transform.eulerAngles = eulerAngles;
         bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 
@@ -48,12 +53,18 @@ public class BulletManager {
         bullet.init (bulletData);
     }
 
-    public void spawnBullet (Transform bulletTrans, float bulletDir, string tag, string bulletUrl, float bulletSpeed) {
+    public void spawnBullet (
+        Vector3 position,
+        Vector3 eulerAngles,
+        float bulletDir,
+        string tag,
+        string bulletUrl,
+        float bulletSpeed) {
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
 
-        bulletNode.transform.position = bulletTrans.position;
-        bulletNode.transform.eulerAngles = bulletTrans.eulerAngles;
+        bulletNode.transform.position = position;
+        bulletNode.transform.eulerAngles = eulerAngles;
         bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 

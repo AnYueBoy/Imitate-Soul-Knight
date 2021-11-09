@@ -359,6 +359,16 @@ namespace UFramework.FrameUtil {
             Debug.DrawLine (startPos, endPos, color);
         }
 
+        public static Vector3 getWorldEulerAngles (Transform transform, Vector3 angles) {
+            Vector3 resultAngles = angles;
+            while (transform.parent != null) {
+                transform = transform.parent;
+                resultAngles += transform.eulerAngles;
+            }
+
+            return resultAngles;
+        }
+
         public static string getCurPlatformName () {
             RuntimePlatform runtimePlatform = Application.platform;
             switch (runtimePlatform) {

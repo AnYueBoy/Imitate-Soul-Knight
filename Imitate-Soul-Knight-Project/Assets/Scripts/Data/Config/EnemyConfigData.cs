@@ -9,4 +9,5 @@ public class EnemyConfigData {
     public float maxAttackDistance; // 最大攻击距离
     public float moveSpeed; // 移速
     public string bulletUrl; // 子弹路径
+    public float bulletSpeed; // 子弹速度
 }

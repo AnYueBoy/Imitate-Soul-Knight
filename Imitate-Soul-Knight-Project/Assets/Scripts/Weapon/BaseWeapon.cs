@@ -63,7 +63,7 @@ public class BaseWeapon : MonoBehaviour {
 
         this.refreshShotGun (dt);
 
-        this.recoilForce(dt);
+        this.recoilForce (dt);
     }
 
     protected void refreshShotGun (float dt) {
@@ -85,7 +85,7 @@ public class BaseWeapon : MonoBehaviour {
         }
 
         this.launchTimer = 0;
-        ModuleManager.instance.bulletManager.spawnBullet (launchTrans, bulletDir, this.weaponTag, this.weaponConfigData);
+        ModuleManager.instance.bulletManager.spawnBullet (launchTrans.position, launchTrans.eulerAngles, bulletDir, this.weaponTag, this.weaponConfigData);
 
         this.shotGunEffect.gameObject.SetActive (true);
         this.shotGunEffect.color = new Color (1, 1, 1, 1);
