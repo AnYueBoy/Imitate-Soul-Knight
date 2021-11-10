@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UFramework.AI.BehaviourTree;
+﻿using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
-using UnityEngine;
 
 public class LanJingGuaiIdleAction : ActionNode {
 
@@ -13,7 +9,7 @@ public class LanJingGuaiIdleAction : ActionNode {
         // 玩家未进入此房间时，角色处于待机状态
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
 
-        return !lanJingGuai.isInRoom ();
+        return !lanJingGuai.isRoomActive ();
     }
 
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {

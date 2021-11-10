@@ -20,15 +20,15 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected BaseNode BTNode;
 
-	public Func<bool> isInRoom;
+	public Func<bool> isRoomActive;
 
 	protected EnemyConfigData enemyConfigData;
 
 	protected PathFinding pathFinding;
 
-	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isInRoom) {
+	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isRoomActive) {
 		this.enemyConfigData = enemyConfigData;
-		this.isInRoom = isInRoom;
+		this.isRoomActive = isRoomActive;
 	}
 
 	public void setPathFinding (PathFinding pathFinding) {

@@ -79,10 +79,8 @@ public class LanJingGuai : BaseEnemy {
 	private List<Vector3> pathPosList = new List<Vector3> ();
 	public void genRandomTargetPos () {
 		// 产生随机移动的目标位置
-		// Vector3 worldPos = this.pathFinding.getRandomCellPos ();
-		Vector3 rolePos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-		this.pathPosList = this.pathFinding.findPath (this.transform.position, rolePos);
-		// this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
+		Vector3 worldPos = this.pathFinding.getRandomCellPos ();
+		this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
 		if (this.pathPosList == null) {
 			return;
 		}
@@ -130,7 +128,6 @@ public class LanJingGuai : BaseEnemy {
 		ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
 
 		this.isAttack = true;
-
 	}
 
 	public void resetRandomMoveState () {

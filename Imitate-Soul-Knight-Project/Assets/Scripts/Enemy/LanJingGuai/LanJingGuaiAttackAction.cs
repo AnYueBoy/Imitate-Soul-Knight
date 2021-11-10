@@ -8,7 +8,6 @@ using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
-using UnityEngine;
 
 public class LanJingGuaiAttackAction : ActionNode {
 	protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
@@ -24,7 +23,7 @@ public class LanJingGuaiAttackAction : ActionNode {
 
 	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return RunningStatus.Finished;
+		return RunningStatus.Executing;
 	}
 
 	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {

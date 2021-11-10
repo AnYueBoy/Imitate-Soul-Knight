@@ -111,6 +111,10 @@ public class Room {
 		return false;
 	}
 
+	private bool isRoomActive () {
+		return this.roomActive;
+	}
+
 	private void createRoomItem () {
 		RoomTypeEnum roomType = this.roomData.roomType;
 		switch (roomType) {
@@ -148,7 +152,7 @@ public class Room {
 			int enemyId = CommonUtil.getRandomElement<int> (this.roomData.enemyList);
 			Vector3 enemyPos = randomPosList[i];
 			BaseEnemy enemy = ModuleManager.instance.enemyManager.spawnEnemyById (enemyId, enemyPos, () => {
-				return this.isInRoom ();
+				return this.isRoomActive ();
 			});
 
 			// 设置敌人的寻路组件
