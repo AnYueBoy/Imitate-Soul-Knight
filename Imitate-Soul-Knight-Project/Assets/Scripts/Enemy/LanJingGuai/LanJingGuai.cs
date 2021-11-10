@@ -47,6 +47,12 @@ public class LanJingGuai : BaseEnemy {
 		float horizontalStep = step * this.tempMoveDir.x;
 		float verticalStep = step * this.tempMoveDir.y;
 
+		if (this.tempMoveDir.x > 0) {
+			this.transform.localScale = Vector3.one;
+		} else {
+			this.transform.localScale = new Vector3 (-1, 1, 1);
+		}
+
 		this.transform.position += new Vector3 (horizontalStep, verticalStep, 0);
 
 		float distance = (this.transform.position - targetPos).magnitude;
