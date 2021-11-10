@@ -356,7 +356,28 @@ namespace UFramework.FrameUtil {
         }
 
         public static void drawLine (Vector3 startPos, Vector3 endPos, Color color) {
+            if (startPos == null || endPos == null) {
+                Debug.Log ("start or end is null");
+                return;
+            }
             Debug.DrawLine (startPos, endPos, color);
+        }
+
+        /// <summary>
+        ///绘制路径 
+        /// </summary>
+        /// <param name="posList"></param>
+        public static void drawPath (List<Vector3> posList, Color color) {
+            if (posList == null || posList.Count <= 0) {
+                Debug.Log ("draw path not exist");
+                return;
+            }
+            for (int i = 0; i < posList.Count - 1; i++) {
+                Vector3 curPos = posList[i];
+                Vector3 nextPos = posList[i + 1];
+
+                CommonUtil.drawLine (curPos, nextPos, color);
+            }
         }
 
         public static Vector3 getWorldEulerAngles (Transform transform, Vector3 angles) {

@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using UFramework;
 /*
  * @Author: l hy 
  * @Date: 2021-10-28 17:20:41 
  * @Description: 蓝精怪
  */
 
+using System.Collections.Generic;
+using UFramework;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
 using UFramework.FrameUtil;
-using UFramework.GameCommon;
 using UnityEngine;
 
 public class LanJingGuai : BaseEnemy {
@@ -56,16 +55,37 @@ public class LanJingGuai : BaseEnemy {
 			this.curMoveIndex++;
 			this.getNextTargetPos ();
 		}
+
+		this.drawPath (Color.red);
+
+	}
+
+	private List<Vector3> drawPathList = new List<Vector3> ();
+
+	private void drawPath (Color color) {
+		if (this.drawPathList == null || this.drawPathList.Count <= 0) {
+			return;
+		}
+
+		if ((this.transform.position - this.drawPathList[0]).magnitude <= 0.4f) {
+			this.drawPathList.RemoveAt (0);
+		}
+		CommonUtil.drawPath (this.drawPathList, color);
+		CommonUtil.drawLine (this.transform.position, this.drawPathList[0], color);
 	}
 
 	private List<Vector3> pathPosList = new List<Vector3> ();
 	public void genRandomTargetPos () {
 		// 产生随机移动的目标位置
-		Vector3 worldPos = this.pathFinding.getRandomCellPos ();
-		this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
+		// Vector3 worldPos = this.pathFinding.getRandomCellPos ();
+		Vector3 rolePos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
+		this.pathPosList = this.pathFinding.findPath (this.transform.position, rolePos);
+		// this.pathPosList = this.pathFinding.findPath (this.transform.position, worldPos);
 		if (this.pathPosList == null) {
 			return;
 		}
+
+		this.drawPathList = new List<Vector3> (this.pathPosList);
 
 		this.curMoveIndex = 0;
 		this.getNextTargetPos ();
