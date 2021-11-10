@@ -32,6 +32,15 @@ public class LanJingGuai : BaseEnemy {
 		this.animator.SetBool ("IsMove", true);
 	}
 
+	public float idleTimer = 1.5f;
+
+	public readonly float idleInterval = 1.5f;
+
+	public void stayIdle () {
+		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
+		this.idleTimer += dt;
+	}
+
 	private Vector3 targetPos = Vector3.zero;
 
 	private Vector3 tempMoveDir = Vector3.zero;
@@ -144,5 +153,9 @@ public class LanJingGuai : BaseEnemy {
 
 	public void resetAttackState () {
 		this.isAttack = false;
+	}
+
+	public void resetIdleState () {
+		this.idleTimer = 0;
 	}
 }

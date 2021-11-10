@@ -19,11 +19,12 @@ public class LanJingGuaiAttackAction : ActionNode {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.playIdleAni ();
 		lanJingGuai.attack ();
+		lanJingGuai.resetIdleState ();
 	}
 
 	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return RunningStatus.Executing;
+		return RunningStatus.Finished;
 	}
 
 	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
