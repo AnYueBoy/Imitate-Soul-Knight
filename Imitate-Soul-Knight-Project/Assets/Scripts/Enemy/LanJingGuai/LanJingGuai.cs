@@ -71,7 +71,9 @@ public class LanJingGuai : BaseEnemy {
 			this.drawPathList.RemoveAt (0);
 		}
 		CommonUtil.drawPath (this.drawPathList, color);
-		CommonUtil.drawLine (this.transform.position, this.drawPathList[0], color);
+		if (this.drawPathList.Count > 0) {
+			CommonUtil.drawLine (this.transform.position, this.drawPathList[0], color);
+		}
 	}
 
 	private List<Vector3> pathPosList = new List<Vector3> ();

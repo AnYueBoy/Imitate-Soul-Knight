@@ -368,7 +368,7 @@ namespace UFramework.FrameUtil {
         /// </summary>
         /// <param name="posList"></param>
         public static void drawPath (List<Vector3> posList, Color color) {
-            if (posList == null || posList.Count <= 0) {
+            if (posList == null || posList.Count <= 1) {
                 Debug.Log ("draw path not exist");
                 return;
             }
