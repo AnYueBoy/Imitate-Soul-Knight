@@ -74,10 +74,6 @@ public class RoleControl : MonoBehaviour {
 
         transform.Translate (moveDir * dt * moveSpeed);
 
-        if (moveDir.x != 0) {
-            float sign = moveDir.x / Mathf.Abs (moveDir.x);
-            transform.localScale = new Vector3 (sign, 1, 1);
-        }
     }
 
     private void refreshWeaponRotate () {
@@ -89,7 +85,7 @@ public class RoleControl : MonoBehaviour {
         BaseEnemy closetEnemy = ModuleManager.instance.enemyManager.getClosetEnemy ();
         // 附近有敌人则武器优先朝向敌人
         if (closetEnemy != null) {
-            moveDir = (this.transform.position - closetEnemy.transform.position).normalized;
+            moveDir = (closetEnemy.transform.position - this.transform.position).normalized;
         }
 
         if (moveDir == Vector2.zero) {
@@ -99,6 +95,11 @@ public class RoleControl : MonoBehaviour {
         // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
         this.weaponRotaionTrans.eulerAngles = new Vector3 (0, 0, rotationAngle);
+
+        if (moveDir.x != 0) {
+            float sign = moveDir.x / Mathf.Abs (moveDir.x);
+            transform.localScale = new Vector3 (sign, 1, 1);
+        }
     }
 
     private void roleAni () {
