@@ -1,4 +1,5 @@
-﻿/*
+﻿using System.Collections.Generic;
+/*
  * @Author: l hy 
  * @Date: 2021-09-17 14:00:13 
  * @Description: 角色控制
@@ -41,6 +42,7 @@ public class RoleControl : MonoBehaviour {
     public void localUpdate (float dt) {
         this.roleAni ();
         this.roleMove (dt);
+        this.refreshWeaponRotate ();
         this.curWeapon.localUpdate (dt);
     }
 
@@ -76,11 +78,24 @@ public class RoleControl : MonoBehaviour {
             float sign = moveDir.x / Mathf.Abs (moveDir.x);
             transform.localScale = new Vector3 (sign, 1, 1);
         }
+    }
 
+    private void refreshWeaponRotate () {
+        Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
         this.weaponRotate (new Vector2 (transform.localScale.x, 0), moveDir);
     }
 
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
+        BaseEnemy closetEnemy = ModuleManager.instance.enemyManager.getClosetEnemy ();
+        // 附近有敌人则武器优先朝向敌人
+        if (closetEnemy != null) {
+            moveDir = (this.transform.position - closetEnemy.transform.position).normalized;
+        }
+
+        if (moveDir == Vector2.zero) {
+            return;
+        }
+
         // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
         this.weaponRotaionTrans.eulerAngles = new Vector3 (0, 0, rotationAngle);

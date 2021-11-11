@@ -12,4 +12,6 @@ public class ConstValue {
     ///敌人生成数量 
     /// </summary>
     public const int enemySpawnCount = 1;
+
+    public const float playerAttackDis = 6.5f;
 }

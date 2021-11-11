@@ -75,7 +75,6 @@ public class Room {
 			}
 			return;
 		}
-		ModuleManager.instance.playerManager.setPathFinding (this.pathFinding);
 		if (!this.curDoorClose) {
 			this.closeDoor ();
 		}

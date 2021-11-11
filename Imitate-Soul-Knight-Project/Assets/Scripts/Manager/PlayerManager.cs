@@ -3,10 +3,8 @@
  * @Date: 2021-10-19 17:22:16 
  * @Description: 玩家管理
  */
-using System.Collections.Generic;
 using Cinemachine;
 using UFramework;
-using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UnityEngine;
 public class PlayerManager : MonoBehaviour {
@@ -26,25 +24,9 @@ public class PlayerManager : MonoBehaviour {
 
 	public void localUpdate (float dt) {
 		this.roleControl?.localUpdate (dt);
-
-		if (Input.touchCount <= 0) {
-			return;
-		}
-
-		// Touch touch = Input.touches[0];
-		// Vector3 touchPos = touch.position;
-		// Vector3 worldPoint = Camera.main.ScreenToWorldPoint (touchPos);
-		// List<Vector3> posList = this.pathFinding.findPath (this.roleControl.transform.position, worldPoint);
-		// CommonUtil.drawPath (posList, Color.red);
 	}
 
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
-	}
-
-	protected PathFinding pathFinding;
-
-	public void setPathFinding (PathFinding pathFinding) {
-		this.pathFinding = pathFinding;
 	}
 }

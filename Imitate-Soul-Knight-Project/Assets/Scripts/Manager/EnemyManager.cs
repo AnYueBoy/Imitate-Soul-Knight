@@ -34,4 +34,31 @@ public class EnemyManager {
         enemySet.Add (enemy);
         return enemy;
     }
+
+    public BaseEnemy getClosetEnemy () {
+        BaseEnemy closestEnemy = null;
+        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+        float curClosetDis = ConstValue.playerAttackDis;
+        foreach (BaseEnemy enemy in enemySet) {
+            if (enemy == null) {
+                continue;
+            }
+
+            if (!enemy.transform.gameObject.activeSelf) {
+                continue;
+            }
+
+            float distance = (enemy.transform.position - playerTrans.position).magnitude;
+            if (distance > ConstValue.playerAttackDis) {
+                continue;
+            }
+
+            if (distance <= curClosetDis) {
+                curClosetDis = distance;
+                closestEnemy = enemy;
+            }
+        }
+
+        return closestEnemy;
+    }
 }
