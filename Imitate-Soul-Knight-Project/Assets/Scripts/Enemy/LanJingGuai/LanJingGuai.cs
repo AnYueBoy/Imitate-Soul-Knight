@@ -24,6 +24,7 @@ public class LanJingGuai : BaseEnemy {
 		);
 	}
 
+	#region  动画状态
 	public void playIdleAni () {
 		this.animator.SetBool ("IsMove", false);
 	}
@@ -32,15 +33,23 @@ public class LanJingGuai : BaseEnemy {
 		this.animator.SetBool ("IsMove", true);
 	}
 
+	#endregion
+
+	#region  idle状态
 	public float idleTimer = 1.5f;
 
 	public readonly float idleInterval = 1.5f;
-
 	public void stayIdle () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
 		this.idleTimer += dt;
 	}
 
+	public void resetIdleState () {
+		this.idleTimer = 0;
+	}
+	#endregion
+
+	#region  移动状态
 	private Vector3 targetPos = Vector3.zero;
 
 	private Vector3 tempMoveDir = Vector3.zero;
@@ -72,7 +81,6 @@ public class LanJingGuai : BaseEnemy {
 		}
 
 		this.drawPath (Color.red);
-
 	}
 
 	private List<Vector3> drawPathList = new List<Vector3> ();
@@ -118,7 +126,16 @@ public class LanJingGuai : BaseEnemy {
 		return this.pathPosList == null || this.curMoveIndex >= this.pathPosList.Count;
 	}
 
+	public void resetRandomMoveState () {
+		this.curMoveIndex = -1;
+	}
+
+	#endregion 
+
+	#region  攻击状态
 	private readonly float attackOffset = 0.7f;
+
+	public bool isAttack = false;
 
 	public void attack () {
 		Vector3 leftPos = this.transform.position + Vector3.left * this.attackOffset;
@@ -145,17 +162,10 @@ public class LanJingGuai : BaseEnemy {
 		this.isAttack = true;
 	}
 
-	public void resetRandomMoveState () {
-		this.curMoveIndex = -1;
-	}
-
-	public bool isAttack = false;
-
 	public void resetAttackState () {
 		this.isAttack = false;
 	}
 
-	public void resetIdleState () {
-		this.idleTimer = 0;
-	}
+	#endregion
+
 }
