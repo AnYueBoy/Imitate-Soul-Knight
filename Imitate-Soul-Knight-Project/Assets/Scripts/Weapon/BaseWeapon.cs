@@ -44,11 +44,11 @@ public class BaseWeapon : MonoBehaviour {
     protected bool isRecoilForce = false;
     #endregion
 
-    public virtual void init (string tag) {
+    public virtual void init (string bulletTag) {
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
         this.launchInterval = weaponConfigData.launchInterval;
         this.launchTimer = this.launchInterval;
-        this.weaponTag = tag;
+        this.weaponTag = bulletTag;
         this.shotGunEffect.gameObject.SetActive (false);
 
         this.shotGunEffectInterval = this.launchInterval / 2;

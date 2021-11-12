@@ -121,7 +121,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void switchWeapon () {
-        this.curWeapon.init ("player");
+        this.curWeapon.init (TagGroup.playerBullet);
     }
 
     private void useSkill () {

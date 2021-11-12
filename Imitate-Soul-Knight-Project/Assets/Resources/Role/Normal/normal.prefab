@@ -73,9 +73,10 @@ GameObject:
   - component: {fileID: 6695241533007738466}
   - component: {fileID: 6695241533007738465}
   - component: {fileID: 1207011531411687324}
+  - component: {fileID: 923209696040022001}
   m_Layer: 0
   m_Name: normal
-  m_TagString: Untagged
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,6 +186,32 @@ MonoBehaviour:
     m_Bits: 256
   weaponSprite: {fileID: 5964078763514089749}
   curWeapon: {fileID: 1493591086675286464}
+--- !u!61 &923209696040022001
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6695241533007738464}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.15461506, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.0666667, y: 0.96666664}
+    newSize: {x: 1.0666667, y: 0.96666664}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.75743675, y: 0.96666664}
+  m_EdgeRadius: 0
 --- !u!1 &8872654483371053356
 GameObject:
   m_ObjectHideFlags: 0

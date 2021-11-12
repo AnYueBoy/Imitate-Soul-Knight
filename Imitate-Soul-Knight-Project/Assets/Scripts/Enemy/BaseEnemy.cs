@@ -10,7 +10,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
 
-	protected string bulletTag = "enemy";
+	protected string bulletTag = TagGroup.enemyBullet;
 
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();

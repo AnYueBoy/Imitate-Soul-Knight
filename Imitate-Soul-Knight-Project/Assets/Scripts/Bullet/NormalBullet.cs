@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-23 08:50:16
+ * @Last Modified time: 2021-11-12 12:19:16
  */
 
 using UnityEngine;
@@ -12,11 +12,27 @@ public class NormalBullet : BaseBullet {
     private Vector2 moveDir;
 
     protected override void OnTriggerEnter2D (Collider2D other) {
-        if (other.tag == this.bulletData.tag) {
+        if (other.tag == TagGroup.enemyBullet || other.tag == TagGroup.playerBullet) {
             return;
         }
 
-        this.triggerHandler ();
+        if (other.tag == TagGroup.block) {
+            // 回收子弹
+            this.bulletData.isDie = true;
+            return;
+        }
+
+        if (this.bulletData.tag == TagGroup.enemyBullet && other.tag == TagGroup.player) {
+            // 回收子弹、对玩家造成伤害
+            this.bulletData.isDie = true;
+            return;
+        }
+
+        if (this.bulletData.tag == TagGroup.playerBullet && other.tag == TagGroup.enemy) {
+            // 回收子弹、对敌人造成伤害
+            this.bulletData.isDie = true;
+            return;
+        }
     }
 
     protected override void move (float dt) {
