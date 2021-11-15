@@ -9,4 +9,9 @@ public class PlayerData : BaseData {
     public int chapter = 1;
 
     public int level = 1;
+
+    /// <summary>
+    /// 当前角色id 
+    /// </summary>
+    public int curRoleId = 1;
 }

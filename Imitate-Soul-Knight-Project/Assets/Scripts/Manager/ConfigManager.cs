@@ -16,10 +16,13 @@ public class ConfigManager {
 
 	public EnemyConfig enemyConfig;
 
+	public RoleConfig roleConfig;
+
 	public void init () {
 		levelConfig = this.loadConfig<LevelConfig> (ConfigAssetsUrl.levelConfig);
 		weaponConfig = this.loadConfig<WeaponConfig> (ConfigAssetsUrl.weaponConfig);
 		enemyConfig = this.loadConfig<EnemyConfig> (ConfigAssetsUrl.enemyConfig);
+		roleConfig = this.loadConfig<RoleConfig> (ConfigAssetsUrl.roleConfig);
 	}
 
 	public T loadConfig<T> (string configUrl) {

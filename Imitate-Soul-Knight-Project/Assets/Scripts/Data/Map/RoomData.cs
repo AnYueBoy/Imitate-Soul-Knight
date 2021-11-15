@@ -5,7 +5,7 @@ using System.Collections.Generic;
  * @Description: 房间数据
  */
 using UnityEngine;
-public class RoomData {
+public class RoomData : BaseData {
 
 	public int roomWidth;
 

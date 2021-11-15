@@ -4,7 +4,7 @@
  * @Description: 武器配置数据
  */
 
-public class WeaponConfigData {
+public class WeaponConfigData : BaseData {
 
 	public int id; // 唯一标识
 	public string name; // 名称

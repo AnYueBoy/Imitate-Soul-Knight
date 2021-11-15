@@ -4,7 +4,7 @@
  * @Description: 角色数据
  */
 
-public class RoleConfigData {
+public class RoleConfigData : BaseData {
     public int id; // 唯一标识
     public string name; // 名称
     public float hp; // 血量

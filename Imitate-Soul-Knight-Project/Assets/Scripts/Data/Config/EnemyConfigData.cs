@@ -1,4 +1,4 @@
-public class EnemyConfigData {
+public class EnemyConfigData : BaseData {
     public int id; // 唯一标识
     public string name; // 名称
     public string describe; // 描述

@@ -6,7 +6,7 @@
 
 using System.Collections.Generic;
 
-public class LevelData {
+public class LevelData : BaseData {
 
 	public int chapter; // 章节
 	public int level; // 关卡

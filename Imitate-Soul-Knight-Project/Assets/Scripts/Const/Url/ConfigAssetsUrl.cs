@@ -11,4 +11,6 @@ public class ConfigAssetsUrl {
 	public const string weaponConfig = "Config/WeaponConfig";
 	public const string enemyConfig = "Config/EnemyConfig";
 
+	public const string roleConfig = "Config/RoleConfig";
+
 }
