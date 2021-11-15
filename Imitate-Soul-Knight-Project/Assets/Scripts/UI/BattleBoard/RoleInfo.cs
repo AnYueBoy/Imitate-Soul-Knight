@@ -6,6 +6,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UFramework;
+using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +26,8 @@ public class RoleInfo : MonoBehaviour {
     [SerializeField]
     private Text curArmorText;
 
-    public void localUpdate () {
-        this.refreshInfo ();
+    private void OnEnable () {
+        ListenerManager.instance.add (EventName.ATTRIBUTE_CHANGE, this, this.refreshInfo);
     }
 
     private void refreshInfo () {
@@ -34,6 +35,19 @@ public class RoleInfo : MonoBehaviour {
         if (battleRoleData == null) {
             return;
         }
-        // TODO: 信息刷新
+
+        // 信息刷新
+        this.curHpText.text = battleRoleData.curHp + "/" + battleRoleData.curMaxHp;
+        this.curHpImage.fillAmount = battleRoleData.curHp / battleRoleData.curMaxHp;
+
+        this.curMpText.text = battleRoleData.curMp + "/" + battleRoleData.curMaxMp;
+        this.curMpImage.fillAmount = battleRoleData.curMp / battleRoleData.curMaxMp;
+
+        this.curArmorText.text = battleRoleData.curArmor + "/" + battleRoleData.curMaxArmor;
+        this.curArmorImage.fillAmount = battleRoleData.curArmor / battleRoleData.curMaxArmor;
+    }
+
+    private void OnDisable () {
+        ListenerManager.instance.removeAll (this);
     }
 }

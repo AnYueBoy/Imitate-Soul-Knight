@@ -3,7 +3,7 @@
  * @Date: 2020-03-05 08:57:49 
  * @Description: 事件监听 
  * @Last Modified by: l hy
- * @Last Modified time: 2020-12-21 16:43:03
+ * @Last Modified time: 2021-11-15 18:07:50
  */
 namespace UFramework.GameCommon {
 
@@ -13,14 +13,17 @@ namespace UFramework.GameCommon {
 
     public class ListenerManager {
 
-        private static ListenerManager instance = null;
+        private static ListenerManager _instance = null;
 
-        public static ListenerManager getInstance () {
-            if (instance == null) {
-                instance = new ListenerManager ();
+        public static ListenerManager instance {
+            get {
+                if (_instance == null) {
+                    _instance = new ListenerManager ();
+                }
+                return _instance;
             }
-            return instance;
         }
+
         private Dictionary<string, Dictionary<object, Delegate>> listenerMap = new Dictionary<string, Dictionary<object, Delegate>> ();
 
         private Dictionary<object, List<string>> reverseListenerMap = new Dictionary<object, List<string>> ();

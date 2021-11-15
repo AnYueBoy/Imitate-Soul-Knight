@@ -15,7 +15,7 @@ public class BattleRoleData : BaseData {
 
     public float curMp;
 
-    public float curMaxMap;
+    public float curMaxMp;
 
     public float curArmor;
 
@@ -30,7 +30,7 @@ public class BattleRoleData : BaseData {
 
         this.curHp = this.curMaxHp = roleConfigData.hp;
 
-        this.curMp = this.curMaxMap = roleConfigData.mp;
+        this.curMp = this.curMaxMp = roleConfigData.mp;
 
         this.curArmor = this.curMaxArmor = roleConfigData.armor;
 

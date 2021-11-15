@@ -12,14 +12,10 @@ using UnityEngine.UI;
 
 public class BattleBoard : BaseUI {
 
-    [SerializeField]
-    private RoleInfo roleInfo;
-
     public override void onShow (params object[] args) {
 
     }
 
     private void Update () {
-        this.roleInfo.localUpdate ();
     }
 }

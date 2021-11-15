@@ -38,4 +38,5 @@ public class PlayerManager : MonoBehaviour {
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
 	}
+
 }

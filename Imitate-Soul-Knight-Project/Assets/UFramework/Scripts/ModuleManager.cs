@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-15 12:30:00
+ * @Last Modified time: 2021-11-15 17:54:29
  */
 
 namespace UFramework {
@@ -65,6 +65,8 @@ namespace UFramework {
             this.configManager.init ();
             this.playerManager.init ();
             this.mapManager.init ();
+
+            this.uIManager.showBoard (UIPath.BATTLE_BOARD);
         }
 
         private void Update () {
