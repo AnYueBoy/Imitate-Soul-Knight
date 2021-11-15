@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour {
 
 	private RoleControl roleControl;
 
+	public BattleRoleData battleRoleData;
+
 	[SerializeField]
 	private CinemachineVirtualCamera cinemaCamera;
 
@@ -20,6 +22,13 @@ public class PlayerManager : MonoBehaviour {
 		playerNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 		this.roleControl = playerNode.GetComponent<RoleControl> ();
 		cinemaCamera.Follow = this.roleControl.transform;
+
+		this.buildBattleRoleData ();
+	}
+
+	private void buildBattleRoleData () {
+		int curRoleId = ModuleManager.instance.playerDataManager.getCurRoleId ();
+		this.battleRoleData = new BattleRoleData (curRoleId);
 	}
 
 	public void localUpdate (float dt) {
