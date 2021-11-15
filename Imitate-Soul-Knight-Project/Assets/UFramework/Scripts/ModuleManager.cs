@@ -3,12 +3,13 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-27 18:13:11
+ * @Last Modified time: 2021-11-15 12:30:00
  */
 
 namespace UFramework {
     using UFramework.Const;
     using UFramework.Develop;
+    using UFramework.GameCommon;
     using UFramework.Promise;
     using UnityEngine;
     public class ModuleManager : MonoBehaviour {
@@ -21,6 +22,9 @@ namespace UFramework {
                 return _instance;
             }
         }
+
+        [SerializeField]
+        private GameObject uiRoot;
 
         #region 业务模块
         public InputManager inputManager;
@@ -42,6 +46,8 @@ namespace UFramework {
         #region 系统模块
         private GUIConsole guiConsole = null;
         public PromiseTimer promiseTimer = new PromiseTimer ();
+
+        public UIManager uIManager = new UIManager ();
         #endregion
 
         #region  程序生命周期函数 
@@ -54,6 +60,7 @@ namespace UFramework {
         }
 
         private void Start () {
+            this.uIManager.init (this.uiRoot);
             this.playerDataManager.init ();
             this.configManager.init ();
             this.playerManager.init ();
