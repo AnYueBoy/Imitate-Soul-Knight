@@ -3,7 +3,7 @@
  * @Date: 2020-03-07 17:13:07 
  * @Description: 界面管理器 
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-15 12:27:51
+ * @Last Modified time: 2021-11-15 18:17:48
  */
 namespace UFramework.GameCommon {
 
@@ -86,6 +86,9 @@ namespace UFramework.GameCommon {
                 targetUI = uiNode.GetComponent<BaseUI> ();
                 this.uiDic.Add (uiName, targetUI);
                 uiNode.SetActive (true);
+
+                RectTransform rectTransform = uiNode.GetComponent<RectTransform> ();
+                rectTransform.offsetMin = rectTransform.offsetMax = Vector2.zero;
             }
 
             targetUI.onShow (args);

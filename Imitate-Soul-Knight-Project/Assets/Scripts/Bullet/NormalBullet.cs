@@ -3,9 +3,10 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-12 12:19:16
+ * @Last Modified time: 2021-11-15 18:24:43
  */
 
+using UFramework;
 using UnityEngine;
 
 public class NormalBullet : BaseBullet {
@@ -25,6 +26,7 @@ public class NormalBullet : BaseBullet {
         if (this.bulletData.tag == TagGroup.enemyBullet && other.tag == TagGroup.player) {
             // 回收子弹、对玩家造成伤害
             this.bulletData.isDie = true;
+            ModuleManager.instance.playerManager.injured (this.bulletData.damage);
             return;
         }
 

@@ -39,4 +39,10 @@ public class PlayerManager : MonoBehaviour {
 		return this.roleControl.transform;
 	}
 
+	public void injured (float damage) {
+		this.battleRoleData.curHp -= damage;
+		this.battleRoleData.curHp = Mathf.Max (0, this.battleRoleData.curHp);
+		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
 }

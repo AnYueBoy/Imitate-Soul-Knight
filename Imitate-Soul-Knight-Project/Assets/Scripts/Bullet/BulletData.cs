@@ -11,11 +11,14 @@ public class BulletData {
 
 	public float moveDir;
 
+	public float damage;
+
 	public string tag;
 
-	public BulletData (float moveDir, float moveSpeed, string tag) {
+	public BulletData (float moveDir, float moveSpeed, float bulletDamgage, string tag) {
 		this.moveDir = moveDir;
 		this.moveSpeed = moveSpeed;
+		this.damage = bulletDamgage;
 		this.isDie = false;
 		this.tag = tag;
 	}

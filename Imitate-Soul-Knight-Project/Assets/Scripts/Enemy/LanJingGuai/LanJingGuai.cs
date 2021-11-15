@@ -145,19 +145,19 @@ public class LanJingGuai : BaseEnemy {
 
 		// 左
 		Vector3 leftEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, Vector3.zero);
-		ModuleManager.instance.bulletManager.spawnBullet (leftPos, leftEulerAngles, -1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (leftPos, leftEulerAngles, -1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed, this.enemyConfigData.damage);
 
 		// 右
 		Vector3 rightEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, Vector3.zero);
-		ModuleManager.instance.bulletManager.spawnBullet (rightPos, rightEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (rightPos, rightEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed, this.enemyConfigData.damage);
 
 		// 上
 		Vector3 upEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, 90));
-		ModuleManager.instance.bulletManager.spawnBullet (upPos, upEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (upPos, upEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed, this.enemyConfigData.damage);
 
 		// 下
 		Vector3 downEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, -90));
-		ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed);
+		ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed, this.enemyConfigData.damage);
 
 		this.isAttack = true;
 	}

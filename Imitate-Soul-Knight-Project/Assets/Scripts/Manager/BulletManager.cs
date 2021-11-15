@@ -49,7 +49,7 @@ public class BulletManager {
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
 
-        BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed, tag);
+        BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed, weaponConfigData.damage, tag);
         bullet.init (bulletData);
     }
 
@@ -59,7 +59,8 @@ public class BulletManager {
         float bulletDir,
         string tag,
         string bulletUrl,
-        float bulletSpeed) {
+        float bulletSpeed,
+        float bulletDamage) {
         GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
         GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
 
@@ -73,7 +74,7 @@ public class BulletManager {
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
 
-        BulletData bulletData = new BulletData (bulletDir, bulletSpeed, tag);
+        BulletData bulletData = new BulletData (bulletDir, bulletDamage, bulletSpeed, tag);
         bullet.init (bulletData);
     }
 }
