@@ -74,7 +74,7 @@ public class BulletManager {
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
 
-        BulletData bulletData = new BulletData (bulletDir, bulletDamage, bulletSpeed, tag);
+        BulletData bulletData = new BulletData (bulletDir, bulletSpeed, bulletDamage, tag);
         bullet.init (bulletData);
     }
 }

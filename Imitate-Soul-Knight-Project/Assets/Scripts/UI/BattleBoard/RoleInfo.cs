@@ -28,6 +28,7 @@ public class RoleInfo : MonoBehaviour {
 
     private void OnEnable () {
         ListenerManager.instance.add (EventName.ATTRIBUTE_CHANGE, this, this.refreshInfo);
+        this.refreshInfo ();
     }
 
     private void refreshInfo () {
