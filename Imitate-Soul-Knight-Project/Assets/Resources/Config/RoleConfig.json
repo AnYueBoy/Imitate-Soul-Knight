@@ -1,0 +1,20 @@
+{
+    "roleList": [
+        {
+            "id": 1,
+            "name": "骑士",
+            "hp": 6,
+            "mp": 100,
+            "armor": 5,
+            "criticalHit": 5
+        },
+        {
+            "id": 2,
+            "name": "吸血鬼",
+            "hp": 10,
+            "mp": 100,
+            "armor": 3,
+            "criticalHit": 5
+        }
+    ]
+}

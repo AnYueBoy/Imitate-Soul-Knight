@@ -15,10 +15,6 @@ public class PathFinding {
 
 	private Cell[, ] cellInfoArray;
 
-	private readonly float horAndVerCost = 10;
-
-	private readonly float diagonalCost = 14;
-
 	private int roomWidth;
 
 	private int roomHeight;
@@ -133,7 +129,7 @@ public class PathFinding {
 	private float getManhattan (Cell firstCell, Cell secondCell) {
 		int centX = Mathf.Abs (firstCell.x - secondCell.x);
 		int centY = Mathf.Abs (firstCell.y - secondCell.y);
-		return this.horAndVerCost * (centX + centY);
+		return ConstValue.horAndVerCost * (centX + centY);
 	}
 
 	private List<Vector3> generatePath (Cell startCell, Cell endCell) {
