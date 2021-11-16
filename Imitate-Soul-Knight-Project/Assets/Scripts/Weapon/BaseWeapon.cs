@@ -84,6 +84,13 @@ public class BaseWeapon : MonoBehaviour {
             return;
         }
 
+        float weaponConsumeValue = this.weaponConfigData.mpConsume;
+        float curMp = ModuleManager.instance.playerManager.getCurMp ();
+        if (curMp < weaponConsumeValue) {
+            return;
+        }
+        ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
+
         this.launchTimer = 0;
         ModuleManager.instance.bulletManager.spawnBullet (launchTrans.position, launchTrans.eulerAngles, bulletDir, this.weaponTag, this.weaponConfigData);
 

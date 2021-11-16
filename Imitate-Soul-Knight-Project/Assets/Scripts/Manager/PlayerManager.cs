@@ -54,4 +54,14 @@ public class PlayerManager : MonoBehaviour {
 		// TODO: 触发死亡检测
 	}
 
+	public float getCurMp () {
+		return this.battleRoleData.curMp;
+	}
+
+	public void consumeMp (float value) {
+		this.battleRoleData.curMp -= value;
+		this.battleRoleData.curMp = Mathf.Max (0, this.battleRoleData.curMp);
+		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
 }
