@@ -9,7 +9,8 @@
 			"damage": 4,
 			"launchCount": 1,
 			"bulletSpeed": 8,
-			"bulletUrl": "Bullet/bullet_1"
+			"bulletUrl": "Bullet/bullet_1",
+			"mpConsume": 2
 		}
 	]
 }

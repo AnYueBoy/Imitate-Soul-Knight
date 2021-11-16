@@ -15,4 +15,5 @@ public class WeaponConfigData : BaseData {
 	public int launchCount; // 发射数量
 	public int bulletSpeed; // 子弹速度
 	public string bulletUrl; // 子弹路径
+	public float mpConsume; // 蓝量消耗值
 }

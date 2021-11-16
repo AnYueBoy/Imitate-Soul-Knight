@@ -110,4 +110,8 @@ public class BaseWeapon : MonoBehaviour {
         this.transform.localPosition = new Vector3 (nodeX - this.recoilForceTimer * this.recoilForceSpeed, 0, 0);
 
     }
+
+    public float getWeaponMpConsume () {
+        return this.weaponConfigData.mpConsume;
+    }
 }
