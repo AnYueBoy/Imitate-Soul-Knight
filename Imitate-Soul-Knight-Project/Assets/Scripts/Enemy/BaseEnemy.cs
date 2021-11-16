@@ -10,10 +10,13 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
 
+	protected BoxCollider2D boxCollider2D;
+
 	protected string bulletTag = TagGroup.enemyBullet;
 
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
+		this.boxCollider2D = this.GetComponent<BoxCollider2D> ();
 	}
 
 	protected BlackBoardMemory blackboardMemory;
@@ -24,11 +27,15 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected EnemyConfigData enemyConfigData;
 
+	protected EnemyData enemyData;
+
 	protected PathFinding pathFinding;
 
 	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isRoomActive) {
 		this.enemyConfigData = enemyConfigData;
 		this.isRoomActive = isRoomActive;
+
+		this.enemyData = new EnemyData (this.enemyConfigData);
 	}
 
 	public void setPathFinding (PathFinding pathFinding) {
@@ -57,5 +64,10 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	public float aimToPlayerDistance () {
 		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.getPlayerTrans ().position);
 		return subVec.magnitude;
+	}
+
+	public virtual void injured (float damage) {
+		this.enemyData.curHp -= damage;
+		this.enemyData.curHp = Mathf.Max (this.enemyData.curHp, 0);
 	}
 }

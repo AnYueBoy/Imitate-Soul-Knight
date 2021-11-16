@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-15 18:24:43
+ * @Last Modified time: 2021-11-16 08:22:41
  */
 
 using UFramework;
@@ -33,6 +33,8 @@ public class NormalBullet : BaseBullet {
         if (this.bulletData.tag == TagGroup.playerBullet && other.tag == TagGroup.enemy) {
             // 回收子弹、对敌人造成伤害
             this.bulletData.isDie = true;
+            BaseEnemy enemy = other.GetComponent<BaseEnemy> ();
+            enemy.injured (this.bulletData.damage);
             return;
         }
     }

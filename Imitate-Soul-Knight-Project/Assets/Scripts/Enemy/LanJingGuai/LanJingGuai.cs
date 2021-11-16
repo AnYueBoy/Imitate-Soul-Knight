@@ -17,6 +17,7 @@ public class LanJingGuai : BaseEnemy {
 		blackboardMemory = new BlackBoardMemory ();
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
+				new LanJingGuaiDeadAction (),
 				new LanJingGuaiIdleAction (),
 				new LanJingGuaiRandomMoveAction (),
 				new LanJingGuaiAttackAction ()
@@ -31,6 +32,10 @@ public class LanJingGuai : BaseEnemy {
 
 	public void playMoveAni () {
 		this.animator.SetBool ("IsMove", true);
+	}
+
+	public void playerDeadAni () {
+		this.animator.SetBool ("IsDeath", true);
 	}
 
 	#endregion
@@ -168,4 +173,16 @@ public class LanJingGuai : BaseEnemy {
 
 	#endregion
 
+	#region 死亡状态 
+	public bool isDead () {
+		return this.enemyData.curHp <= 0;
+	}
+
+	public void invalidCollider () {
+		if (this.boxCollider2D.enabled) {
+			this.boxCollider2D.enabled = false;
+		}
+	}
+
+	#endregion
 }
