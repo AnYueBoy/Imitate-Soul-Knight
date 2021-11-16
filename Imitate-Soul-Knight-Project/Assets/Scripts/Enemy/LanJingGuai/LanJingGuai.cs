@@ -174,10 +174,7 @@ public class LanJingGuai : BaseEnemy {
 	#endregion
 
 	#region 死亡状态 
-	public bool isDead () {
-		return this.enemyData.curHp <= 0;
-	}
-
+	
 	public void invalidCollider () {
 		if (this.boxCollider2D.enabled) {
 			this.boxCollider2D.enabled = false;

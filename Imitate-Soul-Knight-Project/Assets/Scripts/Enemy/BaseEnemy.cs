@@ -70,4 +70,8 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		this.enemyData.curHp -= damage;
 		this.enemyData.curHp = Mathf.Max (this.enemyData.curHp, 0);
 	}
+
+	public bool isDead () {
+		return this.enemyData.curHp <= 0;
+	}
 }

@@ -27,8 +27,6 @@ public class Room {
 
 	private bool roomActive = false;
 
-	private float monsterTimer = 0;
-
 	public Room (RoomData roomData) {
 		this.roomData = roomData;
 		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
@@ -44,6 +42,7 @@ public class Room {
 		this.rightTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 1, this.roomData.roomCenter.y, 0));
 		this.upTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 1, 0));
 		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
+		this.roomEnemyList.Clear ();
 
 		this.createRoomItem ();
 
@@ -53,6 +52,17 @@ public class Room {
 
 	public void localUpdate (float dt) {
 		this.checkRoomDoor (dt);
+	}
+
+	private bool isEnemyClear () {
+		for (int i = 0; i < this.roomEnemyList.Count; i++) {
+			BaseEnemy enemy = this.roomEnemyList[i];
+			if (!enemy.isDead ()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private void checkRoomDoor (float dt) {
@@ -65,11 +75,8 @@ public class Room {
 
 		this.roomActive = true;
 
-		this.monsterTimer += dt;
-
-		// TODO: 当前怪物全部清理完成,则打开房门
-
-		if (this.monsterTimer > 5) {
+		// 当前怪物全部清理完成,则打开房门
+		if (this.isEnemyClear ()) {
 			if (this.curDoorClose) {
 				this.openDoor ();
 			}
@@ -144,6 +151,8 @@ public class Room {
 
 	}
 
+	private List<BaseEnemy> roomEnemyList = new List<BaseEnemy> ();
+
 	private void spawnEnemy () {
 		List<Vector3> randomPosList = this.getRandomPos (ConstValue.enemySpawnCount);
 		for (int i = 0; i < ConstValue.enemySpawnCount; i++) {
@@ -156,6 +165,8 @@ public class Room {
 
 			// 设置敌人的寻路组件
 			enemy.setPathFinding (this.pathFinding);
+
+			this.roomEnemyList.Add (enemy);
 		}
 	}
 

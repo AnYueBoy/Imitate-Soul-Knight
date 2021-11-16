@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour {
 		this.battleRoleData.curHp -= damage;
 		this.battleRoleData.curHp = Mathf.Max (0, this.battleRoleData.curHp);
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+
+		// TODO: 触发死亡检测
 	}
 
 }
