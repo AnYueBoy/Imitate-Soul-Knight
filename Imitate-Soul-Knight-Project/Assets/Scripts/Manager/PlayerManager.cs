@@ -40,6 +40,13 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public void injured (float damage) {
+		float originArmor = this.battleRoleData.curArmor;
+		this.battleRoleData.curArmor -= damage;
+		this.battleRoleData.curArmor = Mathf.Max (0, this.battleRoleData.curArmor);
+
+		damage -= originArmor;
+		damage = Mathf.Max (0, damage);
+
 		this.battleRoleData.curHp -= damage;
 		this.battleRoleData.curHp = Mathf.Max (0, this.battleRoleData.curHp);
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
