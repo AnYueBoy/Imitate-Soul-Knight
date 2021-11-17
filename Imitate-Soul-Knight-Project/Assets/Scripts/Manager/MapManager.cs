@@ -370,4 +370,49 @@ public class MapManager : MonoBehaviour {
         Vector3 worldPosCenter = new Vector3 (worldPosLeftDown.x + this.wallTileMap.cellSize.x / 2, worldPosLeftDown.y + this.wallTileMap.cellSize.y / 2, 0);
         return worldPosCenter;
     }
+
+    public BaseEnemy getClosetEnemy () {
+        BaseEnemy closestEnemy = null;
+        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+        float curClosetDis = ConstValue.playerAttackDis;
+        foreach (Room room in roomDic.Values) {
+            if (room == null) {
+                continue;
+            }
+
+            if (!room.isRoomActive ()) {
+                continue;
+            }
+
+            foreach (BaseEnemy enemy in room.roomEnemyList) {
+                if (enemy == null) {
+                    continue;
+                }
+
+                if (enemy.isDead ()) {
+                    continue;
+                }
+
+                if (!enemy.transform.gameObject.activeSelf) {
+                    continue;
+                }
+
+                float distance = (enemy.transform.position - playerTrans.position).magnitude;
+                if (distance > ConstValue.playerAttackDis) {
+                    continue;
+                }
+
+                if (distance <= curClosetDis) {
+                    curClosetDis = distance;
+                    closestEnemy = enemy;
+                }
+            }
+
+            if (closestEnemy != null) {
+                return closestEnemy;
+            }
+        }
+
+        return null;
+    }
 }

@@ -117,7 +117,7 @@ public class Room {
 		return false;
 	}
 
-	private bool isRoomActive () {
+	public bool isRoomActive () {
 		return this.roomActive;
 	}
 
@@ -151,7 +151,7 @@ public class Room {
 
 	}
 
-	private List<BaseEnemy> roomEnemyList = new List<BaseEnemy> ();
+	public List<BaseEnemy> roomEnemyList = new List<BaseEnemy> ();
 
 	private void spawnEnemy () {
 		List<Vector3> randomPosList = this.getRandomPos (ConstValue.enemySpawnCount);

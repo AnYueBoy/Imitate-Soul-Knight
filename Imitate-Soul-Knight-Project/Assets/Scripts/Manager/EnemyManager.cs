@@ -1,10 +1,10 @@
-﻿using System;
-/*
+﻿/*
  * @Author: l hy 
  * @Date: 2021-10-27 18:09:20 
  * @Description: 敌人管理
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UFramework;
@@ -33,32 +33,5 @@ public class EnemyManager {
         enemy.init (enemyConfigData, callback);
         enemySet.Add (enemy);
         return enemy;
-    }
-
-    public BaseEnemy getClosetEnemy () {
-        BaseEnemy closestEnemy = null;
-        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
-        float curClosetDis = ConstValue.playerAttackDis;
-        foreach (BaseEnemy enemy in enemySet) {
-            if (enemy == null) {
-                continue;
-            }
-
-            if (!enemy.transform.gameObject.activeSelf) {
-                continue;
-            }
-
-            float distance = (enemy.transform.position - playerTrans.position).magnitude;
-            if (distance > ConstValue.playerAttackDis) {
-                continue;
-            }
-
-            if (distance <= curClosetDis) {
-                curClosetDis = distance;
-                closestEnemy = enemy;
-            }
-        }
-
-        return closestEnemy;
     }
 }

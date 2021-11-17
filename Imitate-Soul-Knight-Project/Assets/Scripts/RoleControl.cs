@@ -81,7 +81,7 @@ public class RoleControl : MonoBehaviour {
     }
 
     private void weaponRotate (Vector2 refer, Vector2 moveDir) {
-        BaseEnemy closetEnemy = ModuleManager.instance.enemyManager.getClosetEnemy ();
+        BaseEnemy closetEnemy = ModuleManager.instance.mapManager.getClosetEnemy ();
         // 附近有敌人则武器优先朝向敌人
         if (closetEnemy != null) {
             moveDir = (closetEnemy.transform.position - this.transform.position).normalized;
