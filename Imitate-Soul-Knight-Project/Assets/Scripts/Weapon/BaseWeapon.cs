@@ -92,7 +92,20 @@ public class BaseWeapon : MonoBehaviour {
         ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
 
         this.launchTimer = 0;
-        ModuleManager.instance.bulletManager.spawnBullet (launchTrans.position, launchTrans.eulerAngles, bulletDir, this.weaponTag, this.weaponConfigData);
+        Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
+        float bulletSpeed = this.weaponConfigData.bulletSpeed;
+        if (moveDir != Vector2.zero) {
+            bulletSpeed += ConstValue.moveSpeed;
+        }
+
+        ModuleManager.instance.bulletManager.spawnBullet (
+            launchTrans.position,
+            launchTrans.eulerAngles,
+            bulletDir,
+            this.weaponTag,
+            this.weaponConfigData.bulletUrl,
+            bulletSpeed,
+            this.weaponConfigData.damage);
 
         this.shotGunEffect.gameObject.SetActive (true);
         this.shotGunEffect.color = new Color (1, 1, 1, 1);

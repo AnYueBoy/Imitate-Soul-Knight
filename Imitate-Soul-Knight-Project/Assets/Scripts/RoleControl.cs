@@ -22,8 +22,6 @@ public class RoleControl : MonoBehaviour {
 
     public SpriteRenderer weaponSprite;
 
-    private readonly float moveSpeed = 7;
-
     private Animator animator;
 
     [SerializeField]
@@ -71,7 +69,7 @@ public class RoleControl : MonoBehaviour {
             }
         }
 
-        transform.Translate (moveDir * dt * moveSpeed);
+        transform.Translate (moveDir * dt * ConstValue.moveSpeed);
 
     }
 

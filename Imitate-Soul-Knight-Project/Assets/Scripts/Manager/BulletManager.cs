@@ -34,30 +34,6 @@ public class BulletManager {
         Vector3 eulerAngles,
         float bulletDir,
         string tag,
-        WeaponConfigData weaponConfigData) {
-        string bulletUrl = weaponConfigData.bulletUrl;
-        GameObject bulletPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (bulletUrl);
-        GameObject bulletNode = ObjectPool.instance.requestInstance (bulletPrefab);
-
-        bulletNode.transform.position = position;
-        bulletNode.transform.eulerAngles = eulerAngles;
-        bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
-        bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
-
-        bulletNode.tag = tag;
-
-        BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
-        this.bulletSet.Add (bullet);
-
-        BulletData bulletData = new BulletData (bulletDir, weaponConfigData.bulletSpeed, weaponConfigData.damage, tag);
-        bullet.init (bulletData);
-    }
-
-    public void spawnBullet (
-        Vector3 position,
-        Vector3 eulerAngles,
-        float bulletDir,
-        string tag,
         string bulletUrl,
         float bulletSpeed,
         float bulletDamage) {

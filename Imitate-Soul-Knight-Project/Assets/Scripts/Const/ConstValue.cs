@@ -13,10 +13,18 @@ public class ConstValue {
     /// </summary>
     public const int enemySpawnCount = 1;
 
+    /// <summary>
+    /// 攻击距离 
+    /// </summary>
     public const float playerAttackDis = 6.5f;
 
     /// <summary>
     /// 水平移动花费 
     /// </summary>
     public const float horAndVerCost = 10;
+
+    /// <summary>
+    /// 角色移动速度 
+    /// </summary>
+    public const float moveSpeed = 7;
 }
