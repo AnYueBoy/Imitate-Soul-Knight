@@ -18,10 +18,10 @@ namespace UFramework.GameCommon {
 
         private BaseUI currentBoard = null;
 
-        private GameObject uiRoot;
+        private RectTransform uiRootRectTrans;
 
-        public void init (GameObject uiRoot) {
-            this.uiRoot = uiRoot;
+        public void init (RectTransform uiRootRectTrans) {
+            this.uiRootRectTrans = uiRootRectTrans;
             this.currentBoard = null;
         }
 
@@ -79,16 +79,17 @@ namespace UFramework.GameCommon {
             } else {
                 string url = UrlString.uiUrl + uiName;
                 GameObject prefab = Resources.Load<GameObject> (url);
-
                 GameObject uiNode = GameObject.Instantiate (prefab);
-                uiNode.transform.SetParent (this.uiRoot.transform);
-                uiNode.transform.localPosition = Vector3.zero;
+                RectTransform uiRectTransform = uiNode.GetComponent<RectTransform> ();
+
+                uiRectTransform.SetParent (this.uiRootRectTrans);
+                uiRectTransform.localScale = Vector3.one;
+                uiRectTransform.offsetMin = uiRectTransform.offsetMax = Vector2.zero;
+
                 targetUI = uiNode.GetComponent<BaseUI> ();
                 this.uiDic.Add (uiName, targetUI);
                 uiNode.SetActive (true);
 
-                RectTransform rectTransform = uiNode.GetComponent<RectTransform> ();
-                rectTransform.offsetMin = rectTransform.offsetMax = Vector2.zero;
             }
 
             targetUI.onShow (args);

@@ -24,7 +24,7 @@ namespace UFramework {
         }
 
         [SerializeField]
-        private GameObject uiRoot;
+        private RectTransform uiRootRectTrans;
 
         #region 业务模块
         public InputManager inputManager;
@@ -60,7 +60,7 @@ namespace UFramework {
         }
 
         private void Start () {
-            this.uIManager.init (this.uiRoot);
+            this.uIManager.init (this.uiRootRectTrans);
             this.playerDataManager.init ();
             this.configManager.init ();
             this.playerManager.init ();

@@ -616,7 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   appMode: 2
-  uiRoot: {fileID: 1944031412}
+  uiRootRectTrans: {fileID: 1944031416}
   inputManager: {fileID: 671483816}
   mapManager: {fileID: 361785848}
   playerManager: {fileID: 748354062}
