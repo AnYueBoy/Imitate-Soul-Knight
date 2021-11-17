@@ -2009,7 +2009,7 @@ GameObject:
   - component: {fileID: 2114980465}
   - component: {fileID: 2114980464}
   m_Layer: 8
-  m_Name: WallTilemap
+  m_Name: BlockTilemap
   m_TagString: block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
