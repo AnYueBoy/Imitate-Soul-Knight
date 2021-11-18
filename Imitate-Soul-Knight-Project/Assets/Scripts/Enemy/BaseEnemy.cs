@@ -67,6 +67,9 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	public virtual void injured (float damage) {
+		if (!this.isRoomActive ()) {
+			return;
+		}
 		this.enemyData.curHp -= damage;
 		this.enemyData.curHp = Mathf.Max (this.enemyData.curHp, 0);
 	}
