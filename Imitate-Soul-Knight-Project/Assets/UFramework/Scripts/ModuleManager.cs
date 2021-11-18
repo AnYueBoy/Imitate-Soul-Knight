@@ -3,7 +3,7 @@
  * @Date: 2021-02-23 21:39:35 
  * @Description: 模块管理
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-15 17:54:29
+ * @Last Modified time: 2021-11-18 18:22:00
  */
 
 namespace UFramework {
@@ -94,6 +94,8 @@ namespace UFramework {
         #endregion 
 
         public Transform gameObjectTrans;
+
+        public Transform effectsTrans;
 
     }
 }
