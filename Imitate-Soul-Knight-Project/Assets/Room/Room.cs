@@ -52,9 +52,11 @@ public class Room {
 
 	public void localUpdate (float dt) {
 		this.checkRoomDoor (dt);
+		this.checkChest ();
 	}
 
 	private bool isEnemyClear () {
+		// TODO: 性能点
 		for (int i = 0; i < this.roomEnemyList.Count; i++) {
 			BaseEnemy enemy = this.roomEnemyList[i];
 			if (!enemy.isDead ()) {
@@ -85,6 +87,26 @@ public class Room {
 		if (!this.curDoorClose) {
 			this.closeDoor ();
 		}
+	}
+
+	private bool isAlreadySpawnChest = false;
+	private void checkChest () {
+		if (this.isAlreadySpawnChest) {
+			return;
+		}
+
+		if (this.roomData.roomType != RoomTypeEnum.BATTLE) {
+			return;
+		}
+
+		if (!this.isEnemyClear ()) {
+			return;
+		}
+
+		this.isAlreadySpawnChest = true;
+
+		this.spawnChestRandom ();
+
 	}
 
 	private void openDoor () {
@@ -171,6 +193,7 @@ public class Room {
 	}
 
 	private List<Vector3> getRandomPos (int randomCount) {
+		// TODO: 性能点
 		// FIXME: 更好，更快的随机算法
 		List<Vector2Int> sampleList = new List<Vector2Int> ();
 		int horizontalStart = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
@@ -193,5 +216,12 @@ public class Room {
 		}
 
 		return resultList;
+	}
+
+	private void spawnChestRandom () {
+		List<Vector3> randomPosList = this.getRandomPos (1);
+		Vector3 randomPos = randomPosList[0];
+
+		ModuleManager.instance.chestManager.spawnChest (randomPos, SceneObjectAssetsUrl.smallWhiteChest);
 	}
 }

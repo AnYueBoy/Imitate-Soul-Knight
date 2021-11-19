@@ -8,7 +8,7 @@ using UFramework;
 using UnityEngine;
 public class AutoChest : BaseChest {
 
-    private readonly float triggerDistance = 0.5f;
+    private readonly float triggerDistance = 0.85f;
 
     private bool isTriggered = false;
 
@@ -22,7 +22,9 @@ public class AutoChest : BaseChest {
         }
 
         Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
-        if ((this.transform.position - playerTrans.position).magnitude < triggerDistance) {
+        float distance = (this.transform.position - playerTrans.position).magnitude;
+
+        if (distance > triggerDistance) {
             return;
         }
 
@@ -31,10 +33,22 @@ public class AutoChest : BaseChest {
         this.spawnObjects ();
     }
 
-    public void spawnObjects () {
-        // TODO: 触发动画并生成奖励物品
-        this.left.DOLocalMoveX (-0.43f, 0.5f).SetEase(Ease.OutQuart);
-        this.right.DOLocalMoveX (0.43f, 0.5f).SetEase(Ease.OutQuart);
+    private readonly float animationTime = 0.5f;
 
+    public void spawnObjects () {
+        // 触发动画并生成奖励物品
+        this.left
+            .DOLocalMoveX (-0.43f, this.animationTime)
+            .SetEase (Ease.OutQuart)
+            .Play ();
+        this.right
+            .DOLocalMoveX (0.43f, this.animationTime)
+            .SetEase (Ease.OutQuart)
+            .Play ();
+
+        ModuleManager.instance.promiseTimer.waitFor (this.animationTime / 2)
+            .then (() => {
+                Debug.Log ("生成奖励");
+            });
     }
 }
