@@ -21,12 +21,14 @@ public class NormalBullet : BaseBullet {
         if (other.tag == TagGroup.block) {
             // 回收子弹
             this.bulletData.isDie = true;
+            this.spawnBulletEffect ();
             return;
         }
 
         if (this.bulletData.tag == TagGroup.enemyBullet && other.tag == TagGroup.player) {
             // 回收子弹、对玩家造成伤害
             this.bulletData.isDie = true;
+            this.spawnBulletEffect ();
             ModuleManager.instance.playerManager.injured (this.bulletData.damage);
             return;
         }
@@ -34,6 +36,7 @@ public class NormalBullet : BaseBullet {
         if (this.bulletData.tag == TagGroup.playerBullet && other.tag == TagGroup.enemy) {
             // 回收子弹、对敌人造成伤害
             this.bulletData.isDie = true;
+            this.spawnBulletEffect ();
             BaseEnemy enemy = other.GetComponent<BaseEnemy> ();
             enemy.injured (this.bulletData.damage);
             return;
@@ -49,11 +52,7 @@ public class NormalBullet : BaseBullet {
         ParticleSystem bulletEffect = bulletEffectNode.GetComponent<ParticleSystem> ();
 
         ParticleSystem.MainModule mainParticle = bulletEffect.main;
-
-    }
-
-    private void OnParticleSystemStopped () {
-
+        mainParticle.stopAction = ParticleSystemStopAction.Callback;
     }
 
     protected override void move (float dt) {
