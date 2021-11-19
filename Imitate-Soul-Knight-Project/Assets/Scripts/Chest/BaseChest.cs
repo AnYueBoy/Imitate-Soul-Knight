@@ -6,10 +6,10 @@
 using UnityEngine;
 public class BaseChest : MonoBehaviour {
     [SerializeField]
-    private Transform left;
+    protected Transform left;
 
     [SerializeField]
-    private Transform right;
+    protected Transform right;
 
     public virtual void localUpdate(float dt){
 

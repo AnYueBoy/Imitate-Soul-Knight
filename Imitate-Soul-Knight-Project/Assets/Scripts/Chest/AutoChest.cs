@@ -3,6 +3,7 @@
  * @Date: 2021-11-19 14:05:16 
  * @Description: 自动宝箱
  */
+using DG.Tweening;
 using UFramework;
 using UnityEngine;
 public class AutoChest : BaseChest {
@@ -32,5 +33,8 @@ public class AutoChest : BaseChest {
 
     public void spawnObjects () {
         // TODO: 触发动画并生成奖励物品
+        this.left.DOLocalMoveX (-0.43f, 0.5f).SetEase(Ease.OutQuart);
+        this.right.DOLocalMoveX (0.43f, 0.5f).SetEase(Ease.OutQuart);
+
     }
 }
