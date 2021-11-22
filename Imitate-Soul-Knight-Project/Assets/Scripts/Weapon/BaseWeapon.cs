@@ -4,6 +4,7 @@
  * @Description: 武器基类
  */
 using UFramework;
+using UFramework.FrameUtil;
 using UnityEngine;
 
 public class BaseWeapon : MonoBehaviour {
@@ -98,9 +99,13 @@ public class BaseWeapon : MonoBehaviour {
             bulletSpeed += ConstValue.moveSpeed;
         }
 
+        // 产生子弹偏移
+        float randomValue = CommonUtil.getRandomValue (-1, 1);
+        Vector3 endEulerAngles = new Vector3 (launchTrans.eulerAngles.x, launchTrans.eulerAngles.y, launchTrans.eulerAngles.z + randomValue * this.weaponConfigData.bulletOffset);
+        
         ModuleManager.instance.bulletManager.spawnBullet (
             launchTrans.position,
-            launchTrans.eulerAngles,
+            endEulerAngles,
             bulletDir,
             this.weaponTag,
             this.weaponConfigData.bulletUrl,
