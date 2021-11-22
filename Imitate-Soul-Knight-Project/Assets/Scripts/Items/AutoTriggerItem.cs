@@ -48,7 +48,6 @@ public class AutoTriggerItem : BaseItem {
             .DOMove (playerPos, this.animationTime)
             .OnComplete (() => {
                 this.animationCompleted ();
-
             })
             .Play ();
     }
