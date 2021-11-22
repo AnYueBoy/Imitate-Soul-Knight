@@ -16,7 +16,7 @@ public class WeaponConfig : IConfig {
 		}
 	}
 
-	public WeaponConfigData getWeaponConfigDataById (int id) {
-		return this.weaponDic[id];
+	public WeaponConfigData getWeaponConfigDataById (ItemIdEnum id) {
+		return this.weaponDic[(int)id];
 	}
 }

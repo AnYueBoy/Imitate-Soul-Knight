@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchTrans: {fileID: 5875837980605441700}
-  id: 1
+  id: 1001
   shotGunEffect: {fileID: 2844567617569411705}
 --- !u!1 &8028117731048333099
 GameObject:
