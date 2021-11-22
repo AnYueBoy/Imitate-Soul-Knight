@@ -64,4 +64,10 @@ public class PlayerManager : MonoBehaviour {
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
 	}
 
+	public void addMp (float value) {
+		this.battleRoleData.curMp += value;
+		this.battleRoleData.curMp = Mathf.Min (this.battleRoleData.curMaxMp, this.battleRoleData.curMp);
+		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
 }

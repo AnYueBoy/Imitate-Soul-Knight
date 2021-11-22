@@ -6,6 +6,7 @@
 
 using DG.Tweening;
 using UFramework;
+using UFramework.FrameUtil;
 using UnityEngine;
 public class WhiteChest : BaseItem {
     [SerializeField]
@@ -34,13 +35,13 @@ public class WhiteChest : BaseItem {
 
         this.isTriggered = true;
 
-        this.spawnObjects ();
+        this.executeAnimation ();
     }
 
     private readonly float animationTime = 0.5f;
 
-    public void spawnObjects () {
-        // 触发动画并生成奖励物品
+    private void executeAnimation () {
+        // 触发动画
         this.left
             .DOLocalMoveX (-0.43f, this.animationTime)
             .SetEase (Ease.OutQuart)
@@ -52,7 +53,20 @@ public class WhiteChest : BaseItem {
 
         ModuleManager.instance.promiseTimer.waitFor (this.animationTime / 2)
             .then (() => {
-                Debug.Log ("生成奖励");
+                //生成奖励物品
+                this.spawnReward ();
             });
+    }
+
+    private void spawnReward () {
+        // TODO:根据配置生成奖励物品
+
+        // TODO: 根据配置进行随机
+
+        int randomValue = CommonUtil.getRandomValue (2, 4);
+        for (int i = 0; i < randomValue; i++) {
+            Vector3 randomPos = CommonUtil.getCircleRandomPos (this.transform.position, 1);
+            ModuleManager.instance.itemManager.spawnItem (randomPos, ItemIdEnum.MP_ITEM);
+        }
     }
 }

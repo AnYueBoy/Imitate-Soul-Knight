@@ -3,7 +3,7 @@
  * @Date: 2019-12-16 23:05:55 
  * @Description: 工具类
  * @Last Modified by: l hy
- * @Last Modified time: 2021-10-31 22:13:35
+ * @Last Modified time: 2021-11-22 12:23:43
  */
 
 namespace UFramework.FrameUtil {
@@ -379,6 +379,12 @@ namespace UFramework.FrameUtil {
             }
         }
 
+        /// <summary>
+        /// 获取世界坐标下的旋转
+        /// </summary>
+        /// <param name="transform"></param>
+        /// <param name="angles"></param>
+        /// <returns></returns>
         public static Vector3 getWorldEulerAngles (Transform transform, Vector3 angles) {
             Vector3 resultAngles = angles;
             while (transform.parent != null) {
@@ -387,6 +393,18 @@ namespace UFramework.FrameUtil {
             }
 
             return resultAngles;
+        }
+
+        /// <summary>
+        /// 获取圆范围内的随机点位置
+        /// </summary>
+        /// <param name="originVec">圆心坐标</param>
+        /// <param name="radius">半径</param>
+        /// <returns></returns>
+        public static Vector3 getCircleRandomPos (Vector3 originVec, float radius) {
+            float randomX = getRandomValue (-radius, radius);
+            float randomY = getRandomValue (-radius, radius);
+            return new Vector3 (originVec.x + randomX, originVec.y + randomY, originVec.z);
         }
 
         public static string getCurPlatformName () {
