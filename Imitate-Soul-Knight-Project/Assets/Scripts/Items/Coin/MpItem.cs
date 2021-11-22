@@ -8,13 +8,7 @@ using DG.Tweening;
 using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
-public class MpItem : BaseItem {
-
-    private bool isTriggered = false;
-
-    private readonly float triggerDistance = 3f;
-
-    private bool initOver = false;
+public class MpItem : AutoTriggerItem {
 
     public void init (Vector3 endPos) {
         ModuleManager.instance.promiseTimer
@@ -22,47 +16,21 @@ public class MpItem : BaseItem {
             .then (() => {
                 this.transform
                     .DOMove (endPos, 0.9f)
-                    .SetEase(Ease.OutQuart)
+                    .SetEase (Ease.OutQuart)
                     .OnComplete (() => {
                         this.initOver = true;
                     })
                     .Play ();
             });
+
+        // 设置相关参数
+        this.triggerDistance = 3.0f;
+        this.animationTime = 0.35f;
     }
 
-    public override void localUpdate (float dt) {
-        if (!this.initOver) {
-            return;
-        }
-
-        this.check ();
-    }
-
-    private void check () {
-        if (this.isTriggered) {
-            return;
-        }
-
-        float distance = this.getSelfToPlayerDis ();
-
-        if (distance > triggerDistance) {
-            return;
-        }
-
-        this.isTriggered = true;
-
-        this.executeAnimation ();
-    }
-
-    private readonly float animationTime = 0.35f;
-    private void executeAnimation () {
-        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-        this.transform
-            .DOMove (playerPos, this.animationTime)
-            .OnComplete (() => {
-                ObjectPool.instance.returnInstance (this.gameObject);
-                ModuleManager.instance.playerManager.addMp (ConstValue.mpRecoveryValue);
-            })
-            .Play ();
+    protected override void animationCompleted () {
+        base.animationCompleted ();
+        ObjectPool.instance.returnInstance (this.gameObject);
+        ModuleManager.instance.playerManager.addMp (ConstValue.mpRecoveryValue);
     }
 }
