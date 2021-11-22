@@ -1,13 +1,18 @@
 /*
  * @Author: l hy 
- * @Date: 2021-11-19 14:05:16 
- * @Description: 自动宝箱
+ * @Date: 2021-11-22 09:44:51 
+ * @Description: 白色宝箱
  */
+
 using DG.Tweening;
 using UFramework;
 using UnityEngine;
-public class AutoChest : BaseChest {
+public class WhiteChest : BaseItem {
+    [SerializeField]
+    protected Transform left;
 
+    [SerializeField]
+    protected Transform right;
     private readonly float triggerDistance = 0.85f;
 
     private bool isTriggered = false;
@@ -21,8 +26,7 @@ public class AutoChest : BaseChest {
             return;
         }
 
-        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
-        float distance = (this.transform.position - playerTrans.position).magnitude;
+        float distance = this.getSelfToPlayerDis ();
 
         if (distance > triggerDistance) {
             return;

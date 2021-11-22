@@ -222,6 +222,6 @@ public class Room {
 		List<Vector3> randomPosList = this.getRandomPos (1);
 		Vector3 randomPos = randomPosList[0];
 
-		ModuleManager.instance.chestManager.spawnChest (randomPos, SceneObjectAssetsUrl.smallWhiteChest);
+		ModuleManager.instance.itemManager.spawnItem (randomPos, ItemIdEnum.WHITE_CHEST);
 	}
 }
