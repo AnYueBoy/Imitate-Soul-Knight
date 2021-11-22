@@ -65,8 +65,9 @@ public class WhiteChest : BaseItem {
 
         int randomValue = CommonUtil.getRandomValue (2, 4);
         for (int i = 0; i < randomValue; i++) {
-            Vector3 randomPos = CommonUtil.getCircleRandomPos (this.transform.position, 1);
-            ModuleManager.instance.itemManager.spawnItem (randomPos, ItemIdEnum.MP_ITEM);
+            Vector3 randomPos = CommonUtil.getCircleRandomPos (this.transform.position, 1.5f);
+            MpItem item = (MpItem) ModuleManager.instance.itemManager.spawnItem (this.transform.position, ItemIdEnum.MP_ITEM);
+            item.init (randomPos);
         }
     }
 }

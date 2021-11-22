@@ -14,7 +14,27 @@ public class MpItem : BaseItem {
 
     private readonly float triggerDistance = 3f;
 
+    private bool initOver = false;
+
+    public void init (Vector3 endPos) {
+        ModuleManager.instance.promiseTimer
+            .waitFor (0.15f)
+            .then (() => {
+                this.transform
+                    .DOMove (endPos, 0.9f)
+                    .SetEase(Ease.OutQuart)
+                    .OnComplete (() => {
+                        this.initOver = true;
+                    })
+                    .Play ();
+            });
+    }
+
     public override void localUpdate (float dt) {
+        if (!this.initOver) {
+            return;
+        }
+
         this.check ();
     }
 

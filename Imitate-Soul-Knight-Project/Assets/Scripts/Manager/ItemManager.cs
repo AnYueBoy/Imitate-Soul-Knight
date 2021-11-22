@@ -21,7 +21,7 @@ public class ItemManager {
         }
     }
 
-    public void spawnItem (Vector3 pos, ItemIdEnum id) {
+    public BaseItem spawnItem (Vector3 pos, ItemIdEnum id) {
         string url = this.getItemPreUrl (id);
         GameObject itemPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (url);
         GameObject itemNode = ObjectPool.instance.requestInstance (itemPrefab);
@@ -31,6 +31,7 @@ public class ItemManager {
 
         BaseItem item = itemNode.GetComponent<BaseItem> ();
         this.itemSet.Add (item);
+        return item;
     }
 
     private string getItemPreUrl (ItemIdEnum id) {
