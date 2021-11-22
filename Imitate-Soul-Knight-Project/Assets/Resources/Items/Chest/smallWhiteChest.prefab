@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3143690908182049637}
-  - component: {fileID: 1008221563763934232}
+  - component: {fileID: 4293120898140091576}
   m_Layer: 0
   m_Name: smallWhiteChest
   m_TagString: Untagged
@@ -116,7 +116,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1008221563763934232
+--- !u!114 &4293120898140091576
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1371901970351027453}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d6662a6c65b2474485b08116d35aa67, type: 3}
+  m_Script: {fileID: 11500000, guid: 2122fd4c6870d1548979cb7990730e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   left: {fileID: 6235541831183434925}
