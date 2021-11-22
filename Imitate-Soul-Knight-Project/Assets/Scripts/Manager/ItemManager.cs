@@ -23,7 +23,6 @@ public class ItemManager {
 
     public void spawnItem (Vector3 pos, ItemIdEnum id) {
         string url = this.getItemPreUrl (id);
-        Debug.Log ("Url:" + url);
         GameObject itemPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (url);
         GameObject itemNode = ObjectPool.instance.requestInstance (itemPrefab);
 
