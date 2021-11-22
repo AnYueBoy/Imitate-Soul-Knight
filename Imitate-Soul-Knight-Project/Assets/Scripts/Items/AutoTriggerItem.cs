@@ -4,15 +4,10 @@
  * @Description: 自动触发item
  */
 
-using DG.Tweening;
 using UFramework;
-using UFramework.GameCommon;
 using UnityEngine;
 
 public class AutoTriggerItem : BaseItem {
-    protected bool isTriggered = false;
-
-    protected float triggerDistance = 3f;
 
     protected bool initOver = false;
 
@@ -22,7 +17,12 @@ public class AutoTriggerItem : BaseItem {
         }
 
         this.check ();
+
+        this.executeAnimation (dt);
     }
+
+    protected bool isTriggered = false;
+    protected float triggerDistance = 3f;
 
     protected void check () {
         if (this.isTriggered) {
@@ -36,23 +36,45 @@ public class AutoTriggerItem : BaseItem {
         }
 
         this.isTriggered = true;
-
-        this.executeAnimation ();
+        this.isExecuteAnimation = true;
     }
 
-    protected float animationTime = 0.35f;
+    protected float animationTime = 0.2f;
+    protected bool isExecuteAnimation = false;
+    protected float curAnimationTimer = 0;
 
-    protected virtual void executeAnimation () {
+    protected virtual void executeAnimation (float dt) {
+        if (!this.isExecuteAnimation) {
+            return;
+        }
+        float distance = this.getSelfToPlayerDis ();
+        float speed = distance / (this.animationTime - this.curAnimationTimer);
+
         Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-        this.transform
-            .DOMove (playerPos, this.animationTime)
-            .OnComplete (() => {
-                this.animationCompleted ();
-            })
-            .Play ();
+        Vector3 moveDir = (playerPos - this.transform.position).normalized;
+
+        this.transform.position = this.transform.position + moveDir * speed * dt;
+
+        this.curAnimationTimer += dt;
+
+        distance = this.getSelfToPlayerDis ();
+        if (distance < 0.15f) {
+            this.isExecuteAnimation = false;
+            this.animationCompleted ();
+        }
     }
 
     protected virtual void animationCompleted () {
 
+    }
+
+    protected virtual void reset () {
+        this.initOver = this.isExecuteAnimation = this.isTriggered = false;
+
+        this.curAnimationTimer = 0;
+    }
+
+    protected void OnDisable () {
+        this.reset ();
     }
 }

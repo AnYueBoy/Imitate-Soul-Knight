@@ -24,8 +24,8 @@ public class MpItem : AutoTriggerItem {
             });
 
         // 设置相关参数
-        this.triggerDistance = 3.0f;
-        this.animationTime = 0.35f;
+        this.triggerDistance = 3.5f;
+        this.animationTime = 0.2f;
     }
 
     protected override void animationCompleted () {
