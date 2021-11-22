@@ -54,7 +54,7 @@ public class MpItem : BaseItem {
         this.executeAnimation ();
     }
 
-    private readonly float animationTime = 0.4f;
+    private readonly float animationTime = 0.35f;
     private void executeAnimation () {
         Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
         this.transform
