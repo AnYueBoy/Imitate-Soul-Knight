@@ -37,24 +37,16 @@ public class ItemManager {
     private string getItemPreUrl (ItemIdEnum id) {
         int idNumber = (int) id;
         int preId = idNumber / 1000;
-
         switch (preId) {
             case 1:
                 return "Items/Weapon/" + idNumber;
-
             case 2:
                 return "Items/Chest/" + idNumber;
-
             case 3:
                 return "Items/Coin/" + idNumber;
-
-            case 4:
-                return "Items/Weapon/" + idNumber;
             default:
-                break;
+                Debug.LogWarning ("except value: " + preId);
+                return null;
         }
-
-        return null;
-
     }
 }
