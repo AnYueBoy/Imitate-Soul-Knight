@@ -5,7 +5,7 @@
 			"name": "破旧短枪",
 			"describe": "一把破旧的短枪",
 			"launchInterval": 0.3,
-			"damage": 4,
+			"damage": 35,
 			"launchCount": 1,
 			"bulletSpeed": 10,
 			"bulletUrl": "Bullet/bullet_1",
