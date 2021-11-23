@@ -1,17 +1,14 @@
 /*
  * @Author: l hy 
- * @Date: 2021-11-22 09:35:59 
- * @Description: mp
+ * @Date: 2021-11-23 18:08:52 
+ * @Description: 金钱
  */
-
 using DG.Tweening;
 using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
-public class MpItem : AutoTriggerItem {
-
-    private readonly float mpRecoveryValue = 3;
-
+public class CoinItem : AutoTriggerItem {
+    private readonly int coinValue = 5;
     public void init (Vector3 endPos) {
         ModuleManager.instance.promiseTimer
             .waitFor (0.15f)
@@ -33,6 +30,6 @@ public class MpItem : AutoTriggerItem {
     protected override void animationCompleted () {
         base.animationCompleted ();
         ObjectPool.instance.returnInstance (this.gameObject);
-        ModuleManager.instance.playerManager.addMp (this.mpRecoveryValue);
+        ModuleManager.instance.playerManager.addCoin (this.coinValue);
     }
 }

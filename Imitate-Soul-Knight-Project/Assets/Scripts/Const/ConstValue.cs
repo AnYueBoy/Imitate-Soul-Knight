@@ -3,7 +3,7 @@
  * @Date: 2021-10-31 19:10:03 
  * @Description: 常量
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-22 11:21:11
+ * @Last Modified time: 2021-11-23 18:10:32
  */
 
 public class ConstValue {
@@ -27,9 +27,4 @@ public class ConstValue {
     /// 角色移动速度 
     /// </summary>
     public const float moveSpeed = 7;
-
-    /// <summary>
-    /// mp回复值 
-    /// </summary>
-    public const float mpRecoveryValue = 5;
 }

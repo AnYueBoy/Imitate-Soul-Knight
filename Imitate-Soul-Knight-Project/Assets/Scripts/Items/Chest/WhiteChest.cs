@@ -63,10 +63,17 @@ public class WhiteChest : BaseItem {
 
         // TODO: 根据配置进行随机
 
-        int randomValue = CommonUtil.getRandomValue (2, 4);
-        for (int i = 0; i < randomValue; i++) {
+        int mpRandomValue = CommonUtil.getRandomValue (2, 4);
+        for (int i = 0; i < mpRandomValue; i++) {
             Vector3 randomPos = CommonUtil.getCircleRandomPos (this.transform.position, 1.5f);
             MpItem item = (MpItem) ModuleManager.instance.itemManager.spawnItem (this.transform.position, ItemIdEnum.MP_ITEM);
+            item.init (randomPos);
+        }
+
+        int coinRandomValue = CommonUtil.getRandomValue (4, 6);
+        for (int i = 0; i < coinRandomValue; i++) {
+            Vector3 randomPos = CommonUtil.getCircleRandomPos (this.transform.position, 1.5f);
+            CoinItem item = (CoinItem) ModuleManager.instance.itemManager.spawnItem (this.transform.position, ItemIdEnum.COIN_ITEM);
             item.init (randomPos);
         }
     }
