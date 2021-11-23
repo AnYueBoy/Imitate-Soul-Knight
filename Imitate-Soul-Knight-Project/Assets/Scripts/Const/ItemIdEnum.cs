@@ -7,4 +7,6 @@ public enum ItemIdEnum {
     MP_ITEM = 3001,
 
     COIN_ITEM = 3002,
+
+    PORTAL = 4001,
 }

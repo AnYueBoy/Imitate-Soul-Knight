@@ -44,6 +44,8 @@ public class ItemManager {
                 return "Items/Chest/" + idNumber;
             case 3:
                 return "Items/Coin/" + idNumber;
+            case 4:
+                return "Items/Portal/" + idNumber;
             default:
                 Debug.LogWarning ("except value: " + preId);
                 return null;
