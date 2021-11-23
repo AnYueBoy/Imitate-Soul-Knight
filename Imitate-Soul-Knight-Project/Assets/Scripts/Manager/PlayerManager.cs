@@ -70,4 +70,14 @@ public class PlayerManager : MonoBehaviour {
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
 	}
 
+	public void addCoin (int value) {
+		this.battleRoleData.curCoin += value;
+		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
+	public void consumeCoin (int value) {
+		this.battleRoleData.curCoin -= value;
+		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
 }

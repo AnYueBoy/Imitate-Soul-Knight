@@ -23,6 +23,8 @@ public class BattleRoleData : BaseData {
 
     public float curCriticalHit;
 
+    public int curCoin;
+
     public BattleRoleData (int roleId) {
         this.roleId = roleId;
 
@@ -35,5 +37,7 @@ public class BattleRoleData : BaseData {
         this.curArmor = this.curMaxArmor = roleConfigData.armor;
 
         this.curCriticalHit = roleConfigData.criticalHit;
+
+        this.curCoin = 0;
     }
 }

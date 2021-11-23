@@ -26,6 +26,9 @@ public class RoleInfo : MonoBehaviour {
     [SerializeField]
     private Text curArmorText;
 
+    [SerializeField]
+    private Text curCoinText;
+
     private void OnEnable () {
         ListenerManager.instance.add (EventName.ATTRIBUTE_CHANGE, this, this.refreshInfo);
         this.refreshInfo ();
@@ -46,6 +49,8 @@ public class RoleInfo : MonoBehaviour {
 
         this.curArmorText.text = battleRoleData.curArmor + "/" + battleRoleData.curMaxArmor;
         this.curArmorImage.fillAmount = battleRoleData.curArmor / battleRoleData.curMaxArmor;
+
+        this.curCoinText.text = battleRoleData.curCoin.ToString ();
     }
 
     private void OnDisable () {
