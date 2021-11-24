@@ -13,32 +13,49 @@ public class PlayerManager : MonoBehaviour {
 
 	public BattleRoleData battleRoleData;
 
+	private BaseWeapon curWeapon;
+
 	[SerializeField]
 	private CinemachineVirtualCamera cinemaCamera;
 
 	public void init () {
+		// 构建战斗角色
+		this.buildBattleRole ();
+	}
+
+	private void buildBattleRole () {
+		// 构建角色实例
 		GameObject playerPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (RoleAssetsUrl.player);
 		GameObject playerNode = ObjectPool.instance.requestInstance (playerPrefab);
 		playerNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 		this.roleControl = playerNode.GetComponent<RoleControl> ();
 		cinemaCamera.Follow = this.roleControl.transform;
 
-		this.buildBattleRoleData ();
-	}
-
-	private void buildBattleRoleData () {
+		// 构建角色数据
 		int curRoleId = ModuleManager.instance.playerDataManager.getCurRoleId ();
 		this.battleRoleData = new BattleRoleData (curRoleId);
+
+		// 根据当前武器生成武器实例
+		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
+		string weaponUrl = ItemManager.getItemPreUrl (ItemIdEnum.NORMAL_WEAPON);
+		GameObject weaponPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (weaponUrl);
+		GameObject weaponNode = ObjectPool.instance.requestInstance (weaponPrefab);
+		weaponNode.transform.SetParent (this.roleControl.weaponParent);
+		weaponNode.transform.localPosition = Vector3.zero;
+		this.curWeapon = weaponNode.GetComponent<BaseWeapon> ();
+		this.triggerSwitchWeapon ();
 	}
 
 	public void localUpdate (float dt) {
 		this.roleControl?.localUpdate (dt);
+		this.curWeapon?.localUpdate (dt);
 	}
 
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
 	}
 
+	#region  数据访问
 	public void injured (float damage) {
 		float originArmor = this.battleRoleData.curArmor;
 		this.battleRoleData.curArmor -= damage;
@@ -79,5 +96,25 @@ public class PlayerManager : MonoBehaviour {
 		this.battleRoleData.curCoin -= value;
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
 	}
+
+	#endregion
+
+	#region  输入调用
+
+	public void triggerAttack () {
+		this.curWeapon.launchBullet (this.roleControl.transform.localScale.x);
+	}
+
+	public void triggerInterface () {
+
+	}
+
+	public void triggerSwitchWeapon () {
+		// FIXME: 临时逻辑
+		this.curWeapon.init (TagGroup.playerBullet);
+	}
+
+	public void triggerSkill () { }
+	#endregion
 
 }

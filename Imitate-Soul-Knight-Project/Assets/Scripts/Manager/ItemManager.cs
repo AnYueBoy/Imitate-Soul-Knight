@@ -22,7 +22,7 @@ public class ItemManager {
     }
 
     public BaseItem spawnItem (Vector3 pos, ItemIdEnum id) {
-        string url = this.getItemPreUrl (id);
+        string url = getItemPreUrl (id);
         GameObject itemPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (url);
         GameObject itemNode = ObjectPool.instance.requestInstance (itemPrefab);
 
@@ -34,7 +34,7 @@ public class ItemManager {
         return item;
     }
 
-    private string getItemPreUrl (ItemIdEnum id) {
+    public static string getItemPreUrl (ItemIdEnum id) {
         int idNumber = (int) id;
         int preId = idNumber / 1000;
         switch (preId) {
