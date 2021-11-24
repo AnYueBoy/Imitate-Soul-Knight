@@ -22,12 +22,15 @@ public class PassiveTriggerItem : BaseItem {
         float distance = this.getSelfToPlayerDis ();
 
         if (distance > triggerDistance) {
+            ModuleManager.instance.playerManager.removeInterfaceItem (this);
             return;
         }
+        ModuleManager.instance.playerManager.addInterfaceItem (this);
     }
 
     public virtual void triggerHandler () {
         this.isTriggered = true;
+        ModuleManager.instance.playerManager.removeInterfaceItem (this);
         // TODO: 具体的触发逻辑
     }
 

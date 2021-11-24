@@ -125,7 +125,12 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public void triggerInterface () {
-
+		PassiveTriggerItem interfaceItem = this.getCloseInterfaceItem ();
+		if (interfaceItem == null) {
+			Debug.LogWarning ("can not get close interface item");
+			return;
+		}
+		interfaceItem.triggerHandler ();
 	}
 
 	public void triggerSwitchWeapon () {
@@ -135,5 +140,21 @@ public class PlayerManager : MonoBehaviour {
 
 	public void triggerSkill () { }
 	#endregion
+
+	private PassiveTriggerItem getCloseInterfaceItem () {
+		float closeDistance = float.MaxValue;
+		PassiveTriggerItem targetItem = null;
+		foreach (PassiveTriggerItem item in this.interfaceSet) {
+			float itemDistance = item.getSelfToPlayerDis ();
+			if (itemDistance > closeDistance) {
+				continue;
+			}
+
+			closeDistance = itemDistance;
+			targetItem = item;
+		}
+
+		return targetItem;
+	}
 
 }
