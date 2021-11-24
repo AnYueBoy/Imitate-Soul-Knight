@@ -25,6 +25,8 @@ public class InputManager : MonoBehaviour {
 
 	private Action switchHandler;
 
+	private Action interactiveHandler;
+
 	public void localUpdate (float dt) {
 		this.editorControl ();
 		this.mobileControl ();
@@ -142,6 +144,14 @@ public class InputManager : MonoBehaviour {
 	public void unRegisterSwitch () {
 		this.switchHandler = null;
 	}
+
+	public void registerInteractive (Action interactiveCallback) {
+		this.interactiveHandler = interactiveCallback;
+	}
+
+	public void unRegisterInteractive () {
+		this.interactiveHandler = null;
+	}
 	#endregion
 
 	#region  按钮触发
@@ -152,7 +162,10 @@ public class InputManager : MonoBehaviour {
 	public void triggerSwitch () {
 		this.switchHandler?.Invoke ();
 	}
+
+	public void triggerInteractive () {
+		this.interactiveHandler?.Invoke ();
+	}
 	#endregion
 
-	
 }
