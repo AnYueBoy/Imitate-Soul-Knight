@@ -58,7 +58,7 @@ public class AutoTriggerItem : BaseItem {
         this.curAnimationTimer += dt;
 
         distance = this.getSelfToPlayerDis ();
-        if (distance < 0.15f) {
+        if (distance < 0.4f) {
             this.isExecuteAnimation = false;
             this.animationCompleted ();
         }
