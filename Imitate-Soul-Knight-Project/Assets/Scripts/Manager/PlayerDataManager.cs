@@ -58,5 +58,9 @@ public class PlayerDataManager {
     public int getCurRoleId () {
         return this.playerData.curRoleId;
     }
+
+    public int getCurWeaponId () {
+        return this.playerData.curWeaponId;
+    }
     #endregion
 }
