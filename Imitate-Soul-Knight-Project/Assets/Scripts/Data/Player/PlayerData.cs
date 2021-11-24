@@ -14,4 +14,6 @@ public class PlayerData : BaseData {
     /// 当前角色id 
     /// </summary>
     public int curRoleId = 1;
+
+    public int curWeaponId = 1001;
 }

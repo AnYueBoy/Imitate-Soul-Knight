@@ -18,35 +18,24 @@ public class RoleControl : MonoBehaviour {
     [SerializeField]
     private Transform weaponRotaionTrans;
 
-    public LayerMask checkLayer;
+    public Transform weaponParent;
 
-    public SpriteRenderer weaponSprite;
+    public LayerMask checkLayer;
 
     private Animator animator;
 
-    [SerializeField]
-    private BaseWeapon curWeapon;
-
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
-        ModuleManager.instance.inputManager.registerSwitch (this.switchWeapon);
-        ModuleManager.instance.inputManager.registerSkill (this.useSkill);
-        ModuleManager.instance.inputManager.registerAttack (this.attack);
-
-        this.switchWeapon ();
     }
 
     public void localUpdate (float dt) {
         this.roleAni ();
         this.roleMove (dt);
         this.refreshWeaponRotate ();
-        this.curWeapon.localUpdate (dt);
     }
 
     private void OnDisable () {
-        ModuleManager.instance.inputManager.unRegisterSwitch ();
-        ModuleManager.instance.inputManager.unRegisterSkill ();
-        ModuleManager.instance.inputManager.unRegisterAttack ();
+
     }
 
     private void roleMove (float dt) {
@@ -116,17 +105,5 @@ public class RoleControl : MonoBehaviour {
             this.animator.SetBool ("IsMove", true);
         }
 
-    }
-
-    private void switchWeapon () {
-        this.curWeapon.init (TagGroup.playerBullet);
-    }
-
-    private void useSkill () {
-
-    }
-
-    private void attack () {
-        this.curWeapon.launchBullet (transform.localScale.x);
     }
 }
