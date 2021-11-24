@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2021-10-19 17:22:16 
@@ -17,6 +18,8 @@ public class PlayerManager : MonoBehaviour {
 
 	[SerializeField]
 	private CinemachineVirtualCamera cinemaCamera;
+
+	private HashSet<PassiveTriggerItem> interfaceSet = new HashSet<PassiveTriggerItem> ();
 
 	public void init () {
 		// 构建战斗角色
@@ -95,6 +98,16 @@ public class PlayerManager : MonoBehaviour {
 	public void consumeCoin (int value) {
 		this.battleRoleData.curCoin -= value;
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
+	}
+
+	public void addInterfaceItem (PassiveTriggerItem item) {
+		this.interfaceSet.Add (item);
+	}
+
+	public void removeInterfaceItem (PassiveTriggerItem item) {
+		if (this.interfaceSet.Contains (item)) {
+			this.interfaceSet.Remove (item);
+		}
 	}
 
 	#endregion
