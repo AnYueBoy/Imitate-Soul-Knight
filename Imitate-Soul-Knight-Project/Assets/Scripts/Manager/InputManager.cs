@@ -5,6 +5,7 @@
  */
 
 using System;
+using UFramework;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,12 @@ public class InputManager : MonoBehaviour {
 	private Action switchHandler;
 
 	private Action interactiveHandler;
+
+	private void OnEnable () {
+		this.attackBtn.registerPressed (() => {
+			this.triggerAttack ();
+		});
+	}
 
 	public void localUpdate (float dt) {
 		this.editorControl ();
@@ -120,51 +127,21 @@ public class InputManager : MonoBehaviour {
 
 	#endregion
 
-	#region  注册/解注册
-	public void registerAttack (Action attackCallback) {
-		this.attackBtn.registerPressed (attackCallback);
-	}
-
-	public void unRegisterAttack () {
-		this.attackBtn.unRegisterPressed ();
-	}
-
-	public void registerSkill (Action skillCallback) {
-		this.skillHandler = skillCallback;
-	}
-
-	public void unRegisterSkill () {
-		this.skillHandler = null;
-	}
-
-	public void registerSwitch (Action switchCallback) {
-		this.switchHandler = switchCallback;
-	}
-
-	public void unRegisterSwitch () {
-		this.switchHandler = null;
-	}
-
-	public void registerInteractive (Action interactiveCallback) {
-		this.interactiveHandler = interactiveCallback;
-	}
-
-	public void unRegisterInteractive () {
-		this.interactiveHandler = null;
-	}
-	#endregion
-
 	#region  按钮触发
 	public void triggerSkill () {
-		this.skillHandler?.Invoke ();
+		ModuleManager.instance.playerManager.triggerSkill ();
 	}
 
-	public void triggerSwitch () {
-		this.switchHandler?.Invoke ();
+	public void triggerSwitchWeapon () {
+		ModuleManager.instance.playerManager.triggerSwitchWeapon ();
 	}
 
 	public void triggerInteractive () {
-		this.interactiveHandler?.Invoke ();
+		ModuleManager.instance.playerManager.triggerInterface ();
+	}
+
+	public void triggerAttack () {
+		ModuleManager.instance.playerManager.triggerAttack ();
 	}
 	#endregion
 

@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15a91ef32d15c45478a57b3749b925c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackBtn: {fileID: 0}
+  attackBtn: {fileID: 1180525735}
   canvasRect: {fileID: 1944031416}
   moveRocker: {fileID: 26273831}
   movePointer: {fileID: 260314170}
