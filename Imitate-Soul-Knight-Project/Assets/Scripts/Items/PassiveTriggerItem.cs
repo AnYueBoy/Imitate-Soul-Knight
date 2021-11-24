@@ -5,7 +5,6 @@
  */
 
 using UFramework;
-using UnityEngine;
 public class PassiveTriggerItem : BaseItem {
     public override void localUpdate (float dt) {
         this.check ();
@@ -31,7 +30,7 @@ public class PassiveTriggerItem : BaseItem {
     public virtual void triggerHandler () {
         this.isTriggered = true;
         ModuleManager.instance.playerManager.removeInterfaceItem (this);
-        // TODO: 具体的触发逻辑
+        // 具体的触发逻辑
     }
 
     protected virtual void reset () {
