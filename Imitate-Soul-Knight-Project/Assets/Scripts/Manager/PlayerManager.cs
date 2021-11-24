@@ -101,12 +101,18 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public void addInterfaceItem (PassiveTriggerItem item) {
+		if (this.interfaceSet.Count <= 0) {
+			ModuleManager.instance.inputManager.showInterfaceBtn ();
+		}
 		this.interfaceSet.Add (item);
 	}
 
 	public void removeInterfaceItem (PassiveTriggerItem item) {
 		if (this.interfaceSet.Contains (item)) {
 			this.interfaceSet.Remove (item);
+			if (this.interfaceSet.Count <= 0) {
+				ModuleManager.instance.inputManager.showAttackBtn ();
+			}
 		}
 	}
 

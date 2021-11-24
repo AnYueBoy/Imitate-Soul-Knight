@@ -4,7 +4,7 @@
  * @Description: 输入管理
  */
 
-using System;
+using DG.Tweening;
 using UFramework;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +14,9 @@ public class InputManager : MonoBehaviour {
 	[SerializeField]
 	private ActionButton attackBtn;
 
+	[SerializeField]
+	private Button interfaceBtn;
+
 	private Vector2 _moveDir = Vector2.zero;
 
 	public Vector2 MoveDir { get => _moveDir; }
@@ -22,16 +25,30 @@ public class InputManager : MonoBehaviour {
 
 	public RectTransform moveRocker;
 
-	private Action skillHandler;
-
-	private Action switchHandler;
-
-	private Action interactiveHandler;
+	private readonly float animationTime = 0.5f;
+	private Tween interfaceTween;
+	private Tween attackTween;
 
 	private void OnEnable () {
 		this.attackBtn.registerPressed (() => {
 			this.triggerAttack ();
 		});
+
+		this.interfaceTween = this.interfaceBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.one, this.animationTime)
+			.OnComplete (() => {
+				this.interfaceBtn.interactable = true;
+			})
+			.SetAutoKill (false);
+
+		this.attackTween = this.attackBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.zero, this.animationTime)
+			.OnComplete (() => {
+				this.attackBtn.interactable = true;
+			})
+			.SetAutoKill (false);
 	}
 
 	public void localUpdate (float dt) {
@@ -142,6 +159,21 @@ public class InputManager : MonoBehaviour {
 
 	public void triggerAttack () {
 		ModuleManager.instance.playerManager.triggerAttack ();
+	}
+	#endregion
+
+	#region  动画
+
+	public void showInterfaceBtn () {
+		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
+		this.interfaceTween.Play ();
+		this.attackTween.Play ();
+	}
+
+	public void showAttackBtn () {
+		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
+		this.interfaceTween.PlayBackwards ();
+		this.attackTween.PlayBackwards ();
 	}
 	#endregion
 
