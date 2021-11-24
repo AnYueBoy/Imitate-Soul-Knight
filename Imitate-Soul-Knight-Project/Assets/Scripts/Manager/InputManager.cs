@@ -25,30 +25,19 @@ public class InputManager : MonoBehaviour {
 
 	public RectTransform moveRocker;
 
-	private readonly float animationTime = 0.5f;
-	private Tween interfaceTween;
-	private Tween attackTween;
+	private readonly float animationTime = 0.3f;
+	private Tween interfaceShowTween;
+	private Tween attackShowTween;
+
+	private Tween interfaceHideTween;
+	private Tween attackHideTween;
 
 	private void OnEnable () {
 		this.attackBtn.registerPressed (() => {
 			this.triggerAttack ();
 		});
 
-		this.interfaceTween = this.interfaceBtn
-			.GetComponent<RectTransform> ()
-			.DOScale (Vector3.one, this.animationTime)
-			.OnComplete (() => {
-				this.interfaceBtn.interactable = true;
-			})
-			.SetAutoKill (false);
-
-		this.attackTween = this.attackBtn
-			.GetComponent<RectTransform> ()
-			.DOScale (Vector3.zero, this.animationTime)
-			.OnComplete (() => {
-				this.attackBtn.interactable = true;
-			})
-			.SetAutoKill (false);
+		this.createAnimationTween ();
 	}
 
 	public void localUpdate (float dt) {
@@ -166,14 +155,46 @@ public class InputManager : MonoBehaviour {
 
 	public void showInterfaceBtn () {
 		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
-		this.interfaceTween.Play ();
-		this.attackTween.Play ();
+		this.interfaceShowTween.Restart ();
+		this.attackHideTween.Restart ();
 	}
 
 	public void showAttackBtn () {
 		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
-		this.interfaceTween.PlayBackwards ();
-		this.attackTween.PlayBackwards ();
+		this.interfaceHideTween.Restart ();
+		this.attackShowTween.Restart ();
+	}
+
+	private void createAnimationTween () {
+		this.interfaceShowTween = this.interfaceBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.one, this.animationTime)
+			.OnComplete (() => {
+				this.interfaceBtn.interactable = true;
+			})
+			.SetAutoKill (false)
+			.Pause ();
+
+		this.interfaceHideTween = this.interfaceBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.zero, this.animationTime)
+			.SetAutoKill (false)
+			.Pause ();
+
+		this.attackShowTween = this.attackBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.one, this.animationTime)
+			.OnComplete (() => {
+				this.attackBtn.interactable = true;
+			})
+			.SetAutoKill (false)
+			.Pause ();
+
+		this.attackHideTween = this.attackBtn
+			.GetComponent<RectTransform> ()
+			.DOScale (Vector3.zero, this.animationTime)
+			.SetAutoKill (false)
+			.Pause ();
 	}
 	#endregion
 

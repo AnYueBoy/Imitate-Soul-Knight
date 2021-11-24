@@ -145,6 +145,8 @@ public class Room {
 
 	private void createRoomItem () {
 		RoomTypeEnum roomType = this.roomData.roomType;
+		Vector3 roomCenterToWorldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
+
 		switch (roomType) {
 			case RoomTypeEnum.BATTLE:
 				this.spawnEnemy ();
@@ -159,13 +161,13 @@ public class Room {
 				break;
 
 			case RoomTypeEnum.PORTAL:
-				// TODO: 生成传送门
+				//  生成传送门
+				ModuleManager.instance.itemManager.spawnItem (roomCenterToWorldPos, ItemIdEnum.PORTAL);
 				break;
 
 			case RoomTypeEnum.BORN:
 				// 设置玩家出现在出生房间
-				Vector3 worldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
-				ModuleManager.instance.playerManager.getPlayerTrans ().position = worldPos;
+				ModuleManager.instance.playerManager.getPlayerTrans ().position = roomCenterToWorldPos;
 				break;
 			default:
 				break;
