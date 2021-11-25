@@ -65,7 +65,7 @@ public class PathFinding {
 		int x = CommonUtil.getRandomValue (2, this.roomWidth - 2);
 		int y = CommonUtil.getRandomValue (2, this.roomHeight - 2);
 
-		return this.cellInfoArray[x, y].pos;
+		return this.cellInfoArray[x, y].worldPos;
 	}
 
 	public List<Vector3> findPath (Vector3 origin, Vector3 target) {
@@ -153,14 +153,14 @@ public class PathFinding {
 			if (cell == null) {
 				continue;
 			}
-			pathInfo.Add (cell.pos);
+			pathInfo.Add (cell.worldPos);
 		}
 
 		return pathInfo;
 
 	}
 
-	private Cell getGridByPos (Vector3 targetPos) {
+	public Cell getGridByPos (Vector3 targetPos) {
 		Vector3Int cellPos = ModuleManager.instance.mapManager.floorTilemap.WorldToCell (targetPos);
 		return this.getGridByCellPos (cellPos);
 	}
@@ -178,7 +178,7 @@ public class PathFinding {
 		return this.cellInfoArray[x, y];
 	}
 
-	public List<Cell> getAroundCell (Cell targetCell) {
+	private List<Cell> getAroundCell (Cell targetCell) {
 		List<Cell> cellList = new List<Cell> ();
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {

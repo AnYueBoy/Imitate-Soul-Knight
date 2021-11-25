@@ -8,7 +8,7 @@ using UnityEngine;
 public class Cell {
     public bool isObstacle;
 
-    public Vector3 pos;
+    public Vector3 worldPos;
 
     public int x;
 
@@ -33,7 +33,7 @@ public class Cell {
         int y
     ) {
         this.isObstacle = isObstacle;
-        this.pos = pos;
+        this.worldPos = pos;
         this.x = x;
         this.y = y;
     }

@@ -18,13 +18,16 @@ public class YeZhuProbingAction : ActionNode {
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.playMoveAni ();
+        yeZhu.generateProbingPath ();
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.executeProbing ();
-
-        //TODO: 面向玩家试探移动
+        yeZhu.moveToTargetPos ();
+        if (yeZhu.isReachEnd ()) {
+            yeZhu.generateProbingPath ();
+        }
         return RunningStatus.Executing;
     }
 }
