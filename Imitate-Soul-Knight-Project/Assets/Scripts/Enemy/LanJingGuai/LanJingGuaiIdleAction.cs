@@ -9,7 +9,7 @@ public class LanJingGuaiIdleAction : ActionNode {
         // 玩家未进入此房间时，角色处于待机状态
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
 
-        return !lanJingGuai.isRoomActive () || lanJingGuai.idleTimer < lanJingGuai.idleInterval;
+        return !lanJingGuai.isRoomActive () || lanJingGuai.canExecuteIdle ();
     }
 
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
@@ -19,7 +19,7 @@ public class LanJingGuaiIdleAction : ActionNode {
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        lanJingGuai.stayIdle ();
+        lanJingGuai.executeIdle ();
         return RunningStatus.Executing;
     }
 

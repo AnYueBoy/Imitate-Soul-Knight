@@ -16,11 +16,10 @@ public class LanJingGuaiDeadAction : ActionNode {
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
         lanJingGuai.playerDeadAni ();
-        lanJingGuai.invalidCollider();
+        lanJingGuai.invalidCollider ();
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
-        LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        return RunningStatus.Finished;
+        return RunningStatus.Executing;
     }
 }

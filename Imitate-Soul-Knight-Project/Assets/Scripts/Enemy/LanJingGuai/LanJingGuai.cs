@@ -41,12 +41,17 @@ public class LanJingGuai : BaseEnemy {
 	#endregion
 
 	#region  idle状态
-	public float idleTimer = 1.5f;
+	private float idleTimer = 1.5f;
 
-	public readonly float idleInterval = 1.5f;
-	public void stayIdle () {
+	private readonly float idleInterval = 1.5f;
+
+	public void executeIdle () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
 		this.idleTimer += dt;
+	}
+
+	public bool canExecuteIdle () {
+		return this.idleTimer < idleInterval;
 	}
 
 	public void resetIdleState () {
@@ -174,7 +179,7 @@ public class LanJingGuai : BaseEnemy {
 	#endregion
 
 	#region 死亡状态 
-	
+
 	public void invalidCollider () {
 		if (this.boxCollider2D.enabled) {
 			this.boxCollider2D.enabled = false;
