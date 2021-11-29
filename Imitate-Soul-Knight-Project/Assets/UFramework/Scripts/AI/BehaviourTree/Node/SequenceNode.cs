@@ -35,8 +35,8 @@ namespace UFramework.AI.BehaviourTree.Node {
         }
 
         protected override void onReset (IAgent agent, BlackBoardMemory workingMemory) {
-            if (m_currentNodeIndex >= 0 && m_currentNodeIndex < m_Children.Count) {
-                m_Children[m_currentNodeIndex].reset (agent, workingMemory);
+            foreach (BaseNode node in m_Children) {
+                node.reset (agent, workingMemory);
             }
 
             m_currentNodeIndex = -1;
