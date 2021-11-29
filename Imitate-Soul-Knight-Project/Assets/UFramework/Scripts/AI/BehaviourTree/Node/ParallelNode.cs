@@ -16,7 +16,7 @@ namespace UFramework.AI.BehaviourTree.Node {
         private int m_requestFinishedCount;
         private List<RunningStatus> m_childrenRunning = new List<RunningStatus> ();
         public ParallelNode (int threshold) {
-            // 设定阈值
+            // 设定阈值(指定完成的节点数量)
             m_requestFinishedCount = threshold;
         }
 
