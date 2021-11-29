@@ -16,11 +16,14 @@ public class LanJingGuai : BaseEnemy {
 	private void Start () {
 		blackboardMemory = new BlackBoardMemory ();
 		BTNode = new ParallelNode (1).addChild (
+			new SequenceNode ().addChild (new LanJingGuaiDeadAction ()),
 			new SelectorNode ().addChild (
 				new LanJingGuaiDeadAction (),
-				new LanJingGuaiIdleAction (),
-				new LanJingGuaiRandomMoveAction (),
-				new LanJingGuaiAttackAction ()
+				new SequenceNode ().addChild (
+					new LanJingGuaiIdleAction (),
+					new LanJingGuaiRandomMoveAction (),
+					new LanJingGuaiAttackAction ()
+				)
 			)
 		);
 	}
