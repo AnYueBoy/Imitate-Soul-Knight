@@ -17,9 +17,10 @@ public class YeZhu : BaseEnemy {
         BTNode = new ParallelNode (1).addChild (
             new SelectorNode ().addChild (
                 new YeZhuDeadAction (),
-                new YeZhuIdleAction (),
-                new YeZhuProbingAction (),
-                new YeZhuAttackAction ()
+                new SequenceNode ().addChild (
+                    new YeZhuIdleAction (),
+                    new YeZhuProbingAction (),
+                    new YeZhuAttackAction ())
             )
         );
     }
