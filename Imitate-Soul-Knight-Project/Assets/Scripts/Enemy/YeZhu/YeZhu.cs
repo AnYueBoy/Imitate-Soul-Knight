@@ -49,8 +49,8 @@ public class YeZhu : BaseEnemy {
     #region 试探攻击状态
     private float probingTimer = 0;
     private readonly float probingInterval = 4;
-    private readonly float probingMinDistance = 3;
-    private readonly float probingMaxDistance = 6;
+    private readonly float probingMinDistance = 2;
+    private readonly float probingMaxDistance = 4;
 
     public void executeProbing () {
         float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
@@ -76,6 +76,7 @@ public class YeZhu : BaseEnemy {
         Vector3 downPos = playerPos + Vector3.down * randomProbingDistance;
 
         List<Vector3> posList = new List<Vector3> () { leftPos, rightPos, upPos, downPos };
+        CommonUtil.confusionElement<Vector3> (posList);
 
         foreach (var pos in posList) {
             Cell targetCell = this.pathFinding.getGridByPos (pos);
@@ -168,6 +169,7 @@ public class YeZhu : BaseEnemy {
 
     private void getNextTargetPos () {
         if (this.curMoveIndex >= this.pathPosList.Count) {
+            this.pathPosList = this.drawPathList = null;
             return;
         }
         this.targetPos = this.pathPosList[this.curMoveIndex];
