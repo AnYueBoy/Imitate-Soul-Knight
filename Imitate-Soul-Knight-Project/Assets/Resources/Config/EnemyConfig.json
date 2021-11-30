@@ -11,7 +11,22 @@
 			"maxAttackDistance": 4,
 			"moveSpeed": 0.8,
 			"bulletUrl": "Bullet/bullet_33",
-			"bulletSpeed": 5
+			"bulletSpeed": 5,
+			"sprintSpeed": 2
+		},
+		{
+			"id": 2,
+			"name": "野猪",
+			"describe": "怪如其名",
+			"damage": 12,
+			"hp": 120,
+			"url": "Role/Enemy/yeZhu",
+			"minAttackDistance": 0.0,
+			"maxAttackDistance": 0.0,
+			"moveSpeed": 1,
+			"bulletUrl": "",
+			"bulletSpeed": 0.0,
+			"sprintSpeed": 3
 		}
 	]
 }

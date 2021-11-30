@@ -33,6 +33,5 @@ public class LanJingGuaiAttackAction : ActionNode {
 	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.resetAttackState ();
-		Debug.Log ("attack reset");
 	}
 }

@@ -38,6 +38,8 @@ public class YeZhu : BaseEnemy {
         this.animator.SetBool ("IsDeath", true);
     }
 
+    private float curMoveSpeed = 0;
+
     #endregion
 
     #region 试探攻击状态
@@ -98,7 +100,7 @@ public class YeZhu : BaseEnemy {
             this.probingTimer = this.probingInterval;
             return;
         }
-
+        this.curMoveSpeed = this.enemyConfigData.moveSpeed;
         this.drawPathList = new List<Vector3> (this.pathPosList);
         this.curMoveIndex = 0;
         this.getNextTargetPos ();
@@ -117,7 +119,7 @@ public class YeZhu : BaseEnemy {
 
         float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
         // 步长
-        float step = this.enemyConfigData.moveSpeed * dt;
+        float step = this.curMoveSpeed * dt;
 
         // 笛卡尔分量
         float horizontalStep = step * this.tempMoveDir.x;
@@ -175,7 +177,20 @@ public class YeZhu : BaseEnemy {
     #endregion
 
     #region 攻击状态
+    public void getAimToPlayerPath () {
+        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
+        this.pathPosList = this.pathFinding.findPath (this.transform.position, playerPos);
+        if (this.pathPosList == null) {
+            return;
+        }
+        this.curMoveSpeed = this.enemyConfigData.sprintSpeed;
+        this.curMoveIndex = 0;
+        this.getNextTargetPos ();
+    }
 
+    public void resetAttackState () {
+        this.pathPosList = null;
+    }
     #endregion
 
     #region 死亡状态 

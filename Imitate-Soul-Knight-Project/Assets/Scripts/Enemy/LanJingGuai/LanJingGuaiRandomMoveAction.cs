@@ -38,8 +38,5 @@ public class LanJingGuaiRandomMoveAction : ActionNode {
 	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.resetRandomMoveState ();
-
-		Debug.Log ("random move reset");
-
 	}
 }

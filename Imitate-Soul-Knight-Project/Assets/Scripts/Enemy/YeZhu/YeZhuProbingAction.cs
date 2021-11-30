@@ -28,6 +28,10 @@ public class YeZhuProbingAction : ActionNode {
             yeZhu.generateProbingPath ();
         }
         return RunningStatus.Executing;
+    }
 
+    protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
+        YeZhu yeZhu = (YeZhu) agent;
+        yeZhu.resetProbingState ();
     }
 }

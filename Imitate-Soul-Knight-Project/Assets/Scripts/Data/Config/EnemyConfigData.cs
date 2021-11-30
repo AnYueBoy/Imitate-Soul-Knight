@@ -10,4 +10,5 @@ public class EnemyConfigData : BaseData {
     public float moveSpeed; // 移速
     public string bulletUrl; // 子弹路径
     public float bulletSpeed; // 子弹速度
+    public float sprintSpeed; // 冲刺速度
 }
