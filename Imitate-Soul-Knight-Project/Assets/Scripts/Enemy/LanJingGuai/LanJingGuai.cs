@@ -16,7 +16,6 @@ public class LanJingGuai : BaseEnemy {
 	private void Start () {
 		blackboardMemory = new BlackBoardMemory ();
 		BTNode = new ParallelNode (1).addChild (
-			new SequenceNode ().addChild (new LanJingGuaiDeadAction ()),
 			new SelectorNode ().addChild (
 				new LanJingGuaiDeadAction (),
 				new SequenceNode ().addChild (
@@ -67,7 +66,7 @@ public class LanJingGuai : BaseEnemy {
 
 	private Vector3 tempMoveDir = Vector3.zero;
 
-	public int curMoveIndex = -1;
+	private int curMoveIndex = -1;
 
 	public void moveToTargetPos () {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
@@ -148,8 +147,6 @@ public class LanJingGuai : BaseEnemy {
 	#region  攻击状态
 	private readonly float attackOffset = 0.7f;
 
-	public bool isAttack = false;
-
 	public void attack () {
 		Vector3 leftPos = this.transform.position + Vector3.left * this.attackOffset;
 		Vector3 rightPos = this.transform.position + Vector3.right * this.attackOffset;
@@ -172,11 +169,6 @@ public class LanJingGuai : BaseEnemy {
 		Vector3 downEulerAngles = CommonUtil.getWorldEulerAngles (this.transform, new Vector3 (0, 0, -90));
 		ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, this.bulletTag, this.enemyConfigData.bulletUrl, this.enemyConfigData.bulletSpeed, this.enemyConfigData.damage);
 
-		this.isAttack = true;
-	}
-
-	public void resetAttackState () {
-		this.isAttack = false;
 	}
 
 	#endregion

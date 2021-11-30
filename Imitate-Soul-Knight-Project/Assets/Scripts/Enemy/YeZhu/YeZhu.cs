@@ -12,6 +12,10 @@ using UFramework.FrameUtil;
 using UnityEngine;
 
 public class YeZhu : BaseEnemy {
+
+    [SerializeField]
+    private GameObject sprintEffect;
+
     private void Start () {
         blackboardMemory = new BlackBoardMemory ();
         BTNode = new ParallelNode (1).addChild (
@@ -110,7 +114,7 @@ public class YeZhu : BaseEnemy {
 
     private Vector3 tempMoveDir = Vector3.zero;
 
-    public int curMoveIndex = -1;
+    private int curMoveIndex = -1;
 
     public void moveToTargetPos () {
         if (this.pathPosList == null) {
@@ -135,7 +139,7 @@ public class YeZhu : BaseEnemy {
         this.transform.position += new Vector3 (horizontalStep, verticalStep, 0);
 
         float distance = (this.transform.position - targetPos).magnitude;
-        if (distance < step) {
+        if (distance <= step) {
             this.transform.position = targetPos;
             this.curMoveIndex++;
             this.getNextTargetPos ();
@@ -183,6 +187,7 @@ public class YeZhu : BaseEnemy {
         if (this.pathPosList == null) {
             return;
         }
+        this.drawPathList = new List<Vector3> (this.pathPosList);
         this.curMoveSpeed = this.enemyConfigData.sprintSpeed;
         this.curMoveIndex = 0;
         this.getNextTargetPos ();
@@ -190,6 +195,14 @@ public class YeZhu : BaseEnemy {
 
     public void resetAttackState () {
         this.pathPosList = null;
+    }
+
+    public void showAttackEffect () {
+        this.sprintEffect.SetActive (true);
+    }
+
+    public void hideAttackEffect () {
+        this.sprintEffect.SetActive (false);
     }
     #endregion
 

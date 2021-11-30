@@ -15,12 +15,16 @@ public class YeZhuAttackAction : ActionNode {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.playMoveAni ();
         yeZhu.getAimToPlayerPath ();
-        Debug.Log ("enter attack state");
+        yeZhu.showAttackEffect ();
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.moveToTargetPos ();
+        if (yeZhu.aimToPlayerDistance () < 0.45f) {
+            // TODO:
+            Debug.Log ("造成伤害");
+        }
         if (yeZhu.isReachEnd ()) {
             return RunningStatus.Failed;
         }
@@ -29,6 +33,7 @@ public class YeZhuAttackAction : ActionNode {
 
     protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
         YeZhu yeZhu = (YeZhu) agent;
+        yeZhu.hideAttackEffect ();
         yeZhu.resetAttackState ();
     }
 }

@@ -2,14 +2,8 @@
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
-using UnityEngine;
 
 public class LanJingGuaiIdleAction : ActionNode {
-
-    protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
-        LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        return true;
-    }
 
     protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
@@ -25,10 +19,4 @@ public class LanJingGuaiIdleAction : ActionNode {
         }
         return RunningStatus.Finished;
     }
-
-    protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
-        LanJingGuai lanJingGuai = (LanJingGuai) agent;
-        Debug.Log ("idle reset");
-    }
-
 }

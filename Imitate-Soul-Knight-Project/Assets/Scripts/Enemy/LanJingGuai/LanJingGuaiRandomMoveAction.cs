@@ -12,16 +12,9 @@ using UnityEngine;
 
 public class LanJingGuaiRandomMoveAction : ActionNode {
 
-	protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
-		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return true;
-	}
-
 	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		if (lanJingGuai.curMoveIndex <= -1) {
-			lanJingGuai.genRandomTargetPos ();
-		}
+		lanJingGuai.genRandomTargetPos ();
 		lanJingGuai.playMoveAni ();
 	}
 

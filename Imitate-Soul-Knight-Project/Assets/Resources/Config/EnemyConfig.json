@@ -26,7 +26,7 @@
 			"moveSpeed": 1,
 			"bulletUrl": "",
 			"bulletSpeed": 0.0,
-			"sprintSpeed": 3
+			"sprintSpeed": 5
 		}
 	]
 }
