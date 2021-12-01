@@ -4,6 +4,7 @@
  * @Description: 野猪攻击状态
  */
 
+using UFramework;
 using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
@@ -22,8 +23,7 @@ public class YeZhuAttackAction : ActionNode {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.moveToTargetPos ();
         if (yeZhu.aimToPlayerDistance () < 0.45f) {
-            // TODO:
-            Debug.Log ("造成伤害");
+            ModuleManager.instance.playerManager.injured (yeZhu.getDamageValue ());
         }
         if (yeZhu.isReachEnd ()) {
             return RunningStatus.Failed;

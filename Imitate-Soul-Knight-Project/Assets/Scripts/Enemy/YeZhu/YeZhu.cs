@@ -211,6 +211,10 @@ public class YeZhu : BaseEnemy {
     public void hideAttackEffect () {
         this.sprintEffect.SetActive (false);
     }
+
+    public float getDamageValue () {
+        return this.enemyConfigData.damage;
+    }
     #endregion
 
     #region 死亡状态 

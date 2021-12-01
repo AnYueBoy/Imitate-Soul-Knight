@@ -66,6 +66,7 @@ public class PlayerManager : MonoBehaviour {
 		if (this.isProtected) {
 			return;
 		}
+
 		float originArmor = this.battleRoleData.curArmor;
 		this.battleRoleData.curArmor -= damage;
 		this.battleRoleData.curArmor = Mathf.Max (0, this.battleRoleData.curArmor);
@@ -79,7 +80,7 @@ public class PlayerManager : MonoBehaviour {
 
 		// TODO: 触发死亡检测
 
-		
+		this.isProtected = true;
 		this.roleControl.hurtEffect (this.protectedTime, () => {
 			this.isProtected = false;
 		});
