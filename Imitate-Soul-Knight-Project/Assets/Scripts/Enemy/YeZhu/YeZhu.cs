@@ -49,8 +49,8 @@ public class YeZhu : BaseEnemy {
     #region 试探攻击状态
     private float probingTimer = 0;
     private readonly float probingInterval = 4;
-    private readonly float probingMinDistance = 2;
-    private readonly float probingMaxDistance = 4;
+    private readonly int probingMinDistance = 2;
+    private readonly int probingMaxDistance = 4;
 
     public void executeProbing () {
         float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
@@ -68,20 +68,19 @@ public class YeZhu : BaseEnemy {
 
     private Cell getTargetCell () {
         Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-        float randomProbingDistance = CommonUtil.getRandomValue (this.probingMinDistance, this.probingMaxDistance);
+        int randomProbingDistance = CommonUtil.getRandomValue (this.probingMinDistance, this.probingMaxDistance);
 
         float curFindCount = 0;
         do {
-            float randomX = CommonUtil.getRandomValue (-randomProbingDistance, randomProbingDistance);
+            int randomX = CommonUtil.getRandomValue (-randomProbingDistance, randomProbingDistance);
             float baseValue = Mathf.Pow (randomProbingDistance, 2) - Mathf.Pow (randomX, 2);
+            int intBaseValue = (int) baseValue;
             baseValue = Mathf.Sqrt (baseValue);
 
-            // FIXME: 存在NAN值
             List<Vector3> posList = new List<Vector3> () { new Vector3 (playerPos.x + randomX, playerPos.y + baseValue), new Vector3 (randomX, playerPos.y - baseValue) };
             CommonUtil.confusionElement<Vector3> (posList);
 
             foreach (Vector3 pos in posList) {
-                Debug.Log ("pos: " + pos);
                 Cell targetCell = this.pathFinding.getGridByPos (pos);
                 if (targetCell == null) {
                     continue;
