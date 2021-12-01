@@ -58,8 +58,14 @@ public class PlayerManager : MonoBehaviour {
 		return this.roleControl.transform;
 	}
 
+	private bool isProtected = false;
+	private readonly float protectedTime = 0.64f;
+
 	#region  数据访问
 	public void injured (float damage) {
+		if (this.isProtected) {
+			return;
+		}
 		float originArmor = this.battleRoleData.curArmor;
 		this.battleRoleData.curArmor -= damage;
 		this.battleRoleData.curArmor = Mathf.Max (0, this.battleRoleData.curArmor);
@@ -72,6 +78,12 @@ public class PlayerManager : MonoBehaviour {
 		ListenerManager.instance.trigger (EventName.ATTRIBUTE_CHANGE);
 
 		// TODO: 触发死亡检测
+
+		
+		this.roleControl.hurtEffect (this.protectedTime, () => {
+			this.isProtected = false;
+		});
+
 	}
 
 	public float getCurMp () {

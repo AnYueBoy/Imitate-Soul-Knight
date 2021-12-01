@@ -1,8 +1,10 @@
-﻿/*
+﻿using System;
+/*
  * @Author: l hy 
  * @Date: 2021-09-17 14:00:13 
  * @Description: 角色控制
  */
+using DG.Tweening;
 using UFramework;
 using UFramework.FrameUtil;
 using UnityEngine;
@@ -24,8 +26,11 @@ public class RoleControl : MonoBehaviour {
 
     private Animator animator;
 
+    private Material hurtFlashMaterial;
+
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
+        this.hurtFlashMaterial = transform.GetComponent<SpriteRenderer> ().material;
     }
 
     public void localUpdate (float dt) {
@@ -105,5 +110,35 @@ public class RoleControl : MonoBehaviour {
             this.animator.SetBool ("IsMove", true);
         }
 
+    }
+
+    public void hurtEffect (float time, Action callback) {
+        Color originColor = new Color (0, 0, 0, 0);
+        DOTween
+            .To (
+                () => {
+                    return originColor;
+                },
+                (value) => {
+                    originColor = value;
+                    this.hurtFlashMaterial.SetColor ("_HurtColor", originColor);
+                },
+                new Color (1, 1, 1, 0),
+                time / 2)
+            .OnComplete (() => {
+                DOTween.To (
+                        () => {
+                            return originColor;
+                        },
+                        (value) => {
+                            originColor = value;
+                            this.hurtFlashMaterial.SetColor ("_HurtColor", originColor);
+                        },
+                        new Color (0, 0, 0, 0),
+                        time / 2)
+                    .OnComplete (() => {
+                        callback?.Invoke ();
+                    });
+            });
     }
 }
