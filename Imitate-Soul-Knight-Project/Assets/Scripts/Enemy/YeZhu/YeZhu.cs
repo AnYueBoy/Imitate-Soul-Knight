@@ -70,26 +70,32 @@ public class YeZhu : BaseEnemy {
         Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
         float randomProbingDistance = CommonUtil.getRandomValue (this.probingMinDistance, this.probingMaxDistance);
 
-        Vector3 leftPos = playerPos + Vector3.left * randomProbingDistance;
-        Vector3 rightPos = playerPos + Vector3.right * randomProbingDistance;
-        Vector3 upPos = playerPos + Vector3.up * randomProbingDistance;
-        Vector3 downPos = playerPos + Vector3.down * randomProbingDistance;
+        float curFindCount = 0;
+        do {
+            float randomX = CommonUtil.getRandomValue (-randomProbingDistance, randomProbingDistance);
+            float baseValue = Mathf.Pow (randomProbingDistance, 2) - Mathf.Pow (randomX, 2);
+            baseValue = Mathf.Sqrt (baseValue);
 
-        List<Vector3> posList = new List<Vector3> () { leftPos, rightPos, upPos, downPos };
-        CommonUtil.confusionElement<Vector3> (posList);
+            // FIXME: 存在NAN值
+            List<Vector3> posList = new List<Vector3> () { new Vector3 (playerPos.x + randomX, playerPos.y + baseValue), new Vector3 (randomX, playerPos.y - baseValue) };
+            CommonUtil.confusionElement<Vector3> (posList);
 
-        foreach (var pos in posList) {
-            Cell targetCell = this.pathFinding.getGridByPos (pos);
-            if (targetCell == null) {
-                continue;
+            foreach (Vector3 pos in posList) {
+                Debug.Log ("pos: " + pos);
+                Cell targetCell = this.pathFinding.getGridByPos (pos);
+                if (targetCell == null) {
+                    continue;
+                }
+
+                if (targetCell.isObstacle) {
+                    continue;
+                }
+
+                return targetCell;
             }
 
-            if (targetCell.isObstacle) {
-                continue;
-            }
-
-            return targetCell;
-        }
+            curFindCount++;
+        } while (curFindCount < 3);
         return null;
     }
 
