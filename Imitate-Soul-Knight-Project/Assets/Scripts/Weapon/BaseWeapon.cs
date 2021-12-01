@@ -3,6 +3,7 @@
  * @Date: 2021-10-22 18:24:05 
  * @Description: 武器基类
  */
+using DG.Tweening;
 using UFramework;
 using UFramework.FrameUtil;
 using UnityEngine;
@@ -21,14 +22,6 @@ public class BaseWeapon : MonoBehaviour {
     protected WeaponConfigData weaponConfigData;
 
     protected string weaponTag;
-
-    #region  枪口火焰
-    protected float shotGunEffectInterval;
-
-    protected float shotGunEffectSpeed;
-    protected float shotGunTimer = 0;
-
-    #endregion
 
     #region  发射
     protected float launchInterval = 0;
@@ -52,9 +45,6 @@ public class BaseWeapon : MonoBehaviour {
         this.weaponTag = bulletTag;
         this.shotGunEffect.gameObject.SetActive (false);
 
-        this.shotGunEffectInterval = this.launchInterval / 2;
-        this.shotGunEffectSpeed = 1 / shotGunEffectInterval;
-
         this.recoilForceInterval = (this.launchInterval / 2) / 2;
         this.recoilForceSpeed = this.recoilForeceDis / this.recoilForceInterval;
     }
@@ -62,28 +52,30 @@ public class BaseWeapon : MonoBehaviour {
     public virtual void localUpdate (float dt) {
         this.launchTimer += dt;
 
-        this.refreshShotGun (dt);
+        this.spawnShotGunFire ();
 
         this.recoilForce (dt);
     }
 
-    protected void refreshShotGun (float dt) {
-        if (!this.shotGunEffect.gameObject.activeSelf) {
-            return;
-        }
+    protected void spawnShotGunFire () {
+        this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
-        this.shotGunTimer += dt;
-        this.shotGunEffect.color = new Color (1, 1, 1, this.shotGunEffectSpeed * this.shotGunTimer);
-        if (this.shotGunTimer > this.shotGunEffectInterval) {
-            this.shotGunEffect.gameObject.SetActive (false);
-            this.shotGunTimer = 0;
-        }
+        // TODO: 时间需要调整
+        this.shotGunEffect
+            .DOColor (new Color (1, 1, 1, 1), 0.2f)
+            .OnComplete (() => {
+                this.shotGunEffect
+                    .DOColor (new Color (1, 1, 1, 0), 0.2f);
+            });
+
     }
 
     public virtual void launchBullet (float bulletDir) {
         if (this.launchTimer < this.launchInterval) {
             return;
         }
+
+        this.spawnShotGunFire ();
 
         float weaponConsumeValue = this.weaponConfigData.mpConsume;
         float curMp = ModuleManager.instance.playerManager.getCurMp ();
@@ -102,7 +94,7 @@ public class BaseWeapon : MonoBehaviour {
         // 产生子弹偏移
         float randomValue = CommonUtil.getRandomValue (-1, 1);
         Vector3 endEulerAngles = new Vector3 (launchTrans.eulerAngles.x, launchTrans.eulerAngles.y, launchTrans.eulerAngles.z + randomValue * this.weaponConfigData.bulletOffset);
-        
+
         ModuleManager.instance.bulletManager.spawnBullet (
             launchTrans.position,
             endEulerAngles,

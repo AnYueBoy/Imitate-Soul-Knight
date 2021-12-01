@@ -40,7 +40,7 @@ public class PlayerManager : MonoBehaviour {
 
 		// 根据当前武器生成武器实例
 		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
-		string weaponUrl = ItemManager.getItemPreUrl (ItemIdEnum.NORMAL_WEAPON);
+		string weaponUrl = ItemManager.getItemPreUrl ((ItemIdEnum) curWeaponId);
 		GameObject weaponPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (weaponUrl);
 		GameObject weaponNode = ObjectPool.instance.requestInstance (weaponPrefab);
 		weaponNode.transform.SetParent (this.roleControl.weaponParent);
