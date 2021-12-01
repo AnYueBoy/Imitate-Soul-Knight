@@ -43,7 +43,8 @@ public class BaseWeapon : MonoBehaviour {
         this.launchInterval = weaponConfigData.launchInterval;
         this.launchTimer = this.launchInterval;
         this.weaponTag = bulletTag;
-        this.shotGunEffect.gameObject.SetActive (false);
+
+        this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
         this.recoilForceInterval = (this.launchInterval / 2) / 2;
         this.recoilForceSpeed = this.recoilForeceDis / this.recoilForceInterval;
@@ -51,21 +52,17 @@ public class BaseWeapon : MonoBehaviour {
 
     public virtual void localUpdate (float dt) {
         this.launchTimer += dt;
-
-        this.spawnShotGunFire ();
-
         this.recoilForce (dt);
     }
 
+    private readonly float shotGunTime = 0.2f;
+
     protected void spawnShotGunFire () {
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
-
-        // TODO: 时间需要调整
         this.shotGunEffect
-            .DOColor (new Color (1, 1, 1, 1), 0.2f)
+            .DOColor (new Color (1, 1, 1, 1), shotGunTime / 2)
             .OnComplete (() => {
-                this.shotGunEffect
-                    .DOColor (new Color (1, 1, 1, 0), 0.2f);
+                this.shotGunEffect.color = new Color (1, 1, 1, 0);
             });
 
     }
@@ -103,9 +100,6 @@ public class BaseWeapon : MonoBehaviour {
             this.weaponConfigData.bulletUrl,
             bulletSpeed,
             this.weaponConfigData.damage);
-
-        this.shotGunEffect.gameObject.SetActive (true);
-        this.shotGunEffect.color = new Color (1, 1, 1, 1);
 
         this.isRecoilForce = true;
     }
