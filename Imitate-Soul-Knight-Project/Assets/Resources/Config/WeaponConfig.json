@@ -11,6 +11,18 @@
 			"bulletUrl": "Bullet/bullet_1",
 			"mpConsume": 0,
 			"bulletOffset": 5
+		},
+		{
+			"id": 1002,
+			"name": "狙击枪",
+			"describe": "狙击枪",
+			"launchInterval": 0.8,
+			"damage": 70,
+			"launchCount": 1,
+			"bulletSpeed": 10,
+			"bulletUrl": "Bullet/bullet_1",
+			"mpConsume": 10,
+			"bulletOffset": 0
 		}
 	]
 }

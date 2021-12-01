@@ -2,6 +2,8 @@ public enum ItemIdEnum {
 
     NORMAL_WEAPON = 1001,
 
+    SNIPER_WEAPON = 1002,
+
     WHITE_CHEST = 2001,
 
     MP_ITEM = 3001,
