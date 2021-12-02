@@ -11,7 +11,7 @@
 			"bulletUrl": "Bullet/bullet_1",
 			"mpConsume": 0,
 			"bulletOffset": 5,
-			"recoilForceDis": 0.012
+			"recoilForceDis": 0.1
 		},
 		{
 			"id": 1002,
@@ -20,7 +20,7 @@
 			"launchInterval": 0.8,
 			"damage": 70,
 			"launchCount": 1,
-			"bulletSpeed": 30,
+			"bulletSpeed": 20,
 			"bulletUrl": "Bullet/bullet_1",
 			"mpConsume": 0,
 			"bulletOffset": 0,
