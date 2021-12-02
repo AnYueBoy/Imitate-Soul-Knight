@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour {
 		weaponNode.transform.SetParent (this.roleControl.weaponParent);
 		weaponNode.transform.localPosition = Vector3.zero;
 		this.curWeapon = weaponNode.GetComponent<BaseWeapon> ();
+		this.curWeapon.init (curWeaponId);
 		this.triggerSwitchWeapon ();
 	}
 
@@ -148,7 +149,7 @@ public class PlayerManager : MonoBehaviour {
 
 	public void triggerSwitchWeapon () {
 		// FIXME: 临时逻辑
-		this.curWeapon.init (TagGroup.playerBullet);
+		this.curWeapon.equipment (TagGroup.playerBullet);
 	}
 
 	public void triggerSkill () { }

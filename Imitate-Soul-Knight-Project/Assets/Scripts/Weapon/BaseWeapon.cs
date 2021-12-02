@@ -39,15 +39,19 @@ public class BaseWeapon : MonoBehaviour {
     protected readonly float recoilForceInterval = 0.3f;
     #endregion
 
-    public virtual void init (string bulletTag) {
+    public virtual void init (int id) {
+        this.id = (ItemIdEnum) id;
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
         this.launchInterval = weaponConfigData.launchInterval;
         this.launchTimer = this.launchInterval;
-        this.weaponTag = bulletTag;
 
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
         this.recoilForceDis = this.weaponConfigData.recoilForceDis;
+    }
+
+    public virtual void equipment (string bulletTag) {
+        this.weaponTag = bulletTag;
     }
 
     public virtual void localUpdate (float dt) {
