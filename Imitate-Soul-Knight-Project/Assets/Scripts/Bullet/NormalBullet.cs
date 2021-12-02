@@ -17,6 +17,7 @@ public class NormalBullet : BaseBullet {
     protected override void triggerHandler (RaycastHit2D raycastInfo) {
         base.triggerHandler (raycastInfo);
         LayerMask resultLayer = raycastInfo.collider.gameObject.layer;
+        // Debug.Log ("collider layer: " + LayerMask.LayerToName (resultLayer));
         if (resultLayer == LayerMask.NameToLayer (LayerGroup.block)) {
             // 回收子弹
             this.bulletData.isDie = true;
@@ -32,7 +33,7 @@ public class NormalBullet : BaseBullet {
             return;
         }
 
-        if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemyBullet) && this.bulletData.layer == LayerGroup.playerBullet) {
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemy) && this.bulletData.layer == LayerGroup.playerBullet) {
             // 回收子弹、对敌人造成伤害
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();

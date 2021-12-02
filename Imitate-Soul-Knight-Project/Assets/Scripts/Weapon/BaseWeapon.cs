@@ -13,7 +13,6 @@ public class BaseWeapon : MonoBehaviour {
     [SerializeField]
     private Transform launchTrans;
 
-    [SerializeField]
     protected ItemIdEnum id;
 
     [SerializeField]
