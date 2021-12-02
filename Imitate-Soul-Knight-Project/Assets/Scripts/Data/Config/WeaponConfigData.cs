@@ -16,4 +16,5 @@ public class WeaponConfigData : BaseData {
 	public string bulletUrl; // 子弹路径
 	public float mpConsume; // 蓝量消耗值
 	public float bulletOffset; // 子弹偏移度
+	public float recoilForceDis; // 后坐力作用距离
 }

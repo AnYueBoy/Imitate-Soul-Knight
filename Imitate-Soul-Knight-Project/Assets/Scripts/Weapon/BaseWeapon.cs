@@ -31,11 +31,12 @@ public class BaseWeapon : MonoBehaviour {
     #endregion
 
     #region  后坐力
-    protected readonly float recoilForeceDis = 0.012f;
-    protected float recoilForceTimer = 0;
-    protected float recoilForceSpeed;
-    protected float recoilForceInterval;
-    protected bool isRecoilForce = false;
+    protected float recoilForceDis;
+
+    /// <summary>
+    ///后坐力作用时间 
+    /// </summary>
+    protected readonly float recoilForceInterval = 0.3f;
     #endregion
 
     public virtual void init (string bulletTag) {
@@ -46,25 +47,31 @@ public class BaseWeapon : MonoBehaviour {
 
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
-        this.recoilForceInterval = (this.launchInterval / 2) / 2;
-        this.recoilForceSpeed = this.recoilForeceDis / this.recoilForceInterval;
+        this.recoilForceDis = this.weaponConfigData.recoilForceDis;
     }
 
     public virtual void localUpdate (float dt) {
         this.launchTimer += dt;
-        this.recoilForce (dt);
     }
 
-    private readonly float shotGunTime = 0.2f;
+    private readonly float shotGunInterval = 0.2f;
 
-    protected void spawnShotGunFire () {
+    protected virtual void spawnShotGunFire () {
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
         this.shotGunEffect
-            .DOColor (new Color (1, 1, 1, 1), shotGunTime / 2)
+            .DOColor (new Color (1, 1, 1, 1), shotGunInterval / 2)
             .OnComplete (() => {
                 this.shotGunEffect.color = new Color (1, 1, 1, 0);
             });
 
+    }
+
+    protected virtual void spawnRecoilForce () {
+        this.transform
+            .DOLocalMoveX (-this.recoilForceDis, this.recoilForceInterval / 2)
+            .OnComplete (() => {
+                this.transform.DOLocalMoveX (0, this.recoilForceInterval / 2);
+            });
     }
 
     public virtual void launchBullet (float bulletDir) {
@@ -73,6 +80,8 @@ public class BaseWeapon : MonoBehaviour {
         }
 
         this.spawnShotGunFire ();
+
+        this.spawnRecoilForce ();
 
         float weaponConsumeValue = this.weaponConfigData.mpConsume;
         float curMp = ModuleManager.instance.playerManager.getCurMp ();
@@ -100,25 +109,6 @@ public class BaseWeapon : MonoBehaviour {
             this.weaponConfigData.bulletUrl,
             bulletSpeed,
             this.weaponConfigData.damage);
-
-        this.isRecoilForce = true;
-    }
-
-    protected virtual void recoilForce (float dt) {
-        if (!this.isRecoilForce) {
-            return;
-        }
-        this.recoilForceTimer += dt;
-        if (this.recoilForceTimer > this.recoilForceInterval) {
-            this.recoilForceTimer = 0;
-            if (this.recoilForceSpeed < 0) {
-                this.transform.localPosition = Vector3.zero;
-                this.isRecoilForce = false;
-            }
-            this.recoilForceSpeed = -this.recoilForceSpeed;
-        }
-        float nodeX = this.transform.localPosition.x;
-        this.transform.localPosition = new Vector3 (nodeX - this.recoilForceTimer * this.recoilForceSpeed, 0, 0);
 
     }
 
