@@ -19,7 +19,7 @@ public class BaseBullet : MonoBehaviour {
     protected RaycastHit2D checkRayCast (float step, Vector2 checkDir, Vector2 size, float angle) {
         RaycastHit2D raycastInfo = Physics2D.BoxCast (
             this.transform.position,
-            new Vector2 (),
+            size,
             angle,
             checkDir,
             step,
@@ -41,7 +41,7 @@ public class BaseBullet : MonoBehaviour {
 
         // 矩形射线检测
         float radValue = angle * Mathf.PI / 180;
-        Vector2 checkDir = new Vector2 (Mathf.Cos (radValue), Mathf.Sin (radValue));
+        Vector2 checkDir = new Vector2 (Mathf.Cos (radValue) * moveDir, Mathf.Sin (radValue) * moveDir);
         checkDir = checkDir.normalized;
         RaycastHit2D raycastInfo = this.checkRayCast (step, checkDir, new Vector2 (0.52f, 0.18f), angle);
         if (raycastInfo) {
