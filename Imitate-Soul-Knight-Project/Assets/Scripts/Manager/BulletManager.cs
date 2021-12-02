@@ -33,7 +33,7 @@ public class BulletManager {
         Vector3 position,
         Vector3 eulerAngles,
         float bulletDir,
-        string tag,
+        string layer,
         string bulletUrl,
         float bulletSpeed,
         float bulletDamage) {
@@ -45,12 +45,10 @@ public class BulletManager {
         bulletNode.transform.localScale = new Vector3 (bulletDir, 1, 1);
         bulletNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 
-        bulletNode.tag = tag;
-
         BaseBullet bullet = bulletNode.GetComponent<BaseBullet> ();
         this.bulletSet.Add (bullet);
 
-        BulletData bulletData = new BulletData (bulletDir, bulletSpeed, bulletDamage, tag);
+        BulletData bulletData = new BulletData (bulletDir, bulletSpeed, bulletDamage, layer);
         bullet.init (bulletData);
     }
 }

@@ -149,7 +149,7 @@ public class PlayerManager : MonoBehaviour {
 
 	public void triggerSwitchWeapon () {
 		// FIXME: 临时逻辑
-		this.curWeapon.equipment (TagGroup.playerBullet);
+		this.curWeapon.equipment (LayerGroup.playerBullet);
 	}
 
 	public void triggerSkill () { }

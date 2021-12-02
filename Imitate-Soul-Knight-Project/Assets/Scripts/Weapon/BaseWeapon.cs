@@ -21,7 +21,7 @@ public class BaseWeapon : MonoBehaviour {
 
     protected WeaponConfigData weaponConfigData;
 
-    protected string weaponTag;
+    protected string weaponLayer;
 
     #region  发射
     protected float launchInterval = 0;
@@ -50,8 +50,8 @@ public class BaseWeapon : MonoBehaviour {
         this.recoilForceDis = this.weaponConfigData.recoilForceDis;
     }
 
-    public virtual void equipment (string bulletTag) {
-        this.weaponTag = bulletTag;
+    public virtual void equipment (string bulletLayer) {
+        this.weaponLayer = bulletLayer;
     }
 
     public virtual void localUpdate (float dt) {
@@ -109,7 +109,7 @@ public class BaseWeapon : MonoBehaviour {
             launchTrans.position,
             endEulerAngles,
             bulletDir,
-            this.weaponTag,
+            this.weaponLayer,
             this.weaponConfigData.bulletUrl,
             bulletSpeed,
             this.weaponConfigData.damage);

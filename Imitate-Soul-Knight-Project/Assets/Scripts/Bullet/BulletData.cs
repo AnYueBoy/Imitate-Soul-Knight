@@ -13,13 +13,13 @@ public class BulletData {
 
 	public float damage;
 
-	public string tag;
+	public string layer;
 
-	public BulletData (float moveDir, float moveSpeed, float bulletDamgage, string tag) {
+	public BulletData (float moveDir, float moveSpeed, float bulletDamgage, string layer) {
 		this.moveDir = moveDir;
 		this.moveSpeed = moveSpeed;
 		this.damage = bulletDamgage;
 		this.isDie = false;
-		this.tag = tag;
+		this.layer = layer;
 	}
 }

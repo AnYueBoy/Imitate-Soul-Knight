@@ -12,7 +12,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected BoxCollider2D boxCollider2D;
 
-	protected string bulletTag = TagGroup.enemyBullet;
+	protected string bulletLayer = LayerGroup.enemyBullet;
 
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();

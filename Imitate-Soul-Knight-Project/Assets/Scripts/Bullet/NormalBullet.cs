@@ -11,21 +11,20 @@ using UFramework.GameCommon;
 using UnityEngine;
 
 public class NormalBullet : BaseBullet {
+
     private Vector2 moveDir;
 
-    protected override void OnTriggerEnter2D (Collider2D other) {
-        if (other.tag == TagGroup.enemyBullet || other.tag == TagGroup.playerBullet) {
-            return;
-        }
-
-        if (other.tag == TagGroup.block) {
+    protected override void triggerHandler (RaycastHit2D raycastInfo) {
+        base.triggerHandler (raycastInfo);
+        LayerMask resultLayer = raycastInfo.collider.gameObject.layer;
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.block)) {
             // 回收子弹
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
             return;
         }
 
-        if (this.bulletData.tag == TagGroup.enemyBullet && other.tag == TagGroup.player) {
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.player) && this.bulletData.layer == LayerGroup.enemyBullet) {
             // 回收子弹、对玩家造成伤害
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
@@ -33,13 +32,12 @@ public class NormalBullet : BaseBullet {
             return;
         }
 
-        if (this.bulletData.tag == TagGroup.playerBullet && other.tag == TagGroup.enemy) {
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemyBullet) && this.bulletData.layer == LayerGroup.playerBullet) {
             // 回收子弹、对敌人造成伤害
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
-            BaseEnemy enemy = other.GetComponent<BaseEnemy> ();
+            BaseEnemy enemy = raycastInfo.collider.GetComponent<BaseEnemy> ();
             enemy.injured (this.bulletData.damage);
-            return;
         }
     }
 
@@ -53,11 +51,5 @@ public class NormalBullet : BaseBullet {
 
         ParticleSystem.MainModule mainParticle = bulletEffect.main;
         mainParticle.stopAction = ParticleSystemStopAction.Callback;
-    }
-
-    protected override void move (float dt) {
-        float moveSpeed = this.bulletData.moveSpeed;
-        float moveDir = this.bulletData.moveDir;
-        this.transform.Translate (new Vector3 (moveDir * dt * moveSpeed, 0, 0));
     }
 }
