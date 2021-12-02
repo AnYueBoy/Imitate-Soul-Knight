@@ -34,6 +34,19 @@ public class ItemManager {
         return item;
     }
 
+    public BaseWeapon spawnWeapon (Vector3 pos, ItemIdEnum id) {
+        string url = getItemPreUrl (id);
+        GameObject itemPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (url);
+        GameObject itemNode = ObjectPool.instance.requestInstance (itemPrefab);
+
+        itemNode.transform.position = pos;
+        itemNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+
+        BaseWeapon weapon = itemNode.GetComponent<BaseWeapon> ();
+        weapon.init (id);
+        return weapon;
+    }
+
     public static string getItemPreUrl (ItemIdEnum id) {
         int idNumber = (int) id;
         int preId = idNumber / 1000;

@@ -17,7 +17,6 @@ public class NormalBullet : BaseBullet {
     protected override void triggerHandler (RaycastHit2D raycastInfo) {
         base.triggerHandler (raycastInfo);
         LayerMask resultLayer = raycastInfo.collider.gameObject.layer;
-        // Debug.Log ("collider layer: " + LayerMask.LayerToName (resultLayer));
         if (resultLayer == LayerMask.NameToLayer (LayerGroup.block)) {
             // 回收子弹
             this.bulletData.isDie = true;

@@ -40,14 +40,10 @@ public class PlayerManager : MonoBehaviour {
 
 		// 根据当前武器生成武器实例
 		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
-		string weaponUrl = ItemManager.getItemPreUrl ((ItemIdEnum) curWeaponId);
-		GameObject weaponPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (weaponUrl);
-		GameObject weaponNode = ObjectPool.instance.requestInstance (weaponPrefab);
-		weaponNode.transform.SetParent (this.roleControl.weaponParent);
-		weaponNode.transform.localPosition = Vector3.zero;
-		this.curWeapon = weaponNode.GetComponent<BaseWeapon> ();
-		this.curWeapon.init (curWeaponId);
-		this.triggerSwitchWeapon ();
+		BaseWeapon curWeapon = ModuleManager.instance.itemManager.spawnWeapon (Vector3.zero, (ItemIdEnum) curWeaponId);
+		this.curWeapon = curWeapon;
+
+		this.equipmentWeapon ();
 	}
 
 	public void localUpdate (float dt) {
@@ -130,6 +126,12 @@ public class PlayerManager : MonoBehaviour {
 		}
 	}
 
+	private void equipmentWeapon () {
+		this.curWeapon.equipment (LayerGroup.playerBullet);
+		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
+		this.curWeapon.transform.localPosition = Vector3.zero;
+	}
+
 	#endregion
 
 	#region  输入调用
@@ -148,8 +150,7 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public void triggerSwitchWeapon () {
-		// FIXME: 临时逻辑
-		this.curWeapon.equipment (LayerGroup.playerBullet);
+
 	}
 
 	public void triggerSkill () { }

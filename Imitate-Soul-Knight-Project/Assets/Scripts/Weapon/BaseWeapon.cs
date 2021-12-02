@@ -38,8 +38,8 @@ public class BaseWeapon : MonoBehaviour {
     protected readonly float recoilForceInterval = 0.3f;
     #endregion
 
-    public virtual void init (int id) {
-        this.id = (ItemIdEnum) id;
+    public virtual void init (ItemIdEnum id) {
+        this.id = id;
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
         this.launchInterval = weaponConfigData.launchInterval;
         this.launchTimer = this.launchInterval;
