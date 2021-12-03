@@ -41,6 +41,9 @@ public class ItemManager {
 
         itemNode.transform.position = pos;
         itemNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+        
+        BaseItem item = itemNode.GetComponent<BaseItem> ();
+        this.itemSet.Add (item);
 
         BaseWeapon weapon = itemNode.GetComponent<BaseWeapon> ();
         weapon.init (id);

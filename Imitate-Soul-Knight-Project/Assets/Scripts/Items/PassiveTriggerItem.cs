@@ -33,11 +33,11 @@ public class PassiveTriggerItem : BaseItem {
         // 具体的触发逻辑
     }
 
-    protected virtual void reset () {
+    public virtual void reset () {
         this.isTriggered = false;
     }
 
-    protected void OnDisable () {
-        this.reset ();
+    public void triggerSelf () {
+        this.isTriggered = true;
     }
 }

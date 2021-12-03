@@ -142,6 +142,7 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 		this.curWeapon.transform.position = weapon.transform.position;
 		this.curWeapon.transform.eulerAngles = weapon.transform.eulerAngles;
+		this.curWeapon.GetComponent<PassiveTriggerItem> ().reset ();
 
 		this.weaponList.RemoveAt (0);
 		this.weaponList.Insert (0, weapon);
@@ -153,6 +154,7 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon.equipment (LayerGroup.playerBullet);
 		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
 		this.curWeapon.transform.localPosition = Vector3.zero;
+		this.curWeapon.GetComponent<PassiveTriggerItem> ().triggerSelf ();
 	}
 
 	#endregion
