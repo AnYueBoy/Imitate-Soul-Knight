@@ -82,15 +82,18 @@ public class BaseWeapon : MonoBehaviour {
             return;
         }
 
-        this.spawnShotGunFire ();
-
-        this.spawnRecoilForce ();
-
         float weaponConsumeValue = this.weaponConfigData.mpConsume;
         float curMp = ModuleManager.instance.playerManager.getCurMp ();
         if (curMp < weaponConsumeValue) {
             return;
         }
+
+        // 生成枪口火花
+        this.spawnShotGunFire ();
+
+        // 生成后坐力
+        this.spawnRecoilForce ();
+
         ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
 
         this.launchTimer = 0;
