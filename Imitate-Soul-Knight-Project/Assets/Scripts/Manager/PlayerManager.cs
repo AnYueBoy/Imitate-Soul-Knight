@@ -131,11 +131,14 @@ public class PlayerManager : MonoBehaviour {
 		if (this.weaponList.Count < this.battleRoleData.weaponSlotCount) {
 			if (this.weaponList.Count == 0) {
 				this.weaponList.Add (weapon);
-				this.setCurWeapon (weapon);
 			} else {
-				this.weaponList.Add (weapon);
-				weapon.gameObject.SetActive (false);
+				this.curWeapon.gameObject.SetActive (false);
+				this.weaponList.Insert (0, weapon);
 			}
+
+			BaseWeapon curWeapon = this.weaponList[0];
+
+			this.setCurWeapon (curWeapon);
 
 			return;
 		}
