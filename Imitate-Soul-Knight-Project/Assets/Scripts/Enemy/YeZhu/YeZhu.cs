@@ -5,6 +5,7 @@
  */
 
 using System.Collections.Generic;
+using DG.Tweening;
 using UFramework;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
@@ -223,6 +224,10 @@ public class YeZhu : BaseEnemy {
         if (this.boxCollider2D.enabled) {
             this.boxCollider2D.enabled = false;
         }
+    }
+
+    public void dissolveDead () {
+        this.material.DOFloat (0, "_Fade", 2f);
     }
 
     #endregion

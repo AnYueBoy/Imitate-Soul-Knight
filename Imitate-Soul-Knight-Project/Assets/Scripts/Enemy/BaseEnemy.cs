@@ -4,6 +4,7 @@ using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
+using UFramework.FrameUtil;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IAgent {
@@ -11,6 +12,9 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	protected Animator animator;
 
 	protected BoxCollider2D boxCollider2D;
+
+	protected float intensity = 5;
+	protected Material material;
 
 	protected string bulletLayer = LayerGroup.enemyBullet;
 
@@ -36,6 +40,15 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		this.isRoomActive = isRoomActive;
 
 		this.enemyData = new EnemyData (this.enemyConfigData);
+
+		if (this.material == null) {
+			this.material = this.GetComponent<SpriteRenderer> ().material;
+		}
+		this.material.SetFloat ("_Fade", 1);
+		float factor = Mathf.Pow (2, intensity);
+		Color randomColor = CommonUtil.getRandomColor ();
+		randomColor = new Color (randomColor.r * factor, randomColor.g * factor, randomColor.b * factor, randomColor.a * factor);
+		this.material.SetColor ("_DissolveColor", randomColor);
 	}
 
 	public void setPathFinding (PathFinding pathFinding) {

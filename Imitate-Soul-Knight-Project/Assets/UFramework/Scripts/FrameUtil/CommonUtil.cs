@@ -407,6 +407,16 @@ namespace UFramework.FrameUtil {
             return new Vector3 (originVec.x + randomX, originVec.y + randomY, originVec.z);
         }
 
+        public static Color getRandomColor () {
+            float r, g, b;
+            do {
+                r = getRandomValue (0, 1.0f);
+                g = getRandomValue (0, 1.0f);
+                b = getRandomValue (0, 1.0f);
+            } while (r == 0 && g == 0 && b == 0);
+            return new Color (r, g, b, 1);
+        }
+
         public static string getCurPlatformName () {
             RuntimePlatform runtimePlatform = Application.platform;
             switch (runtimePlatform) {
