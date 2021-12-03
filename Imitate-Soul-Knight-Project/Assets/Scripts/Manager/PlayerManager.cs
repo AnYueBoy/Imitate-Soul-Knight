@@ -130,12 +130,13 @@ public class PlayerManager : MonoBehaviour {
 	public void equipmentWeapon (BaseWeapon weapon) {
 		if (this.weaponList.Count < this.battleRoleData.weaponSlotCount) {
 			if (this.weaponList.Count == 0) {
+				this.weaponList.Add (weapon);
 				this.setCurWeapon (weapon);
 			} else {
+				this.weaponList.Add (weapon);
 				weapon.gameObject.SetActive (false);
 			}
 
-			this.weaponList.Add (weapon);
 			return;
 		}
 
@@ -155,6 +156,8 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon.equipment (LayerGroup.playerBullet);
 		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
 		this.curWeapon.transform.localPosition = Vector3.zero;
+		this.curWeapon.transform.localEulerAngles = Vector3.zero;
+		this.curWeapon.transform.localScale = Vector3.one;
 		this.curWeapon.GetComponent<PassiveTriggerItem> ().triggerSelf ();
 
 		this.setWeaponIcon ();
@@ -190,6 +193,7 @@ public class PlayerManager : MonoBehaviour {
 		BaseWeapon firstElement = this.weaponList[0];
 		this.weaponList.RemoveAt (0);
 		this.weaponList.Add (firstElement);
+		firstElement.gameObject.SetActive (false);
 
 		this.setCurWeapon (this.weaponList[0]);
 	}
