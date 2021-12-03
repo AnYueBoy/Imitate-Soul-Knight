@@ -17,12 +17,12 @@
 			"id": 1002,
 			"name": "狙击枪",
 			"describe": "狙击枪",
-			"launchInterval": 0.8,
+			"launchInterval": 0.9,
 			"damage": 70,
 			"launchCount": 1,
-			"bulletSpeed": 20,
+			"bulletSpeed": 30,
 			"bulletUrl": "Bullet/bullet_1",
-			"mpConsume": 0,
+			"mpConsume": 10,
 			"bulletOffset": 0,
 			"recoilForceDis": 0.4
 		}

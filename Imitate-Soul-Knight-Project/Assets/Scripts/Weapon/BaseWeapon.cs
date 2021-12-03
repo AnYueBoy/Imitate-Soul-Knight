@@ -112,10 +112,9 @@ public class BaseWeapon : MonoBehaviour {
             this.weaponConfigData.bulletUrl,
             bulletSpeed,
             this.weaponConfigData.damage);
-
     }
 
-    public float getWeaponMpConsume () {
+    public int getWeaponMpConsume () {
         return this.weaponConfigData.mpConsume;
     }
 }

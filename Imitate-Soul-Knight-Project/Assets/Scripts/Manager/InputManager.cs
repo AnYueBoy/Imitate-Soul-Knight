@@ -20,6 +20,9 @@ public class InputManager : MonoBehaviour {
 	[SerializeField]
 	private Image curWeapon;
 
+	[SerializeField]
+	private Text consumeText;
+
 	private Vector2 _moveDir = Vector2.zero;
 
 	public Vector2 MoveDir { get => _moveDir; }
@@ -48,8 +51,9 @@ public class InputManager : MonoBehaviour {
 		this.mobileControl ();
 	}
 
-	public void setWeaponInfo (Sprite sprite) {
+	public void setWeaponInfo (Sprite sprite, int consume) {
 		this.curWeapon.sprite = sprite;
+		this.consumeText.text = consume.ToString ();
 	}
 
 	#region  移动端触摸逻辑

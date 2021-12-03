@@ -160,12 +160,12 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon.transform.localScale = Vector3.one;
 		this.curWeapon.GetComponent<PassiveTriggerItem> ().triggerSelf ();
 
-		this.setWeaponIcon ();
+		this.setWeaponInfo (this.curWeapon.getWeaponMpConsume ());
 	}
 
-	private void setWeaponIcon () {
+	private void setWeaponInfo (int consume) {
 		Sprite weaponSprite = this.curWeapon.GetComponent<SpriteRenderer> ().sprite;
-		ModuleManager.instance.inputManager.setWeaponInfo (weaponSprite);
+		ModuleManager.instance.inputManager.setWeaponInfo (weaponSprite, consume);
 	}
 
 	#endregion
