@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8351869141081982955}
   - component: {fileID: 2130401749111229751}
   - component: {fileID: 6624322524457485794}
+  - component: {fileID: 6554077601724934722}
   m_Layer: 0
   m_Name: 1001
   m_TagString: Untagged
@@ -178,8 +179,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   launchTrans: {fileID: 5875837980605441700}
-  id: 1001
   shotGunEffect: {fileID: 2844567617569411705}
+--- !u!114 &6554077601724934722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188795857273768443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d132685cfdfbd447b2c2c0346b76ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8028117731048333099
 GameObject:
   m_ObjectHideFlags: 0

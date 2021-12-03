@@ -21,6 +21,8 @@ public class PlayerManager : MonoBehaviour {
 
 	private HashSet<PassiveTriggerItem> interfaceSet = new HashSet<PassiveTriggerItem> ();
 
+	private List<BaseWeapon> weaponList = new List<BaseWeapon> ();
+
 	public void init () {
 		// 构建战斗角色
 		this.buildBattleRole ();
@@ -41,9 +43,8 @@ public class PlayerManager : MonoBehaviour {
 		// 根据当前武器生成武器实例
 		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
 		BaseWeapon curWeapon = ModuleManager.instance.itemManager.spawnWeapon (Vector3.zero, (ItemIdEnum) curWeaponId);
-		this.curWeapon = curWeapon;
 
-		this.equipmentWeapon ();
+		this.equipmentWeapon (curWeapon);
 	}
 
 	public void localUpdate (float dt) {
@@ -126,7 +127,29 @@ public class PlayerManager : MonoBehaviour {
 		}
 	}
 
-	private void equipmentWeapon () {
+	public void equipmentWeapon (BaseWeapon weapon) {
+		if (this.weaponList.Count < this.battleRoleData.weaponSlotCount) {
+			if (this.weaponList.Count == 0) {
+				this.setCurWeapon (weapon);
+			} else {
+				weapon.gameObject.SetActive (false);
+			}
+
+			this.weaponList.Add (weapon);
+			return;
+		}
+
+		this.curWeapon.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+		this.curWeapon.transform.position = weapon.transform.position;
+		this.curWeapon.transform.eulerAngles = weapon.transform.eulerAngles;
+
+		this.weaponList.RemoveAt (0);
+		this.weaponList.Insert (0, weapon);
+		this.setCurWeapon (weapon);
+	}
+
+	private void setCurWeapon (BaseWeapon weapon) {
+		this.curWeapon = weapon;
 		this.curWeapon.equipment (LayerGroup.playerBullet);
 		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
 		this.curWeapon.transform.localPosition = Vector3.zero;

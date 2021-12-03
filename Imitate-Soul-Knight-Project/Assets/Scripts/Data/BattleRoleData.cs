@@ -25,6 +25,8 @@ public class BattleRoleData : BaseData {
 
     public int curCoin;
 
+    public int weaponSlotCount;
+
     public BattleRoleData (int roleId) {
         this.roleId = roleId;
 
@@ -39,5 +41,7 @@ public class BattleRoleData : BaseData {
         this.curCriticalHit = roleConfigData.criticalHit;
 
         this.curCoin = 0;
+
+        this.weaponSlotCount = 2;
     }
 }

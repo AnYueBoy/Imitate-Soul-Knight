@@ -153,7 +153,8 @@ public class Room {
 				break;
 
 			case RoomTypeEnum.CHEST:
-				// TODO: 生成宝箱
+				//  生成宝箱
+				ModuleManager.instance.itemManager.spawnItem (roomCenterToWorldPos, ItemIdEnum.WEAPON_CHEST);
 				break;
 
 			case RoomTypeEnum.BLESS:

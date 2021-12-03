@@ -6,6 +6,8 @@ public enum ItemIdEnum {
 
     WHITE_CHEST = 2001,
 
+    WEAPON_CHEST = 2002,
+
     MP_ITEM = 3001,
 
     COIN_ITEM = 3002,
