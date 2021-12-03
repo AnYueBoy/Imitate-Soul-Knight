@@ -151,10 +151,18 @@ public class PlayerManager : MonoBehaviour {
 
 	private void setCurWeapon (BaseWeapon weapon) {
 		this.curWeapon = weapon;
+		this.curWeapon.gameObject.SetActive (true);
 		this.curWeapon.equipment (LayerGroup.playerBullet);
 		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
 		this.curWeapon.transform.localPosition = Vector3.zero;
 		this.curWeapon.GetComponent<PassiveTriggerItem> ().triggerSelf ();
+
+		this.setWeaponIcon ();
+	}
+
+	private void setWeaponIcon () {
+		Sprite weaponSprite = this.curWeapon.GetComponent<SpriteRenderer> ().sprite;
+		ModuleManager.instance.inputManager.setWeaponInfo (weaponSprite);
 	}
 
 	#endregion
@@ -175,7 +183,15 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public void triggerSwitchWeapon () {
+		if (this.weaponList.Count <= 1) {
+			return;
+		}
 
+		BaseWeapon firstElement = this.weaponList[0];
+		this.weaponList.RemoveAt (0);
+		this.weaponList.Add (firstElement);
+
+		this.setCurWeapon (this.weaponList[0]);
 	}
 
 	public void triggerSkill () { }

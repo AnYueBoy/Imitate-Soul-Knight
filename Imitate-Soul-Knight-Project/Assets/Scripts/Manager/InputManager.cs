@@ -17,6 +17,9 @@ public class InputManager : MonoBehaviour {
 	[SerializeField]
 	private Button interfaceBtn;
 
+	[SerializeField]
+	private Image curWeapon;
+
 	private Vector2 _moveDir = Vector2.zero;
 
 	public Vector2 MoveDir { get => _moveDir; }
@@ -43,6 +46,10 @@ public class InputManager : MonoBehaviour {
 	public void localUpdate (float dt) {
 		this.editorControl ();
 		this.mobileControl ();
+	}
+
+	public void setWeaponInfo (Sprite sprite) {
+		this.curWeapon.sprite = sprite;
 	}
 
 	#region  移动端触摸逻辑
