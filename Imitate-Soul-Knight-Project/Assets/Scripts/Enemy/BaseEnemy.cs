@@ -1,10 +1,12 @@
 ﻿using System;
+using DG.Tweening;
 using UFramework;
 using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
 using UFramework.FrameUtil;
+using UFramework.GameCommon;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IAgent {
@@ -13,7 +15,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected BoxCollider2D boxCollider2D;
 
-	protected float intensity = 5;
+	protected float intensity = 2.5f;
 	protected Material material;
 
 	protected string bulletLayer = LayerGroup.enemyBullet;
@@ -89,5 +91,17 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	public bool isDead () {
 		return this.enemyData.curHp <= 0;
+	}
+
+	public void dissolveDead () {
+		this.material
+			.DOFloat (0, "_Fade", 2.5f)
+			.OnComplete (() => {
+				this.recovery ();
+			});
+	}
+
+	protected virtual void recovery () {
+		ObjectPool.instance.returnInstance (this.gameObject);
 	}
 }

@@ -3,6 +3,7 @@
  * @Date: 2021-11-16 08:24:33 
  * @Description: 蓝精怪死亡状态
  */
+using UFramework;
 using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
@@ -17,6 +18,9 @@ public class LanJingGuaiDeadAction : ActionNode {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
         lanJingGuai.playerDeadAni ();
         lanJingGuai.invalidCollider ();
+        ModuleManager.instance.promiseTimer.waitFor (1).then (() => {
+            lanJingGuai.dissolveDead ();
+        });
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {

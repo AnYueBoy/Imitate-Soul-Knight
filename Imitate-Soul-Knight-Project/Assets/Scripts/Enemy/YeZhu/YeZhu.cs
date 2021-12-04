@@ -226,9 +226,5 @@ public class YeZhu : BaseEnemy {
         }
     }
 
-    public void dissolveDead () {
-        this.material.DOFloat (0, "_Fade", 2f);
-    }
-
     #endregion
 }

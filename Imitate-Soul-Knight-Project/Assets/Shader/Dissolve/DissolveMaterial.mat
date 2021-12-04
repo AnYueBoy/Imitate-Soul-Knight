@@ -27,4 +27,4 @@ Material:
     m_Floats:
     - _Fade: 0.61
     m_Colors:
-    - _DissolveColor: {r: 23.968628, g: 2.8862746, b: 2.8862746, a: 1}
+    - _DissolveColor: {r: 2, g: 0.18039216, b: 0.18039216, a: 1}
