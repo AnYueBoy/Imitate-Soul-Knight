@@ -159,8 +159,9 @@ public class Room {
 
 			case RoomTypeEnum.BLESS:
 				// 生成祝福雕像
-				Statue statue = (Statue) ModuleManager.instance.itemManager.spawnItem (roomCenterToWorldPos, ItemIdEnum.KNIGHT_STATUE);
-				statue.init (ItemIdEnum.KNIGHT_STATUE);
+				int randomValue = CommonUtil.getRandomValue ((int) ItemIdEnum.MAGIC_STATUE, (int) ItemIdEnum.WAREWOLF_STATUE);
+				Statue statue = (Statue) ModuleManager.instance.itemManager.spawnItem (roomCenterToWorldPos, (ItemIdEnum) randomValue);
+				statue.init ((ItemIdEnum) randomValue);
 				break;
 
 			case RoomTypeEnum.PORTAL:
