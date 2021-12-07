@@ -9,6 +9,8 @@ using UFramework.AI.BehaviourTree;
 using UFramework.AI.BehaviourTree.Agent;
 using UFramework.AI.BehaviourTree.Node;
 using UFramework.AI.BlackBoard;
+using UFramework.FrameUtil;
+using UnityEngine;
 
 public class YeZhuDeadAction : ActionNode {
     protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
@@ -21,9 +23,11 @@ public class YeZhuDeadAction : ActionNode {
         yeZhu.playerDeadAni ();
         yeZhu.invalidCollider ();
 
-        ModuleManager.instance.promiseTimer.waitFor (1).then (() => {
-            yeZhu.dissolveDead ();
-        });
+        float randomX = CommonUtil.getRandomValue (-1.0f, 1.0f);
+        float randomY = CommonUtil.getRandomValue (-1.0f, 1.0f);
+        Vector2 randomAimDir = new Vector2 (randomX, randomY);
+        randomAimDir = randomAimDir.normalized;
+        yeZhu.deadMove (randomAimDir);
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {

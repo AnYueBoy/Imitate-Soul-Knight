@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UFramework;
 using UFramework.AI.BehaviourTree;
@@ -93,12 +94,77 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		return this.enemyData.curHp <= 0;
 	}
 
-	public void dissolveDead () {
+	private void dissolveDead () {
 		this.material
 			.DOFloat (0, "_Fade", 2.5f)
 			.OnComplete (() => {
 				this.recovery ();
 			});
+	}
+
+	protected List<Vector3> deadPath = new List<Vector3> ();
+	protected float deadDistance = 15f;
+	protected float deadAnimationTime = 1.2f;
+	public void deadMove (Vector2 aimDir) {
+		this.curIndex = 0;
+		this.getDeadPath (aimDir);
+		this.getDeadTween ();
+	}
+
+	private int curIndex = 0;
+	protected void getDeadTween () {
+		if (this.deadPath == null || this.deadPath.Count <= 0) {
+			return;
+		}
+		if (this.curIndex >= this.deadPath.Count) {
+			ModuleManager.instance.promiseTimer.waitFor (1.0f).then (() => {
+				this.dissolveDead ();
+			});
+			return;
+		}
+
+		this.transform
+			.DOMove (this.deadPath[this.curIndex], this.deadAnimationTime)
+			.OnComplete (() => {
+				this.getDeadTween ();
+			});
+
+		this.curIndex++;
+	}
+
+	/// <summary>
+	/// 获取死亡路径
+	/// </summary>
+	/// <param name="aimDir"></param>
+	protected void getDeadPath (Vector2 aimDir) {
+		deadPath.Clear ();
+		Vector2 startPos = this.transform.position;
+		float leftDistance = deadDistance;
+		RaycastHit2D raycastHitInfo;
+		float count = 20;
+		while (leftDistance > 0 && count > 0) {
+			raycastHitInfo = Physics2D.Raycast (startPos, aimDir, leftDistance, 1 << LayerMask.NameToLayer (LayerGroup.block));
+			Debug.DrawRay (startPos, aimDir, Color.red);
+			if (!raycastHitInfo) {
+				break;
+			}
+
+			Vector2 hitPoint = raycastHitInfo.point;
+			deadPath.Add (new Vector3 (hitPoint.x, hitPoint.y, 0));
+
+			float distance = (hitPoint - startPos).magnitude;
+			leftDistance -= distance;
+
+			startPos = hitPoint;
+			aimDir = Vector2.Reflect (aimDir, raycastHitInfo.normal);
+			count--;
+		}
+
+		if (leftDistance > 0) {
+			Vector2 endPoint = startPos + aimDir * leftDistance;
+			deadPath.Add (new Vector3 (endPoint.x, endPoint.y, 0));
+		}
+
 	}
 
 	protected virtual void recovery () {
