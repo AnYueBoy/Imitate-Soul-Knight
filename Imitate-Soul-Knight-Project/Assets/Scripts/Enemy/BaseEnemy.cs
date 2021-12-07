@@ -107,8 +107,8 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	protected List<Vector3> deadPath = new List<Vector3> ();
-	protected float deadDistance = 15f;
-	protected float deadAnimationTime = 1.2f;
+	protected float deadDistance = 5f;
+	protected float deadAnimationTime = 2f;
 	public void deadMove (Vector2 aimDir) {
 		this.curIndex = 0;
 		this.getDeadPath (aimDir);
@@ -127,9 +127,21 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 			return;
 		}
 
-		// FIXME: 根据tween数量调整时间
+		// 曲线时间
+		float preCurveX = (float) (this.curIndex) / this.deadPath.Count;
+		float curCurveX = (float) (this.curIndex + 1) / this.deadPath.Count;
+
+		float preCurveY = Mathf.Pow (preCurveX, 2);
+		float curCurveY = Mathf.Pow (curCurveX, 2);
+
+		float aniTimeRatio = curCurveY - preCurveY;
+		float realAniTime = this.deadAnimationTime * aniTimeRatio;
+
+		// FIXME: 优化实现
+		Debug.Log ("animationTime: " + realAniTime + " distance: " + (this.transform.position - this.deadPath[this.curIndex]).magnitude);
+		// FIXME:未做tween的控制，可能存在性能问题
 		this.transform
-			.DOMove (this.deadPath[this.curIndex], this.deadAnimationTime)
+			.DOMove (this.deadPath[this.curIndex], realAniTime)
 			.OnComplete (() => {
 				this.getDeadTween ();
 			});
