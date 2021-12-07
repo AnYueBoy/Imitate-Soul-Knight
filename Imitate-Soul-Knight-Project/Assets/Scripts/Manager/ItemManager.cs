@@ -41,7 +41,7 @@ public class ItemManager {
 
         itemNode.transform.position = pos;
         itemNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
-        
+
         BaseItem item = itemNode.GetComponent<BaseItem> ();
         this.itemSet.Add (item);
 
@@ -62,6 +62,8 @@ public class ItemManager {
                 return "Items/Coin/" + idNumber;
             case 4:
                 return "Items/Portal/" + idNumber;
+            case 5:
+                return "Items/Statue/Statue";
             default:
                 Debug.LogWarning ("except value: " + preId);
                 return null;

@@ -158,7 +158,9 @@ public class Room {
 				break;
 
 			case RoomTypeEnum.BLESS:
-				// TODO: 生成祝福雕像
+				// 生成祝福雕像
+				Statue statue = (Statue) ModuleManager.instance.itemManager.spawnItem (roomCenterToWorldPos, ItemIdEnum.KNIGHT_STATUE);
+				statue.init (ItemIdEnum.KNIGHT_STATUE);
 				break;
 
 			case RoomTypeEnum.PORTAL:
