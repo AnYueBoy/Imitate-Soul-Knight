@@ -38,14 +38,18 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected PathFinding pathFinding;
 
+	protected float reflectOffset;
+
 	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isRoomActive) {
 		this.enemyConfigData = enemyConfigData;
 		this.isRoomActive = isRoomActive;
 
 		this.enemyData = new EnemyData (this.enemyConfigData);
+		SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer> ();
+		this.reflectOffset = Mathf.Max (spriteRenderer.size.x, spriteRenderer.size.y);
 
 		if (this.material == null) {
-			this.material = this.GetComponent<SpriteRenderer> ().material;
+			this.material = spriteRenderer.material;
 		}
 		this.material.SetFloat ("_Fade", 1);
 		float factor = Mathf.Pow (2, intensity);
@@ -123,6 +127,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 			return;
 		}
 
+		// FIXME: 根据tween数量调整时间
 		this.transform
 			.DOMove (this.deadPath[this.curIndex], this.deadAnimationTime)
 			.OnComplete (() => {
@@ -141,15 +146,15 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		Vector2 startPos = this.transform.position;
 		float leftDistance = deadDistance;
 		RaycastHit2D raycastHitInfo;
-		float count = 20;
-		while (leftDistance > 0 && count > 0) {
+		while (leftDistance > 0) {
 			raycastHitInfo = Physics2D.Raycast (startPos, aimDir, leftDistance, 1 << LayerMask.NameToLayer (LayerGroup.block));
 			Debug.DrawRay (startPos, aimDir, Color.red);
 			if (!raycastHitInfo) {
 				break;
 			}
 
-			Vector2 hitPoint = raycastHitInfo.point;
+			// 偏移值，否则可能因为点存在于碰撞体上，造成反射异常
+			Vector2 hitPoint = raycastHitInfo.point + aimDir * -this.reflectOffset;
 			deadPath.Add (new Vector3 (hitPoint.x, hitPoint.y, 0));
 
 			float distance = (hitPoint - startPos).magnitude;
@@ -157,7 +162,6 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 			startPos = hitPoint;
 			aimDir = Vector2.Reflect (aimDir, raycastHitInfo.normal);
-			count--;
 		}
 
 		if (leftDistance > 0) {
