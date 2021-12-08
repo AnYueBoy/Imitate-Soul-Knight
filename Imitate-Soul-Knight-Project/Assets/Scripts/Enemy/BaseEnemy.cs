@@ -116,6 +116,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	private int curIndex = 0;
+	private Tween deadTween;
 	protected void getDeadTween () {
 		if (this.deadPath == null || this.deadPath.Count <= 0) {
 			return;
@@ -140,11 +141,12 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		// FIXME: 优化实现
 		Debug.Log ("animationTime: " + realAniTime + " distance: " + (this.transform.position - this.deadPath[this.curIndex]).magnitude);
 		// FIXME:未做tween的控制，可能存在性能问题
-		this.transform
+		this.deadTween = this.transform
 			.DOMove (this.deadPath[this.curIndex], realAniTime)
 			.OnComplete (() => {
 				this.getDeadTween ();
-			});
+			})
+			.SetAutoKill (false);
 
 		this.curIndex++;
 	}
