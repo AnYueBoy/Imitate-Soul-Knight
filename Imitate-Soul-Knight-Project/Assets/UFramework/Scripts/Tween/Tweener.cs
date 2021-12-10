@@ -1,29 +1,33 @@
+using System;
 /*
  * @Author: l hy 
  * @Date: 2021-12-08 18:24:38 
  * @Description: Tweener
  */
 namespace UFramework.Tween {
+    using System;
     using UFramework.Tween.Core;
     public class Tweener<T1, T2> : TweenerCore<T1> {
 
-        public T2 endValue;
+        protected T2 endValue;
 
-        public float duration;
+        protected float duration;
 
-        public Tweener (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration) {
+        protected Action<float> executeHandler;
+
+        public void setProperty (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration) {
             this.getter = getter;
             this.setter = setter;
             this.endValue = endValue;
             this.duration = duration;
         }
 
-        public void localUpdate (float dt) {
-
+        public void setAction (Action<float> actionHandler) {
+            this.executeHandler = actionHandler;
         }
 
-        public virtual void action (float dt) {
-
+        public void localUpdate (float dt) {
+            executeHandler?.Invoke (dt);
         }
     }
 

@@ -8,21 +8,24 @@ namespace UFramework.Tween {
     using System.Collections.Generic;
     using UFramework.Tween.Core;
 
-    public class TweenManager<T1, T2> {
+    public static class TweenManager<T1, T2> {
 
-        private HashSet<Tweener<T1, T2>> tweeners = new HashSet<Tweener<T1, T2>> ();
+        private static HashSet<Tweener<T1, T2>> tweeners = new HashSet<Tweener<T1, T2>> ();
 
-        public void localUpdate (float dt) {
-            foreach (Tweener<T1, T2> tweener in this.tweeners) {
+        public static void localUpdate (float dt) {
+            foreach (Tweener<T1, T2> tweener in tweeners) {
                 tweener.localUpdate (dt);
             }
         }
 
-        public void spawnTweener (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration) {
-            Tweener<T1, T2> tweener = new Tweener<T1, T2> (getter, setter, endValue, duration);
+        public static T3 spawnTweener<T3> (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration)
+        where T3 : Tweener<T1, T2>,
+        new () {
+            T3 tweener = new T3 ();
+            tweener.setProperty (getter, setter, endValue, duration);
 
-            this.tweeners.Add (tweener);
+            tweeners.Add (tweener);
+            return tweener;
         }
-
     }
 }
