@@ -14,9 +14,9 @@ namespace UFramework.Tween {
 
         protected Action<float> executeHandler;
 
-        protected T1 beginValue;
+        public T1 beginValue;
 
-        protected T2 changeValue;
+        public T2 changeValue;
 
         public void setProperty (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration) {
             this.getter = getter;

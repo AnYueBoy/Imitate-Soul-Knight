@@ -34,6 +34,8 @@ namespace UFramework.Tween {
                 duration
             );
 
+            tweener.endValue = endPos;
+            tweener.changeValue = endPos - tweener.beginValue;
             tweener.setAction (tweener.moveXTween);
         }
     }
