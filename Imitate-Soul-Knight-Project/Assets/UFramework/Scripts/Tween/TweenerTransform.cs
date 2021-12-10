@@ -4,11 +4,14 @@
  * @Description: 
  */
 
-
 namespace UFramework.Tween {
     public class TweenerTransform<T1, T2> : Tweener<T1, T2> {
 
         public void pathTween (float dt) {
+
+        }
+
+        public void moveXTween (float dt) {
 
         }
 

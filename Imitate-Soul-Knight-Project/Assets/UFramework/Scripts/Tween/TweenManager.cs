@@ -10,10 +10,10 @@ namespace UFramework.Tween {
 
     public static class TweenManager {
 
-        private static HashSet<Tweener<T1, T2>> tweeners = new HashSet<Tweener<T1, T2>> ();
+        private static HashSet<ITweener> tweeners = new HashSet<ITweener> ();
 
         public static void localUpdate (float dt) {
-            foreach (Tweener<T1, T2> tweener in tweeners) {
+            foreach (ITweener tweener in tweeners) {
                 tweener.localUpdate (dt);
             }
         }

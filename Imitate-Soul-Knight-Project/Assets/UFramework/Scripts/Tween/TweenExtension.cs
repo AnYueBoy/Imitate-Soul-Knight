@@ -8,7 +8,7 @@ namespace UFramework.Tween {
     using UnityEngine;
     public static class TweenExtension {
         public static void pathTween (this Transform target, List<Vector3> pathList, float duration) {
-            TweenerTransform<Vector3, List<Vector3>> tweener = TweenManager<Vector3, List<Vector3>>.spawnTweener<TweenerTransform<Vector3, List<Vector3>>> (
+            TweenerTransform<Vector3, List<Vector3>> tweener = TweenManager.spawnTweener<Vector3, List<Vector3>, TweenerTransform<Vector3, List<Vector3>>> (
                 () => {
                     return target.transform.position;
                 },
@@ -19,8 +19,23 @@ namespace UFramework.Tween {
                 duration
             );
 
-            tweener.setAction(tweener.pathTween);
+            tweener.setAction (tweener.pathTween);
         }
 
+        public static void moveXTween (this Transform target, Vector3 endPos, float duration) {
+            TweenerTransform<Vector3, Vector3> tweener = TweenManager.spawnTweener<Vector3, Vector3, TweenerTransform<Vector3, Vector3>> (
+                () => {
+                    return target.transform.position;
+                },
+                (value) => {
+                    target.transform.position = value;
+                },
+                endPos,
+                duration
+            );
+
+            tweener.setAction (tweener.moveXTween);
+        }
     }
+
 }
