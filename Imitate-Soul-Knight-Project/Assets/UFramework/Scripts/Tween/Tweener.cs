@@ -7,11 +7,13 @@ using System;
 namespace UFramework.Tween {
     using System;
     using UFramework.Tween.Core;
-    public class Tweener<T1, T2> : TweenerCore<T1> {
-
-        protected T2 endValue;
+    public class Tweener<T1, T2> : TweenerCore<T1, T2> {
 
         protected float duration;
+
+        protected Type type1;
+
+        protected Type type2;
 
         protected Action<float> executeHandler;
 
@@ -39,11 +41,11 @@ namespace UFramework.Tween.Core {
 
     public delegate void TweenSetter<in T> (T newValue);
 
-    public class TweenerCore<T> {
-        public TweenGetter<T> getter;
+    public class TweenerCore<T1, T2> {
+        public TweenGetter<T1> getter;
 
-        public TweenSetter<T> setter;
+        public TweenSetter<T1> setter;
 
+        public T2 endValue;
     }
-
 }

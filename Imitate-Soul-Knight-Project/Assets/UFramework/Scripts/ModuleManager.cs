@@ -11,6 +11,7 @@ namespace UFramework {
     using UFramework.Develop;
     using UFramework.GameCommon;
     using UFramework.Promise;
+    using UFramework.Tween;
     using UnityEngine;
     public class ModuleManager : MonoBehaviour {
         public AppMode appMode = AppMode.Developing;
@@ -73,6 +74,7 @@ namespace UFramework {
 
         private void Update () {
             float dt = Time.deltaTime;
+            TweenManager.localUpdate(dt);
             this.guiConsole?.localUpdate (dt);
             this.promiseTimer?.localUpdate (dt);
             this.inputManager.localUpdate (dt);
