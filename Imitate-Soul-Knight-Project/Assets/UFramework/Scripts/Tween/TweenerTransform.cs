@@ -19,6 +19,8 @@ namespace UFramework.Tween {
 
             float time = Mathf.Min (tweenerCore.duration, this.timer);
             float ratioValue = EaseManager.getEaseFuncValue (tweenerCore.easeTye, time, tweenerCore.duration);
+
+            
         }
 
         public void moveTween (float dt, TweenerCore<Vector3> tweenerCore) {

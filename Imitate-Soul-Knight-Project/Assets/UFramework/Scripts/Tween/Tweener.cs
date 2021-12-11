@@ -32,6 +32,10 @@ namespace UFramework.Tween {
             this.extraData = extraData;
         }
 
+        public T1 getExtraData<T1> () {
+            return (T1) this.extraData;
+        }
+
         public void setEase (EaseType easeType) {
             this.tweenerCore.easeTye = easeType;
         }
