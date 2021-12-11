@@ -9,11 +9,19 @@ namespace UFramework.Tween {
     using UnityEngine;
     public class TweenerTransform<T> : Tweener<T> {
 
-        public void pathTween (float dt) {
+        public void pathTween (float dt, TweenerCore<Vector3> tweenerCore) {
+            this.timer += dt;
+            if (this.timer > tweenerCore.duration) {
+                this.executeHandler = null;
+                this.timer = 0;
+                return;
+            }
 
+            float time = Mathf.Min (tweenerCore.duration, this.timer);
+            float ratioValue = EaseManager.getEaseFuncValue (tweenerCore.easeTye, time, tweenerCore.duration);
         }
 
-        public void moveXTween (float dt, TweenerCore<Vector3> tweenerCore) {
+        public void moveTween (float dt, TweenerCore<Vector3> tweenerCore) {
             this.timer += dt;
             if (this.timer > tweenerCore.duration) {
                 this.executeHandler = null;

@@ -19,6 +19,8 @@ namespace UFramework.Tween {
                 },
                 duration
             );
+
+            tweener.setExtraData<List<Vector3>> (pathList);
         }
 
         public static TweenerTransform<Vector3> moveTween (this Transform target, Vector3 endPos, float duration) {
@@ -37,7 +39,7 @@ namespace UFramework.Tween {
             tweenerCore.changeValue = endPos - tweenerCore.beginValue;
 
             tweener.setTweenCore (tweenerCore);
-            tweener.setAction (tweener.moveXTween);
+            tweener.setAction (tweener.moveTween);
             return tweener;
         }
     }

@@ -14,6 +14,8 @@ namespace UFramework.Tween {
 
         protected TweenerCore<T> tweenerCore;
 
+        protected object extraData;
+
         public void setAction (Action<float, TweenerCore<T>> actionHandler) {
             this.executeHandler = actionHandler;
         }
@@ -24,6 +26,10 @@ namespace UFramework.Tween {
 
         public void setTweenCore (TweenerCore<T> tweenCore) {
             this.tweenerCore = tweenCore;
+        }
+
+        public void setExtraData<T1> (T1 extraData) {
+            this.extraData = extraData;
         }
 
         public void setEase (EaseType easeType) {
