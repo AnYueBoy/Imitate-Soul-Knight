@@ -9,7 +9,11 @@ namespace UFramework.Tween {
     public class EaseManager {
 
         private static Dictionary<EaseType, Func<float, float, float>> easeDic =
-            new Dictionary<EaseType, Func<float, float, float>> () { { EaseType.LINER, liner }, { EaseType.InQuad, inQuad }
+            new Dictionary<EaseType, Func<float, float, float>> () {
+                 { EaseType.LINER, liner },
+                 { EaseType.InQuad, inQuad },
+                 { EaseType.InCubic, inCubic },
+                 { EaseType.OutCubic, outCubic }
             };
 
         private static float liner (float time, float duration) {
@@ -22,6 +26,17 @@ namespace UFramework.Tween {
             return ratioTime * ratioTime;
         }
 
+        private static float outCubic (float time, float duration) {
+            float ratioTime = time / duration;
+            float endValue = --ratioTime * ratioTime * ratioTime + 1.0f;
+            return endValue;
+        }
+
+        private static float inCubic (float time, float duration) {
+            float ratioTime = time / duration;
+            return ratioTime * ratioTime * ratioTime;
+        }
+
         public static float getEaseFuncValue (EaseType ease, float time, float duration) {
             Func<float, float, float> easeFunc = easeDic[ease];
             return easeFunc.Invoke (time, duration);
@@ -30,6 +45,8 @@ namespace UFramework.Tween {
 
     public enum EaseType {
         LINER,
-        InQuad
+        InQuad,
+        OutCubic,
+        InCubic,
     }
 }
