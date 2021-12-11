@@ -51,7 +51,8 @@ namespace UFramework.Tween.Core {
         public TweenerCore (TweenGetter<T> getter, TweenSetter<T> setter, float duration) {
             this.getter = getter;
             this.setter = setter;
-            this.beginValue = getter();
+            this.duration = duration;
+            this.beginValue = getter ();
         }
     }
 }
