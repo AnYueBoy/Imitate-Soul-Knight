@@ -46,11 +46,11 @@ namespace UFramework.Tween.Core {
 
         public EaseType easeTye;
 
-        public T endValue;
-
         public T beginValue;
 
         public T changeValue;
+
+        public T otherValue;
 
         public float duration;
 
