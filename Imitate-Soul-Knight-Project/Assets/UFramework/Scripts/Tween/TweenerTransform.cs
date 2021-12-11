@@ -5,22 +5,23 @@
  */
 
 namespace UFramework.Tween {
+    using UFramework.Tween.Core;
     using UnityEngine;
-    public class TweenerTransform : Tweener<T1, T2> {
+    public class TweenerTransform<T> : Tweener<T> {
 
         public void pathTween (float dt) {
 
         }
 
-        public void moveXTween (float dt) {
+        public void moveXTween (float dt, TweenerCore<Vector3> tweenerCore) {
             this.timer += dt;
-            if (this.timer > this.duration) {
+            if (this.timer > tweenerCore.duration) {
                 this.executeHandler = null;
                 return;
             }
 
-            Vector3 endPos = this.changeValue * this.timer / this.duration + this.beginValue;
-            this.setter (endPos);
+            Vector3 endPos = this.changeValue * this.timer / tweenerCore.duration + this.beginValue;
+            tweenerCore.setter (endPos);
         }
 
     }

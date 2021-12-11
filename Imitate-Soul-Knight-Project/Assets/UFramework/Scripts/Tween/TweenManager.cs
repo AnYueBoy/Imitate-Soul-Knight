@@ -6,7 +6,6 @@
 
 namespace UFramework.Tween {
     using System.Collections.Generic;
-    using UFramework.Tween.Core;
 
     public static class TweenManager {
 
@@ -18,14 +17,11 @@ namespace UFramework.Tween {
             }
         }
 
-        public static T3 spawnTweener<T1, T2, T3> (TweenGetter<T1> getter, TweenSetter<T1> setter, T2 endValue, float duration)
-        where T3 : Tweener<T1, T2>,
-            new () {
-                T3 tweener = new T3 ();
-                tweener.setProperty (getter, setter, endValue, duration);
+        public static T2 spawnTweener<T1, T2> () where T2 : Tweener<T1>, new () {
+            T2 tweener = new T2 ();
 
-                tweeners.Add (tweener);
-                return tweener;
-            }
+            tweeners.Add (tweener);
+            return tweener;
+        }
     }
 }
