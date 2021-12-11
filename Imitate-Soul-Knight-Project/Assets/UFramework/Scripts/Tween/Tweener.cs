@@ -25,6 +25,10 @@ namespace UFramework.Tween {
         public void setTweenCore (TweenerCore<T> tweenCore) {
             this.tweenerCore = tweenCore;
         }
+
+        public void setEase (EaseType easeType) {
+            this.tweenerCore.easeTye = easeType;
+        }
     }
 
 }
@@ -40,6 +44,8 @@ namespace UFramework.Tween.Core {
 
         public TweenSetter<T> setter;
 
+        public EaseType easeTye;
+
         public T endValue;
 
         public T beginValue;
@@ -53,6 +59,7 @@ namespace UFramework.Tween.Core {
             this.setter = setter;
             this.duration = duration;
             this.beginValue = getter ();
+            easeTye = EaseType.LINER;
         }
     }
 }
