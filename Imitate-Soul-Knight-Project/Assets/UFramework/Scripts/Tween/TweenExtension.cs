@@ -23,7 +23,7 @@ namespace UFramework.Tween {
             // tweener.setAction (tweener.pathTween);
         }
 
-        public static void moveXTween (this Transform target, Vector3 endPos, float duration) {
+        public static void moveTween (this Transform target, Vector3 endPos, float duration) {
             TweenerTransform<Vector3> tweener = TweenManager.spawnTweener<Vector3, TweenerTransform<Vector3>> ();
 
             TweenerCore<Vector3> tweenerCore = new TweenerCore<Vector3> (
