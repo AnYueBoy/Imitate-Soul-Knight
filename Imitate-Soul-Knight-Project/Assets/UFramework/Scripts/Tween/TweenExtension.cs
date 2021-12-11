@@ -33,10 +33,12 @@ namespace UFramework.Tween {
                 (Vector3 value) => {
                     target.transform.position = value;
                 },
-                endPos,
                 duration
             );
-            
+
+            tweenerCore.endValue = endPos;
+            tweenerCore.changeValue = endPos - tweenerCore.beginValue;
+
             tweener.setTweenCore (tweenerCore);
             tweener.setAction (tweener.moveXTween);
         }

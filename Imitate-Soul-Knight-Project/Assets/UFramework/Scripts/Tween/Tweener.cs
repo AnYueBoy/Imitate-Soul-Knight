@@ -42,12 +42,16 @@ namespace UFramework.Tween.Core {
 
         public T endValue;
 
+        public T beginValue;
+
+        public T changeValue;
+
         public float duration;
 
-        public TweenerCore (TweenGetter<T> getter, TweenSetter<T> setter, T endValue, float duration) {
+        public TweenerCore (TweenGetter<T> getter, TweenSetter<T> setter, float duration) {
             this.getter = getter;
             this.setter = setter;
-            this.endValue = endValue;
+            this.beginValue = getter();
         }
     }
 }

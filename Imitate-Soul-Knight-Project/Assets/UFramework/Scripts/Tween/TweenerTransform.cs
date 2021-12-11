@@ -17,10 +17,13 @@ namespace UFramework.Tween {
             this.timer += dt;
             if (this.timer > tweenerCore.duration) {
                 this.executeHandler = null;
+                this.timer = 0;
                 return;
             }
 
-            Vector3 endPos = this.changeValue * this.timer / tweenerCore.duration + this.beginValue;
+            float time = Mathf.Min (tweenerCore.duration, this.timer);
+
+            Vector3 endPos = tweenerCore.changeValue * time / tweenerCore.duration + tweenerCore.beginValue;
             tweenerCore.setter (endPos);
         }
 
