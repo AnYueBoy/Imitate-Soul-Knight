@@ -14,7 +14,7 @@ namespace UFramework.Tween {
         private Action<float, TweenerCore<T>> executeHandler;
         private object extraData;
 
-        public void setAction (Action<float, TweenerCore<T>> actionHandler) {
+        public void setExecuteAction (Action<float, TweenerCore<T>> actionHandler) {
             this.executeHandler = actionHandler;
         }
 

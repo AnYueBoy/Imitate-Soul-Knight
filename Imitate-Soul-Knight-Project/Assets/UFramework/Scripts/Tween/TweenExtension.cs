@@ -8,7 +8,7 @@ namespace UFramework.Tween {
     using UFramework.Tween.Core;
     using UnityEngine;
     public static class TweenExtension {
-        public static void pathTween (this Transform target, List<Vector3> pathList, float duration) {
+        public static TweenerTransform<Vector3> pathTween (this Transform target, List<Vector3> pathList, float duration) {
             TweenerTransform<Vector3> tweener = TweenManager.spawnTweener<Vector3, TweenerTransform<Vector3>> ();
             TweenerCore<Vector3> tweenerCore = new TweenerCore<Vector3> (
                 () => {
@@ -20,8 +20,6 @@ namespace UFramework.Tween {
                 duration
             );
 
-            tweener.setExtraData<List<Vector3>> (pathList);
-
             float distance = 0;
             for (int i = 0; i < pathList.Count - 1; i++) {
                 Vector3 prePos = pathList[i];
@@ -30,6 +28,11 @@ namespace UFramework.Tween {
             }
 
             tweenerCore.changeValue = Vector3.one * distance;
+
+            tweener.setTweenCore (tweenerCore);
+            tweener.setExtraData<List<Vector3>> (pathList);
+            tweener.setExecuteAction (tweener.pathTween);
+            return tweener;
         }
 
         public static TweenerTransform<Vector3> moveTween (this Transform target, Vector3 endPos, float duration) {
@@ -48,7 +51,7 @@ namespace UFramework.Tween {
             tweenerCore.changeValue = endPos - tweenerCore.beginValue;
 
             tweener.setTweenCore (tweenerCore);
-            tweener.setAction (tweener.moveTween);
+            tweener.setExecuteAction (tweener.moveTween);
             return tweener;
         }
     }
