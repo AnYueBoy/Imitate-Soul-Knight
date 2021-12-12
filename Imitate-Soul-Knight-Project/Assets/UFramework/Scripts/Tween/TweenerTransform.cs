@@ -26,12 +26,14 @@ namespace UFramework.Tween {
             for (int i = 0; i < pathList.Count - 1; i++) {
                 Vector3 prePos = pathList[i];
                 Vector3 curPos = pathList[i + 1];
-                cumulativeDis += (curPos - prePos).magnitude;
+                float curPointDistance = (curPos - prePos).magnitude;
+                cumulativeDis += curPointDistance;
 
-                if (curMoveDistance <= cumulativeDis) {
+                if (curMoveDistance < cumulativeDis) {
                     Vector3 dir = curPos - prePos;
                     dir = dir.normalized;
-                    Vector3 endPos = prePos + curMoveDistance * dir;
+                    float preStageDistance = cumulativeDis - curPointDistance;
+                    Vector3 endPos = prePos + (curMoveDistance - preStageDistance) * dir;
                     tweenerCore.setter (endPos);
                     break;
                 }
