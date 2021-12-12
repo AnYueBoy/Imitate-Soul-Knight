@@ -173,14 +173,6 @@ public class Room {
 			case RoomTypeEnum.BORN:
 				// 设置玩家出现在出生房间
 				ModuleManager.instance.playerManager.getPlayerTrans ().position = roomCenterToWorldPos;
-
-				Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
-				ModuleManager.instance.promiseTimer.waitFor (1.5f).then (() => {
-					Vector3 endPos = playerTrans.position + Vector3.left * 15;
-					playerTrans
-						.moveTween (endPos, 2f)
-						.setEase (EaseType.InCubic);
-				});
 				break;
 			default:
 				break;
