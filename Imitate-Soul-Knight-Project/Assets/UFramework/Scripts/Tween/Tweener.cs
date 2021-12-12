@@ -13,6 +13,11 @@ namespace UFramework.Tween {
 
         private Action<float, TweenerCore<T>> executeHandler;
         private object extraData;
+        private Action<Tweener<T>> tweenerOverCallback;
+
+        public void init (Action<Tweener<T>> tweenerOverCallback) {
+            this.tweenerOverCallback = tweenerOverCallback;
+        }
 
         public void setExecuteAction (Action<float, TweenerCore<T>> actionHandler) {
             this.executeHandler = actionHandler;
@@ -58,6 +63,7 @@ namespace UFramework.Tween {
             this.timer = 0;
             this.resetExtraData ();
             this.triggerCompleted ();
+            this.tweenerOverCallback?.Invoke (this);
         }
     }
 
