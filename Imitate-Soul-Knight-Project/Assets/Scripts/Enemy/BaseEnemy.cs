@@ -122,7 +122,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 		float animationTime = this.deadAnimationTime;
 		if (deadPath.Count > 1) {
-			animationTime *= 2;
+			animationTime *= 5;
 		}
 		this.transform
 			.pathTween (this.deadPath, this.deadAnimationTime)
