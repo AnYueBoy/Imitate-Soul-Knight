@@ -8,13 +8,11 @@ namespace UFramework.Tween {
     using UFramework.Tween.Core;
     public class Tweener<T> : ITweener {
 
+        protected TweenerCore<T> tweenerCore;
         protected float timer;
 
-        protected Action<float, TweenerCore<T>> executeHandler;
-
-        protected TweenerCore<T> tweenerCore;
-
-        protected object extraData;
+        private Action<float, TweenerCore<T>> executeHandler;
+        private object extraData;
 
         public void setAction (Action<float, TweenerCore<T>> actionHandler) {
             this.executeHandler = actionHandler;
@@ -32,18 +30,39 @@ namespace UFramework.Tween {
             this.extraData = extraData;
         }
 
-        public T1 getExtraData<T1> () {
+        protected T1 getExtraData<T1> () {
             return (T1) this.extraData;
+        }
+
+        private void resetExtraData () {
+            this.extraData = null;
         }
 
         public void setEase (EaseType easeType) {
             this.tweenerCore.easeTye = easeType;
+        }
+
+        public void setCompleted (Action callback) {
+            this.tweenerCore.completedCallback = callback;
+        }
+
+        private void triggerCompleted () {
+            this.tweenerCore.completedCallback?.Invoke ();
+            this.tweenerCore.completedCallback = null;
+        }
+
+        protected void tweenerCompleted () {
+            this.executeHandler = null;
+            this.timer = 0;
+            this.resetExtraData ();
+            this.triggerCompleted ();
         }
     }
 
 }
 
 namespace UFramework.Tween.Core {
+    using System;
 
     public delegate T TweenGetter<out T> ();
 
@@ -60,9 +79,9 @@ namespace UFramework.Tween.Core {
 
         public T changeValue;
 
-        public T otherValue;
-
         public float duration;
+
+        public Action completedCallback;
 
         public TweenerCore (TweenGetter<T> getter, TweenSetter<T> setter, float duration) {
             this.getter = getter;

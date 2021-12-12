@@ -13,8 +13,7 @@ namespace UFramework.Tween {
         public void pathTween (float dt, TweenerCore<Vector3> tweenerCore) {
             this.timer += dt;
             if (this.timer > tweenerCore.duration) {
-                this.executeHandler = null;
-                this.timer = 0;
+                this.tweenerCompleted ();
                 return;
             }
 
@@ -22,7 +21,7 @@ namespace UFramework.Tween {
             float ratioValue = EaseManager.getEaseFuncValue (tweenerCore.easeTye, time, tweenerCore.duration);
             float curMoveDistance = tweenerCore.changeValue.x * ratioValue;
 
-            List<Vector3> pathList = (List<Vector3>) this.extraData;
+            List<Vector3> pathList = this.getExtraData<List<Vector3>> ();
             float cumulativeDis = 0;
             for (int i = 0; i < pathList.Count - 1; i++) {
                 Vector3 prePos = pathList[i];
@@ -42,8 +41,7 @@ namespace UFramework.Tween {
         public void moveTween (float dt, TweenerCore<Vector3> tweenerCore) {
             this.timer += dt;
             if (this.timer > tweenerCore.duration) {
-                this.executeHandler = null;
-                this.timer = 0;
+                this.tweenerCompleted ();
                 return;
             }
 
