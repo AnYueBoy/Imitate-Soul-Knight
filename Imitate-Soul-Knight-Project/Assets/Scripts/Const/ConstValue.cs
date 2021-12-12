@@ -11,7 +11,7 @@ public class ConstValue {
     /// <summary>
     ///敌人生成数量 
     /// </summary>
-    public const int enemySpawnCount = 3;
+    public const int enemySpawnCount = 1;
 
     /// <summary>
     /// 攻击距离 
