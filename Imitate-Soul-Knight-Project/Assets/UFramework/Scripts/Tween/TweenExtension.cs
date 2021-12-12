@@ -9,6 +9,10 @@ namespace UFramework.Tween {
     using UnityEngine;
     public static class TweenExtension {
         public static TweenerTransform<Vector3> pathTween (this Transform target, List<Vector3> pathList, float duration) {
+            if (pathList.Count <= 1) {
+                return moveTween (target, pathList[0], duration);
+            }
+
             TweenerTransform<Vector3> tweener = TweenManager.spawnTweener<Vector3, TweenerTransform<Vector3>> ();
             TweenerCore<Vector3> tweenerCore = new TweenerCore<Vector3> (
                 () => {

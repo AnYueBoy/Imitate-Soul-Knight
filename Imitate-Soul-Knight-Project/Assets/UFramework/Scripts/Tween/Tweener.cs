@@ -38,12 +38,14 @@ namespace UFramework.Tween {
             this.extraData = null;
         }
 
-        public void setEase (EaseType easeType) {
+        public Tweener<T> setEase (EaseType easeType) {
             this.tweenerCore.easeTye = easeType;
+            return this;
         }
 
-        public void setCompleted (Action callback) {
+        public Tweener<T> setCompleted (Action callback) {
             this.tweenerCore.completedCallback = callback;
+            return this;
         }
 
         private void triggerCompleted () {
