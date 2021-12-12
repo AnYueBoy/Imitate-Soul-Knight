@@ -5,6 +5,7 @@
  */
 
 namespace UFramework.Tween {
+    using System.Collections.Generic;
     using UFramework.Tween.Core;
     using UnityEngine;
     public class TweenerTransform<T> : Tweener<T> {
@@ -19,9 +20,23 @@ namespace UFramework.Tween {
 
             float time = Mathf.Min (tweenerCore.duration, this.timer);
             float ratioValue = EaseManager.getEaseFuncValue (tweenerCore.easeTye, time, tweenerCore.duration);
+            float curMoveDistance = tweenerCore.changeValue.x * ratioValue;
 
-            Vector3 endPos = Vector3.zero;
-            tweenerCore.setter (endPos);
+            List<Vector3> pathList = (List<Vector3>) this.extraData;
+            float cumulativeDis = 0;
+            for (int i = 0; i < pathList.Count - 1; i++) {
+                Vector3 prePos = pathList[i];
+                Vector3 curPos = pathList[i + 1];
+                cumulativeDis += (curPos - prePos).magnitude;
+
+                if (curMoveDistance <= cumulativeDis) {
+                    Vector3 dir = curPos - prePos;
+                    dir = dir.normalized;
+                    Vector3 endPos = prePos + curMoveDistance * dir;
+                    tweenerCore.setter (endPos);
+                    break;
+                }
+            }
         }
 
         public void moveTween (float dt, TweenerCore<Vector3> tweenerCore) {

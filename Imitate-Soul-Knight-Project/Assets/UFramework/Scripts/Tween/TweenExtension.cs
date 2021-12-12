@@ -21,6 +21,15 @@ namespace UFramework.Tween {
             );
 
             tweener.setExtraData<List<Vector3>> (pathList);
+
+            float distance = 0;
+            for (int i = 0; i < pathList.Count - 1; i++) {
+                Vector3 prePos = pathList[i];
+                Vector3 curPos = pathList[i + 1];
+                distance += (curPos - prePos).magnitude;
+            }
+
+            tweenerCore.changeValue = Vector3.one * distance;
         }
 
         public static TweenerTransform<Vector3> moveTween (this Transform target, Vector3 endPos, float duration) {
