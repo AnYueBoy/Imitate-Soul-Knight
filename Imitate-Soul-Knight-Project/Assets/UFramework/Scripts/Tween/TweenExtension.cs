@@ -12,7 +12,7 @@ namespace UFramework.Tween {
             if (pathList.Count <= 1) {
                 return moveTween (target, pathList[0], duration);
             }
-            Debug.Log ("tween path");
+
             TweenerTransform<Vector3> tweener = TweenManager.spawnTweener<Vector3, TweenerTransform<Vector3>> ();
             TweenerCore<Vector3> tweenerCore = new TweenerCore<Vector3> (
                 () => {
@@ -34,7 +34,6 @@ namespace UFramework.Tween {
             }
 
             tweenerCore.changeValue = Vector3.one * distance;
-            Debug.Log ("distance: " + distance);
 
             tweener.setTweenCore (tweenerCore);
             tweener.setExtraData<List<Vector3>> (pathList);

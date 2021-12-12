@@ -120,13 +120,9 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 			return;
 		}
 
-		float animationTime = this.deadAnimationTime;
-		if (deadPath.Count > 1) {
-			animationTime *= 5;
-		}
 		this.transform
 			.pathTween (this.deadPath, this.deadAnimationTime)
-			.setEase (EaseType.LINER)
+			.setEase (EaseType.OutCubic)
 			.setCompleted (() => {
 				ModuleManager.instance.promiseTimer.waitFor (1.0f).then (() => {
 					this.dissolveDead ();
