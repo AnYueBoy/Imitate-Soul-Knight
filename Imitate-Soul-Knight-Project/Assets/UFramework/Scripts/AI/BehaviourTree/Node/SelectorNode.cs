@@ -35,10 +35,9 @@ namespace UFramework.AI.BehaviourTree.Node {
         }
 
         protected override void onReset (IAgent agent, BlackBoardMemory workingMemory) {
-            if (m_lastRunningNode != null) {
-                m_lastRunningNode.reset (agent, workingMemory);
+            foreach (BaseNode node in m_Children) {
+                node.reset (agent, workingMemory);
             }
-
             m_lastRunningNode = null;
         }
     }
