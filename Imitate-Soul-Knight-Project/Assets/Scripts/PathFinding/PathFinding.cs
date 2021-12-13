@@ -171,7 +171,6 @@ public class PathFinding {
 		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
 
 		if (x < 0 || x >= this.roomWidth || y < 0 || y >= this.roomHeight) {
-			Debug.Log ("越界");
 			return null;
 		}
 
