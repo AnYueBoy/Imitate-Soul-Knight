@@ -107,7 +107,7 @@ public class YeZhu : BaseEnemy {
         }
 
         this.pathPosList = this.pathFinding.findPath (this.transform.position, targetCell.worldPos);
-        if (this.pathFinding == null) {
+        if (this.pathPosList == null) {
             this.probingTimer = this.probingInterval;
             return;
         }
