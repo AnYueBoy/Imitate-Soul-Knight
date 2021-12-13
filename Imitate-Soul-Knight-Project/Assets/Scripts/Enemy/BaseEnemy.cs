@@ -115,8 +115,8 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	protected List<Vector3> deadPath = new List<Vector3> ();
-	protected float deadDistance = 5f;
-	protected float deadAnimationTime = 2f;
+	protected float deadDistance = 6.5f;
+	protected float deadAnimationTime = 2.5f;
 	public void deadMove (Vector2 aimDir) {
 		this.getDeadPath (aimDir);
 		this.getDeadTween ();
