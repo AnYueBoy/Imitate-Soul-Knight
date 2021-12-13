@@ -9,6 +9,9 @@ public class BulletData {
 
 	public bool isDie;
 
+	/// <summary>
+	/// 子弹朝向，根据任务算出的左右方向 
+	/// </summary>
 	public float moveDir;
 
 	public float damage;

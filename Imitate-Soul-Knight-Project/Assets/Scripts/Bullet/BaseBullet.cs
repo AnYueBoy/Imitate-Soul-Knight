@@ -12,6 +12,11 @@ public class BaseBullet : MonoBehaviour {
 
     public BulletData bulletData;
 
+    /// <summary>
+    /// 子弹真正的移动向量
+    /// </summary>
+    protected Vector2 bulletRealMoveDir;
+
     public virtual void init (BulletData bulletData) {
         this.bulletData = bulletData;
     }
@@ -43,6 +48,7 @@ public class BaseBullet : MonoBehaviour {
         float radValue = angle * Mathf.PI / 180;
         Vector2 checkDir = new Vector2 (Mathf.Cos (radValue) * moveDir, Mathf.Sin (radValue) * moveDir);
         checkDir = checkDir.normalized;
+        this.bulletRealMoveDir = checkDir;
         RaycastHit2D raycastInfo = this.checkRayCast (step, checkDir, new Vector2 (0.52f, 0.18f), angle);
         if (raycastInfo) {
             this.triggerHandler (raycastInfo);

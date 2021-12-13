@@ -23,11 +23,8 @@ public class YeZhuDeadAction : ActionNode {
         yeZhu.playerDeadAni ();
         yeZhu.invalidCollider ();
 
-        float randomX = CommonUtil.getRandomValue (-1.0f, 1.0f);
-        float randomY = CommonUtil.getRandomValue (-1.0f, 1.0f);
-        Vector2 randomAimDir = new Vector2 (randomX, randomY);
-        randomAimDir = randomAimDir.normalized;
-        yeZhu.deadMove (randomAimDir);
+        Vector2 bulletDir = yeZhu.getDamageBulletDir ();
+        yeZhu.deadMove (bulletDir);
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {

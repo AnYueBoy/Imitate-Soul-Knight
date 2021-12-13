@@ -21,11 +21,9 @@ public class LanJingGuaiDeadAction : ActionNode {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
         lanJingGuai.playerDeadAni ();
         lanJingGuai.invalidCollider ();
-        float randomX = CommonUtil.getRandomValue (-1.0f, 1.0f);
-        float randomY = CommonUtil.getRandomValue (-1.0f, 1.0f);
-        Vector2 randomAimDir = new Vector2 (randomX, randomY);
-        randomAimDir = randomAimDir.normalized;
-        lanJingGuai.deadMove (randomAimDir);
+
+        Vector2 bulletDir = lanJingGuai.getDamageBulletDir ();
+        lanJingGuai.deadMove (bulletDir);
     }
 
     protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {

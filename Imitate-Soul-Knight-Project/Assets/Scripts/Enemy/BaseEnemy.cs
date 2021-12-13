@@ -87,12 +87,19 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		return subVec.magnitude;
 	}
 
-	public virtual void injured (float damage) {
+	protected Vector2 damageBulletDir = Vector2.zero;
+
+	public Vector2 getDamageBulletDir () {
+		return this.damageBulletDir;
+	}
+
+	public virtual void injured (float damage, Vector2 bulletDir) {
 		if (!this.isRoomActive ()) {
 			return;
 		}
 		this.enemyData.curHp -= damage;
 		this.enemyData.curHp = Mathf.Max (this.enemyData.curHp, 0);
+		this.damageBulletDir = bulletDir;
 	}
 
 	public bool isDead () {

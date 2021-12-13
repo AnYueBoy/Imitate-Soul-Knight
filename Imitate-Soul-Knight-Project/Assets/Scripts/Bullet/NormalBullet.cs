@@ -12,8 +12,6 @@ using UnityEngine;
 
 public class NormalBullet : BaseBullet {
 
-    private Vector2 moveDir;
-
     protected override void triggerHandler (RaycastHit2D raycastInfo) {
         base.triggerHandler (raycastInfo);
         LayerMask resultLayer = raycastInfo.collider.gameObject.layer;
@@ -37,7 +35,7 @@ public class NormalBullet : BaseBullet {
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
             BaseEnemy enemy = raycastInfo.collider.GetComponent<BaseEnemy> ();
-            enemy.injured (this.bulletData.damage);
+            enemy.injured (this.bulletData.damage, this.bulletRealMoveDir);
         }
     }
 
