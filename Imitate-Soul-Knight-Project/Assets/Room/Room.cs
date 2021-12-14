@@ -220,6 +220,11 @@ public class Room {
 
 			Cell cell = this.pathFinding.getGridByPos (pos);
 			cell.isObstacle = true;
+
+			boxBlockNode.GetComponent<DestructibleBlock> ().init ((Vector3 blockPos) => {
+				Cell targetCell = this.pathFinding.getGridByPos (pos);
+				targetCell.isObstacle = false;
+			});
 		}
 	}
 
