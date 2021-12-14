@@ -27,4 +27,9 @@ public class ConstValue {
     /// 角色移动速度 
     /// </summary>
     public const float moveSpeed = 7;
+
+    /// <summary>
+    /// 战斗房间障碍数量
+    /// </summary>
+    public const int battleRoomBlockCount = 20;
 }
