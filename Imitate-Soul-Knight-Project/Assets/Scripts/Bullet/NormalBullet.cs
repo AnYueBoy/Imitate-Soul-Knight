@@ -3,7 +3,7 @@
  * @Date: 2021-10-22 21:39:01 
  * @Description: 普通子弹
  * @Last Modified by: l hy
- * @Last Modified time: 2021-11-18 18:30:02
+ * @Last Modified time: 2021-12-14 12:29:58
  */
 
 using UFramework;
@@ -16,9 +16,16 @@ public class NormalBullet : BaseBullet {
         base.triggerHandler (raycastInfo);
         LayerMask resultLayer = raycastInfo.collider.gameObject.layer;
         if (resultLayer == LayerMask.NameToLayer (LayerGroup.block)) {
-            // 回收子弹
+            // 回收子弹,不可破坏障碍
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
+            return;
+        }
+
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.destructibleBlock)) {
+            // 回收子弹，破坏可破坏障碍
+            this.bulletData.isDie = true;
+            raycastInfo.collider.GetComponent<DestructibleBlock> ().destroyItem ();
             return;
         }
 
