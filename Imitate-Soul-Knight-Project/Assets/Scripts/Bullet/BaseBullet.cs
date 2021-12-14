@@ -28,7 +28,10 @@ public class BaseBullet : MonoBehaviour {
             angle,
             checkDir,
             step,
-            1 << LayerMask.NameToLayer (LayerGroup.enemy) | 1 << LayerMask.NameToLayer (LayerGroup.player) | 1 << LayerMask.NameToLayer (LayerGroup.block));
+            1 << LayerMask.NameToLayer (LayerGroup.enemy) |
+            1 << LayerMask.NameToLayer (LayerGroup.player) |
+            1 << LayerMask.NameToLayer (LayerGroup.block) |
+            1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
 
         return raycastInfo;
     }
