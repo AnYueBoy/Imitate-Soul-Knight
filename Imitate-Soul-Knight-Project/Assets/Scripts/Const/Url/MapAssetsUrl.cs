@@ -13,5 +13,5 @@ public class MapAssetsUrl {
 
 	public const string doorCloseTile = "TileMap/door/doorCloseTile";
 
-	public const string boxBlockItem = "Item/boxBlock";
+	public const string boxBlockItem = "Items/BoxBlock/boxBlock";
 }

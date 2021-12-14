@@ -22,8 +22,6 @@ public class RoleControl : MonoBehaviour {
 
     public Transform weaponParent;
 
-    public LayerMask checkLayer;
-
     private Animator animator;
 
     private Material hurtFlashMaterial;
@@ -51,14 +49,25 @@ public class RoleControl : MonoBehaviour {
 
         if (moveDir.x != 0) {
             float horizontal = Mathf.Abs (moveDir.x) / moveDir.x;
-            if (CommonUtil.ray2DCheck (selfTrans.position, new Vector2 (horizontal, 0), checkDistance, checkLayer)) {
+            RaycastHit2D raycastHitInfo = Physics2D.Raycast (
+                selfTrans.position,
+                new Vector2 (horizontal, 0),
+                checkDistance,
+                1 << LayerMask.NameToLayer (LayerGroup.block) | 1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
+
+            if (raycastHitInfo) {
                 moveDir.x = 0;
             }
         }
 
         if (moveDir.y != 0) {
             float vertical = Mathf.Abs (moveDir.y) / moveDir.y;
-            if (CommonUtil.ray2DCheck (selfTrans.position, new Vector2 (0, vertical), checkDistance, checkLayer)) {
+            RaycastHit2D raycastHitInfo = Physics2D.Raycast (
+                selfTrans.position,
+                new Vector2 (0, vertical),
+                checkDistance,
+                1 << LayerMask.NameToLayer (LayerGroup.block) | 1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
+            if (raycastHitInfo) {
                 moveDir.y = 0;
             }
         }

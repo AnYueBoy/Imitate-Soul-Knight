@@ -45,10 +45,10 @@ public class Room {
 		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
 		this.roomEnemyList.Clear ();
 
-		this.createRoomItem ();
-
 		// 初始化房间的寻路信息
 		this.pathFinding.init (this.roomData.roomWidth, this.roomData.roomHeight, this.roomData.roomCenter);
+
+		this.createRoomItem ();
 	}
 
 	public void localUpdate (float dt) {
@@ -150,6 +150,7 @@ public class Room {
 
 		switch (roomType) {
 			case RoomTypeEnum.BATTLE:
+				this.spawnBoxBlock ();
 				this.spawnEnemy ();
 				break;
 
@@ -183,7 +184,12 @@ public class Room {
 	public List<BaseEnemy> roomEnemyList = new List<BaseEnemy> ();
 
 	private void spawnEnemy () {
-		List<Vector3> randomPosList = this.getRandomPos (ConstValue.enemySpawnCount);
+		int minX = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
+		int maxX = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
+		int minY = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
+		int maxY = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
+
+		List<Vector3> randomPosList = this.getRandomCellWorldPos (ConstValue.enemySpawnCount, minX, maxX, minY, maxY);
 		for (int i = 0; i < ConstValue.enemySpawnCount; i++) {
 			// 获取随机敌人id
 			int enemyId = CommonUtil.getRandomElement<int> (this.roomData.enemyList);
@@ -199,34 +205,64 @@ public class Room {
 		}
 	}
 
-	private List<Vector3> getRandomPos (int randomCount) {
-		// TODO: 性能点
-		// FIXME: 更好，更快的随机算法
-		List<Vector2Int> sampleList = new List<Vector2Int> ();
-		int horizontalStart = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
-		int horizontalEnd = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
-		int verticalStart = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
-		int verticalEnd = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
-		for (int i = horizontalStart; i < horizontalEnd; i++) {
-			for (int j = verticalStart; j < verticalEnd; j++) {
-				sampleList.Add (new Vector2Int (i, j));
+	private void spawnBoxBlock () {
+		int minX = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
+		int maxX = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
+		int minY = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
+		int maxY = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
+		GameObject boxBlockPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (MapAssetsUrl.boxBlockItem);
+		List<Vector3> randomPosList = this.getRandomCellWorldPos (ConstValue.battleRoomBlockCount, minX, maxX, minY, maxY);
+		for (int i = 0; i < randomPosList.Count; i++) {
+			Vector3 pos = randomPosList[i];
+			GameObject boxBlockNode = ObjectPool.instance.requestInstance (boxBlockPrefab);
+			boxBlockNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+			boxBlockNode.transform.position = pos;
+
+			Cell cell = this.pathFinding.getGridByPos (pos);
+			cell.isObstacle = true;
+		}
+	}
+
+	private List<Vector3> getRandomCellWorldPos (int randomCount, int minX, int maxX, int minY, int maxY) {
+		// 获取的是cell的本地坐标
+		List<Vector3Int> cellLocalList = new List<Vector3Int> ();
+
+		int curPointCount = 0;
+		while (curPointCount < randomCount) {
+			int randomX = CommonUtil.getRandomValue (minX, maxX - 1);
+			int randomY = CommonUtil.getRandomValue (minY, maxY - 1);
+			Vector3Int randomPos = new Vector3Int (randomX, randomY, 0);
+			bool isContainRandomPos = false;
+			for (int i = 0; i < cellLocalList.Count; i++) {
+				Vector3Int resultRandomPos = cellLocalList[i];
+				if (resultRandomPos.x == randomPos.x && resultRandomPos.y == randomPos.y) {
+					isContainRandomPos = true;
+					break;
+				}
+			}
+
+			if (!isContainRandomPos) {
+				curPointCount++;
+				cellLocalList.Add (randomPos);
 			}
 		}
 
-		List<Vector3> resultList = new List<Vector3> ();
-		Vector2Int randomPos = Vector2Int.zero;
-		sampleList = CommonUtil.getRandomElementList<Vector2Int> (sampleList, randomCount);
-		for (int i = 0; i < sampleList.Count; i++) {
-			randomPos = sampleList[i];
-			Vector3 resultRandomPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (randomPos.x, randomPos.y, 0));
-			resultList.Add (resultRandomPos);
+		List<Vector3> cellWorldList = new List<Vector3> ();
+		for (int i = 0; i < cellLocalList.Count; i++) {
+			Vector3Int resultPos = cellLocalList[i];
+			Vector3 resultRandomPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (resultPos.x, resultPos.y, 0));
+			cellWorldList.Add (resultRandomPos);
 		}
 
-		return resultList;
+		return cellWorldList;
 	}
 
 	private void spawnChestRandom () {
-		List<Vector3> randomPosList = this.getRandomPos (1);
+		int minX = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
+		int maxX = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
+		int minY = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
+		int maxY = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
+		List<Vector3> randomPosList = this.getRandomCellWorldPos (1, minX, maxX, minY, maxY);
 		Vector3 randomPos = randomPosList[0];
 
 		ModuleManager.instance.itemManager.spawnItem (randomPos, ItemIdEnum.WHITE_CHEST);
