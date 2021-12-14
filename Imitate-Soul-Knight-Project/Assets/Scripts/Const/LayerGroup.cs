@@ -12,6 +12,8 @@ public class LayerGroup {
 
     public const string block = "Block";
 
+    public const string destructibleBlock = "DestructibleBlock";
+
     #endregion
 
     #region  未设定在unity中的层，但在项目中使用
