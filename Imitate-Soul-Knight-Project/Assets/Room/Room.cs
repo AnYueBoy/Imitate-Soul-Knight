@@ -230,6 +230,9 @@ public class Room {
 		}
 	}
 
+	/// <summary>
+	/// 获取非障碍的随机位置
+	/// </summary>
 	private List<Vector3> getRandomCellWorldPos (int randomCount, int minX, int maxX, int minY, int maxY) {
 		// 获取的是cell的本地坐标
 		List<Vector3Int> cellLocalList = new List<Vector3Int> ();
@@ -239,16 +242,21 @@ public class Room {
 			int randomX = CommonUtil.getRandomValue (minX, maxX - 1);
 			int randomY = CommonUtil.getRandomValue (minY, maxY - 1);
 			Vector3Int randomPos = new Vector3Int (randomX, randomY, 0);
-			bool isContainRandomPos = false;
+			bool isSatisfyCondition = true;
 			for (int i = 0; i < cellLocalList.Count; i++) {
 				Vector3Int resultRandomPos = cellLocalList[i];
+				Cell cell = this.pathFinding.getGridByCellPos (resultRandomPos);
+				if (cell.isObstacle) {
+					isSatisfyCondition = false;
+					break;
+				}
 				if (resultRandomPos.x == randomPos.x && resultRandomPos.y == randomPos.y) {
-					isContainRandomPos = true;
+					isSatisfyCondition = false;
 					break;
 				}
 			}
 
-			if (!isContainRandomPos) {
+			if (isSatisfyCondition) {
 				curPointCount++;
 				cellLocalList.Add (randomPos);
 			}

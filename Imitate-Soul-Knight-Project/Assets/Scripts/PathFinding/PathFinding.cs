@@ -165,7 +165,7 @@ public class PathFinding {
 		return this.getGridByCellPos (cellPos);
 	}
 
-	private Cell getGridByCellPos (Vector3Int cellPos) {
+	public Cell getGridByCellPos (Vector3Int cellPos) {
 		// 映射到数组
 		int x = cellPos.x + this.roomWidth / 2 - this.roomCenter.x;
 		int y = -cellPos.y + this.roomHeight / 2 + this.roomCenter.y;
