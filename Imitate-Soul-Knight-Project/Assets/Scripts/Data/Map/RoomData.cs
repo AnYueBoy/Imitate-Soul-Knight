@@ -13,6 +13,9 @@ public class RoomData : BaseData {
 
 	public RoomTypeEnum roomType;
 
+	/// <summary>
+	///方格左下角 
+	/// </summary>
 	public Vector2Int roomCenter = Vector2Int.zero;
 
 	public Vector2Int roomInMapPos = Vector2Int.zero;

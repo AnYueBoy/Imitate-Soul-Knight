@@ -147,7 +147,9 @@ public class Room {
 	private void createRoomItem () {
 		RoomTypeEnum roomType = this.roomData.roomType;
 		Vector3 roomCenterToWorldPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y, 0));
-
+		Vector3 cellSize = ModuleManager.instance.mapManager.floorTilemap.cellSize;
+		roomCenterToWorldPos.x += cellSize.x / 2;
+		roomCenterToWorldPos.y += cellSize.y / 2;
 		switch (roomType) {
 			case RoomTypeEnum.BATTLE:
 				this.spawnBoxBlock ();
@@ -256,6 +258,9 @@ public class Room {
 		for (int i = 0; i < cellLocalList.Count; i++) {
 			Vector3Int resultPos = cellLocalList[i];
 			Vector3 resultRandomPos = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (resultPos.x, resultPos.y, 0));
+			Vector3 cellSize = ModuleManager.instance.mapManager.floorTilemap.cellSize;
+			resultRandomPos.x += cellSize.x / 2;
+			resultRandomPos.y += cellSize.y / 2;
 			cellWorldList.Add (resultRandomPos);
 		}
 
