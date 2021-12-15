@@ -13,6 +13,7 @@ public class MpItem : AutoTriggerItem {
     private readonly float mpRecoveryValue = 3;
 
     public void init (Vector3 endPos) {
+        this.initOver = false;
         ModuleManager.instance.promiseTimer
             .waitFor (0.15f)
             .then (() => {

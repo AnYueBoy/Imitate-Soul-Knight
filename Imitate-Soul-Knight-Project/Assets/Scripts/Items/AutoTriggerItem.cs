@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class AutoTriggerItem : BaseItem {
 
-    protected bool initOver = false;
+    protected bool initOver = true;
 
     public override void localUpdate (float dt) {
         if (!this.initOver) {
@@ -69,8 +69,8 @@ public class AutoTriggerItem : BaseItem {
     }
 
     protected virtual void reset () {
-        this.initOver = this.isExecuteAnimation = this.isTriggered = false;
-
+        this.isExecuteAnimation = this.isTriggered = false;
+        this.initOver = true;
         this.curAnimationTimer = 0;
     }
 

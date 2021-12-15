@@ -147,7 +147,12 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		float leftDistance = deadDistance;
 		RaycastHit2D raycastHitInfo;
 		while (leftDistance > 0) {
-			raycastHitInfo = Physics2D.Raycast (startPos, aimDir, leftDistance, 1 << LayerMask.NameToLayer (LayerGroup.block));
+			raycastHitInfo = Physics2D.Raycast (
+				startPos,
+				aimDir,
+				leftDistance,
+				1 << LayerMask.NameToLayer (LayerGroup.block) |
+				1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
 			Debug.DrawRay (startPos, aimDir, Color.red);
 			if (!raycastHitInfo) {
 				break;

@@ -10,6 +10,7 @@ using UnityEngine;
 public class CoinItem : AutoTriggerItem {
     private readonly int coinValue = 5;
     public void init (Vector3 endPos) {
+        this.initOver = false;
         ModuleManager.instance.promiseTimer
             .waitFor (0.15f)
             .then (() => {
