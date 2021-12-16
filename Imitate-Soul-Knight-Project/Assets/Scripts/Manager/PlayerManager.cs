@@ -16,8 +16,9 @@ public class PlayerManager : MonoBehaviour {
 
 	private BaseWeapon curWeapon;
 
-	[SerializeField]
-	private CinemachineVirtualCamera cinemaCamera;
+	[SerializeField] private BaseWeapon spareMeleeWeapon;
+
+	[SerializeField] private CinemachineVirtualCamera cinemaCamera;
 
 	private HashSet<PassiveTriggerItem> interfaceSet = new HashSet<PassiveTriggerItem> ();
 

@@ -54,7 +54,9 @@ public class RangeWeapon : BaseWeapon {
             });
     }
 
-    public virtual void launchBullet (float bulletDir) {
+    public override void attack (float args) {
+        float bulletDir = args;
+        
         if (this.attackTimer < this.attackInterval) {
             return;
         }
@@ -92,9 +94,5 @@ public class RangeWeapon : BaseWeapon {
             this.weaponConfigData.bulletUrl,
             bulletSpeed,
             this.weaponConfigData.damage);
-    }
-
-    public override void attack (float args) {
-        this.launchBullet (args);
     }
 }
