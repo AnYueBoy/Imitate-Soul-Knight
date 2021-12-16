@@ -91,8 +91,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7950421862185886245}
   - component: {fileID: 9828735600470265}
-  - component: {fileID: 5069940515609485356}
-  - component: {fileID: -7326469604333924920}
+  - component: {fileID: 8759929939052883990}
+  - component: {fileID: 7801569127593333255}
   m_Layer: 0
   m_Name: 1002
   m_TagString: Untagged
@@ -166,21 +166,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5069940515609485356
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6174453109037313077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6a529fbe765dae4691cb02e523535ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchTrans: {fileID: 5492550652298494826}
-  shotGunEffect: {fileID: 4236674599605385143}
---- !u!114 &-7326469604333924920
+--- !u!114 &8759929939052883990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,6 +178,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d132685cfdfbd447b2c2c0346b76ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7801569127593333255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6174453109037313077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d112e19b480ea42b0dfd82e5f37cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  launchTrans: {fileID: 5492550652298494826}
+  shotGunEffect: {fileID: 4236674599605385143}
 --- !u!1 &8276425060756847333
 GameObject:
   m_ObjectHideFlags: 0

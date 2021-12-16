@@ -177,7 +177,7 @@ public class PlayerManager : MonoBehaviour {
 
 	public void triggerAttack () {
 		// TODO: 距离过近，进行近战攻击
-		this.curWeapon.launchBullet (this.roleControl.transform.localScale.x);
+		this.curWeapon.attack (this.roleControl.transform.localScale.x);
 	}
 
 	public void triggerInterface () {
