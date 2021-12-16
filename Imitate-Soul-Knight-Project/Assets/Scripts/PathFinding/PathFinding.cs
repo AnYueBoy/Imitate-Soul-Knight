@@ -95,7 +95,7 @@ public class PathFinding {
 				return generatePath (startCell, endCell);
 			}
 
-			List<Cell> aroundCellList = this.getAroundCell (curCell);
+			List<Cell> aroundCellList = this.getAroundCellFour (curCell);
 			for (int i = 0; i < aroundCellList.Count; i++) {
 				Cell cell = aroundCellList[i];
 				if (cell == null) {
@@ -177,7 +177,7 @@ public class PathFinding {
 		return this.cellInfoArray[x, y];
 	}
 
-	private List<Cell> getAroundCell (Cell targetCell) {
+	private List<Cell> getAroundCellEight (Cell targetCell) {
 		List<Cell> cellList = new List<Cell> ();
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
@@ -192,6 +192,33 @@ public class PathFinding {
 				}
 			}
 		}
+		return cellList;
+	}
+
+	private List<Cell> getAroundCellFour (Cell targetCell) {
+		List<Cell> cellList = new List<Cell> ();
+		Vector2Int upPoint = new Vector2Int (targetCell.x, targetCell.y + 1);
+		Vector2Int downPoint = new Vector2Int (targetCell.x, targetCell.y - 1);
+
+		Vector2Int leftPoint = new Vector2Int (targetCell.x - 1, targetCell.y);
+		Vector2Int rightPoint = new Vector2Int (targetCell.x + 1, targetCell.y);
+
+		if (upPoint.x >= 0 && upPoint.x < this.roomWidth && upPoint.y >= 0 && upPoint.y < this.roomHeight) {
+			cellList.Add (this.cellInfoArray[upPoint.x, upPoint.y]);
+		}
+
+		if (downPoint.x >= 0 && downPoint.x < this.roomWidth && downPoint.y >= 0 && downPoint.y < this.roomHeight) {
+			cellList.Add (this.cellInfoArray[downPoint.x, downPoint.y]);
+		}
+
+		if (leftPoint.x >= 0 && leftPoint.x < this.roomWidth && leftPoint.y >= 0 && leftPoint.y < this.roomHeight) {
+			cellList.Add (this.cellInfoArray[leftPoint.x, leftPoint.y]);
+		}
+
+		if (rightPoint.x >= 0 && rightPoint.x < this.roomWidth && rightPoint.y >= 0 && rightPoint.y < this.roomHeight) {
+			cellList.Add (this.cellInfoArray[rightPoint.x, rightPoint.y]);
+		}
+
 		return cellList;
 	}
 
