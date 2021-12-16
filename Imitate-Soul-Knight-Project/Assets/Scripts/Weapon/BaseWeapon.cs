@@ -13,11 +13,18 @@ public abstract class BaseWeapon : MonoBehaviour {
 
     protected WeaponConfigData weaponConfigData;
 
+    protected float attackInterval = 0;
+
+    protected float attackTimer = 0;
+
     protected string weaponLayer;
 
     public virtual void init (ItemIdEnum id) {
         this.id = id;
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
+
+        this.attackInterval = weaponConfigData.attackInterval;
+        this.attackTimer = this.attackInterval;
     }
 
     public virtual void equipment (string bulletLayer) {

@@ -25,18 +25,8 @@ public class RangeWeapon : BaseWeapon {
     protected readonly float recoilForceInterval = 0.3f;
     #endregion
 
-    #region  发射
-    protected float attackInterval = 0;
-
-    protected float launchTimer = 0;
-
-    #endregion
-
     public override void init (ItemIdEnum id) {
         base.init (id);
-
-        this.attackInterval = weaponConfigData.attackInterval;
-        this.launchTimer = this.attackInterval;
 
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
@@ -44,7 +34,7 @@ public class RangeWeapon : BaseWeapon {
     }
 
     public override void localUpdate (float dt) {
-        this.launchTimer += dt;
+        this.attackTimer += dt;
     }
 
     protected virtual void spawnShotGunFire () {
@@ -65,7 +55,7 @@ public class RangeWeapon : BaseWeapon {
     }
 
     public virtual void launchBullet (float bulletDir) {
-        if (this.launchTimer < this.attackInterval) {
+        if (this.attackTimer < this.attackInterval) {
             return;
         }
 
@@ -83,7 +73,7 @@ public class RangeWeapon : BaseWeapon {
 
         ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
 
-        this.launchTimer = 0;
+        this.attackTimer = 0;
         Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
         float bulletSpeed = this.weaponConfigData.bulletSpeed;
         if (moveDir != Vector2.zero) {
