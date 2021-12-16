@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviour {
 
 	private BaseWeapon curWeapon;
 
-	[SerializeField] private BaseWeapon spareMeleeWeapon;
+	private BaseWeapon spareMeleeWeapon;
 
 	[SerializeField] private CinemachineVirtualCamera cinemaCamera;
 
@@ -44,6 +44,8 @@ public class PlayerManager : MonoBehaviour {
 		// 根据当前武器生成武器实例
 		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
 		BaseWeapon curWeapon = ModuleManager.instance.itemManager.spawnWeapon (Vector3.zero, (ItemIdEnum) curWeaponId);
+
+		// TODO:生成备用近战武器
 
 		this.equipmentWeapon (curWeapon);
 	}

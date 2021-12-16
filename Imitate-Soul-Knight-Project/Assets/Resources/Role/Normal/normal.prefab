@@ -245,7 +245,7 @@ MonoBehaviour:
   checkDistance: 0.4
   weaponRotaionTrans: {fileID: 9080219856250794297}
   meleeTransform: {fileID: 6688241237700456067}
-  meleeEffect: {fileID: 0}
+  meleeEffect: {fileID: 267372300379635710}
   weaponParent: {fileID: 6219751255263575286}
 --- !u!61 &923209696040022001
 BoxCollider2D:
