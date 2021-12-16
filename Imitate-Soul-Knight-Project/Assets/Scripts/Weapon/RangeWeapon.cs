@@ -26,7 +26,7 @@ public class RangeWeapon : BaseWeapon {
     #endregion
 
     #region  发射
-    protected float launchInterval = 0;
+    protected float attackInterval = 0;
 
     protected float launchTimer = 0;
 
@@ -35,8 +35,8 @@ public class RangeWeapon : BaseWeapon {
     public override void init (ItemIdEnum id) {
         base.init (id);
 
-        this.launchInterval = weaponConfigData.launchInterval;
-        this.launchTimer = this.launchInterval;
+        this.attackInterval = weaponConfigData.attackInterval;
+        this.launchTimer = this.attackInterval;
 
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
 
@@ -65,7 +65,7 @@ public class RangeWeapon : BaseWeapon {
     }
 
     public virtual void launchBullet (float bulletDir) {
-        if (this.launchTimer < this.launchInterval) {
+        if (this.launchTimer < this.attackInterval) {
             return;
         }
 
