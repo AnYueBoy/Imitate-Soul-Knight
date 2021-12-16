@@ -1,24 +1,24 @@
-﻿using System;
-/*
+﻿/*
  * @Author: l hy 
  * @Date: 2021-09-17 14:00:13 
  * @Description: 角色控制
  */
+using System;
 using DG.Tweening;
 using UFramework;
-using UFramework.FrameUtil;
 using UnityEngine;
 
 public class RoleControl : MonoBehaviour {
 
-    [SerializeField]
-    private Transform selfTrans;
+    [SerializeField] private Transform selfTrans;
 
-    [SerializeField]
-    private float checkDistance = 0.4f;
+    [SerializeField] private float checkDistance = 0.4f;
 
-    [SerializeField]
-    private Transform weaponRotaionTrans;
+    [SerializeField] private Transform weaponRotaionTrans;
+
+    [SerializeField] private Transform meleeTransform;
+
+    [SerializeField] private GameObject meleeEffect;
 
     public Transform weaponParent;
 
@@ -35,10 +35,6 @@ public class RoleControl : MonoBehaviour {
         this.roleAni ();
         this.roleMove (dt);
         this.refreshWeaponRotate ();
-    }
-
-    private void OnDisable () {
-
     }
 
     private void roleMove (float dt) {
@@ -149,5 +145,9 @@ public class RoleControl : MonoBehaviour {
                         callback?.Invoke ();
                     });
             });
+    }
+
+    private void OnDisable () {
+
     }
 }
