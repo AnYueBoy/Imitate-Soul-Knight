@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1913295980905233908}
   - component: {fileID: 1913295980905233909}
-  - component: {fileID: 1913295980905233906}
+  - component: {fileID: 8536656592422553260}
   m_Layer: 0
   m_Name: blueSword
   m_TagString: Untagged
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &1913295980905233906
+--- !u!95 &8536656592422553260
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0

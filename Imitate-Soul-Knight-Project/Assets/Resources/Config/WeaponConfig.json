@@ -25,6 +25,19 @@
 			"mpConsume": 10,
 			"bulletOffset": 0,
 			"recoilForceDis": 0.4
+		},
+		{
+			"id": 1003,
+			"name": "长剑",
+			"describe": "长剑",
+			"attackInterval": 0.15,
+			"damage": 10,
+			"launchCount": 1,
+			"bulletSpeed": 1,
+			"bulletUrl": "",
+			"mpConsume": 0,
+			"bulletOffset": 0,
+			"recoilForceDis": 0
 		}
 	]
 }
