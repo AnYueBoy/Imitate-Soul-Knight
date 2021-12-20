@@ -6,5 +6,5 @@
 
 public class RoleAssetsUrl {
 
-	public const string player = "Role/Normal/normal";
+	public const string player = "Role/Knight/knight";
 }
