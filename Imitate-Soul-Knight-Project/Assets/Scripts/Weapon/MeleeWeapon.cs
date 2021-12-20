@@ -9,7 +9,8 @@ using UFramework.GameCommon;
 using UnityEngine;
 
 public class MeleeWeapon : BaseWeapon {
-    private Animator animator;
+
+    private GameObject attackEffectNode;
 
     public override void attack (float args) {
         if (this.isInAttackState) {
@@ -35,50 +36,32 @@ public class MeleeWeapon : BaseWeapon {
     }
 
     private void checkEffect () {
-        if (this.animator != null) {
+        if (this.attackEffectNode != null) {
             return;
         }
         GameObject effectPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (this.weaponConfigData.bulletUrl);
-        GameObject effectNode = ObjectPool.instance.requestInstance (effectPrefab);
-        this.animator = effectNode.GetComponent<Animator> ();
+        this.attackEffectNode = ObjectPool.instance.requestInstance (effectPrefab);
 
         Transform effectTransform = ModuleManager.instance.playerManager.getMeleeEffectTransform ();
-        effectNode.transform.SetParent (effectTransform);
+        this.attackEffectNode.transform.SetParent (effectTransform);
         // FIXME: 临时逻辑
-        effectNode.transform.localPosition = new Vector3 (0.4990001f, 0.08199999f, 0);
-        effectNode.SetActive (false);
+        this.attackEffectNode.transform.localPosition = new Vector3 (0.4990001f, 0.08199999f, 0);
+        this.attackEffectNode.SetActive (false);
     }
 
     private bool isInAttackState = false;
-    private float attackAnimationTime = -1;
+    private readonly float attackAnimationTime = 0.2f;
 
     private float animationSpeed;
 
     private float animationTimer;
 
     private void playAttackAnimation () {
-        this.animator.gameObject.SetActive (true);
-        this.animator.SetTrigger ("Attack");
-        this.getAttackAnimationTime ();
 
-        // 开启动画，角度从66~-30
-        this.animationSpeed = 96 / this.attackAnimationTime * 2;
+        // 开启动画，角度从66~-66
+        this.animationSpeed = 132 / this.attackAnimationTime;
         this.isInAttackState = true;
         this.animationTimer = 0;
-    }
-
-    private void getAttackAnimationTime () {
-        if (this.attackAnimationTime != -1) {
-            return;
-        }
-
-        AnimationClip[] clips = this.animator.runtimeAnimatorController.animationClips;
-        for (int i = 0; i < clips.Length; i++) {
-            if (clips[i].name == "blueSword") {
-                this.attackAnimationTime = clips[i].length;
-                break;
-            }
-        }
     }
 
     public override void localUpdate (float dt) {
@@ -96,15 +79,21 @@ public class MeleeWeapon : BaseWeapon {
 
         Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
 
-        if (this.animationTimer > this.attackAnimationTime / 2) {
+        if (this.animationTimer > this.attackAnimationTime) {
             this.animationTimer = 0;
             this.isInAttackState = false;
-            this.animator.gameObject.SetActive (false);
+            this.attackEffectNode.SetActive (false);
             meleeRotationTransfrom.localEulerAngles = Vector3.zero;
             return;
         }
 
-        float zEulerAngles = 60 - this.attackTimer * this.animationSpeed;
+        if (this.animationTimer >= this.attackAnimationTime / 2) {
+            if (!this.attackEffectNode.activeSelf) {
+                this.attackEffectNode.SetActive (true);
+            }
+        }
+
+        float zEulerAngles = 66 - this.attackTimer * this.animationSpeed;
 
         meleeRotationTransfrom.localEulerAngles = new Vector3 (0, 0, zEulerAngles);
     }
