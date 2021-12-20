@@ -16,8 +16,8 @@ public class RoleControl : MonoBehaviour {
 
     [SerializeField] private Transform weaponRotaionTrans;
 
-    public Transform weaponParent;
-    public Transform meleeParent;
+    public Transform rangeWeaponParent;
+    public Transform meleeWeaponParent;
     public Transform meleeRotationTrans;
     public Transform meleeEffectTransform;
 

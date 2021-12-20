@@ -2,6 +2,7 @@ public enum ItemIdEnum {
 
     NORMAL_WEAPON = 1001,
 
+    // 临时枚举
     SNIPER_WEAPON = 1002,
 
     WHITE_CHEST = 2001,

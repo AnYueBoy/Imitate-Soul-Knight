@@ -7,6 +7,7 @@
 public class WeaponConfigData : BaseData {
 
 	public int id; // 唯一标识
+	public int weaponType; // 武器类型
 	public string name; // 名称
 	public string describe; // 描述
 	public float attackInterval; // 攻击间隔

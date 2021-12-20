@@ -38,4 +38,8 @@ public abstract class BaseWeapon : MonoBehaviour {
     public int getWeaponMpConsume () {
         return this.weaponConfigData.mpConsume;
     }
+
+    public WeaponTypeEnum getWeaponType () {
+        return (WeaponTypeEnum) this.weaponConfigData.weaponType;
+    }
 }

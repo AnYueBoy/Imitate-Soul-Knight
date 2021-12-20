@@ -64,7 +64,7 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public Transform getMeleeParentTransform () {
-		return this.roleControl.meleeParent;
+		return this.roleControl.meleeWeaponParent;
 	}
 
 	public Transform getMeleeRotationTransform () {
@@ -172,7 +172,11 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon = weapon;
 		this.curWeapon.gameObject.SetActive (true);
 		this.curWeapon.equipment (LayerGroup.playerWeapon);
-		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
+		if (this.curWeapon.getWeaponType () == WeaponTypeEnum.RANGE) {
+			this.curWeapon.transform.SetParent (this.roleControl.rangeWeaponParent);
+		} else {
+			this.curWeapon.transform.SetParent (this.roleControl.meleeWeaponParent);
+		}
 		this.curWeapon.transform.localPosition = Vector3.zero;
 		this.curWeapon.transform.localEulerAngles = Vector3.zero;
 		this.curWeapon.transform.localScale = Vector3.one;

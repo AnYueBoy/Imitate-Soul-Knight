@@ -2,6 +2,7 @@
 	"weaponList": [
 		{
 			"id": 1001,
+			"weaponType": 1,
 			"name": "破旧短枪",
 			"describe": "一把破旧的短枪",
 			"attackInterval": 0.3,
@@ -15,6 +16,7 @@
 		},
 		{
 			"id": 1002,
+			"weaponType": 1,
 			"name": "狙击枪",
 			"describe": "狙击枪",
 			"attackInterval": 0.9,
@@ -28,6 +30,7 @@
 		},
 		{
 			"id": 1003,
+			"weaponType": 2,
 			"name": "长剑",
 			"describe": "长剑",
 			"attackInterval": 0.15,
