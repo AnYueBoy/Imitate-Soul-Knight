@@ -4,6 +4,7 @@
  * @Description: 近战武器
  */
 
+using DG.Tweening;
 using UFramework;
 using UFramework.GameCommon;
 using UnityEngine;
@@ -62,11 +63,29 @@ public class MeleeWeapon : BaseWeapon {
         this.animationSpeed = 132 / this.attackAnimationTime;
         this.isInAttackState = true;
         this.animationTimer = 0;
+
+        Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
+        meleeRotationTransfrom
+            .DOLocalRotate (new Vector3 (0, 0, 66), 0.2f)
+            .SetEase (Ease.OutCubic)
+            .OnComplete (() => {
+                meleeRotationTransfrom
+                    .DOLocalRotate (new Vector3 (0, 0, -66), this.attackAnimationTime)
+                    .SetEase (Ease.OutCubic)
+                    .OnComplete (() => {
+                        meleeRotationTransfrom
+                            .DOLocalRotate (Vector3.zero, this.attackAnimationTime)
+                            .SetEase (Ease.OutCubic)
+                            .OnComplete (() => {
+                                this.isInAttackState = false;
+                            });
+                    });
+            });
     }
 
     public override void localUpdate (float dt) {
         this.attackTimer += dt;
-        this.executeAnimation (dt);
+        // this.executeAnimation (dt);
         this.checkRayCast ();
     }
 
