@@ -63,7 +63,9 @@ public class MeleeWeapon : BaseWeapon {
         this.animationSpeed = 120 / this.attackAnimationTime;
         this.isInAttackState = true;
         this.animationTimer = 0;
-        this.transform.parent.eulerAngles = new Vector3 (0, 0, -60);
+
+        Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
+        meleeRotationTransfrom.eulerAngles = new Vector3 (0, 0, -60);
     }
 
     public override void localUpdate (float dt) {
@@ -76,16 +78,18 @@ public class MeleeWeapon : BaseWeapon {
             return;
         }
 
+        Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
+
         if (this.animationTimer > this.attackAnimationTime) {
             this.animationTimer = 0;
             this.isInAttackState = false;
-            this.transform.parent.eulerAngles = Vector3.zero;
+            meleeRotationTransfrom.eulerAngles = Vector3.zero;
             return;
         }
 
         float zEulerAngles = -60 + this.attackTimer * this.animationSpeed;
 
-        this.transform.parent.eulerAngles = new Vector3 (0, 0, zEulerAngles);
+        meleeRotationTransfrom.eulerAngles = new Vector3 (0, 0, zEulerAngles);
     }
 
     private void checkRayCast () {

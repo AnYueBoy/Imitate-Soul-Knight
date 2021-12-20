@@ -60,7 +60,15 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public Transform getMeleeEffectTransform () {
-		return this.roleControl.getEffectTransform ();
+		return this.roleControl.meleeEffectTransform;
+	}
+
+	public Transform getMeleeParentTransform () {
+		return this.roleControl.meleeParent;
+	}
+
+	public Transform getMeleeRotationTransform () {
+		return this.roleControl.meleeRotationTrans;
 	}
 
 	private bool isProtected = false;
