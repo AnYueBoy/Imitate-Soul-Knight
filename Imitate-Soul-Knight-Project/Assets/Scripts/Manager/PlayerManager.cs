@@ -59,6 +59,10 @@ public class PlayerManager : MonoBehaviour {
 		return this.roleControl.transform;
 	}
 
+	public Transform getMeleeEffectTransform () {
+		return this.roleControl.getEffectTransform ();
+	}
+
 	private bool isProtected = false;
 	private readonly float protectedTime = 0.64f;
 

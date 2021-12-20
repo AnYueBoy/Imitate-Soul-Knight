@@ -18,7 +18,7 @@ public class RoleControl : MonoBehaviour {
 
     [SerializeField] private Transform meleeTransform;
 
-    [SerializeField] private GameObject meleeEffect;
+    [SerializeField] private Transform meleeEffectTransform;
 
     public Transform weaponParent;
 
@@ -145,6 +145,10 @@ public class RoleControl : MonoBehaviour {
                         callback?.Invoke ();
                     });
             });
+    }
+
+    public Transform getEffectTransform () {
+        return this.meleeEffectTransform;
     }
 
     private void OnDisable () {
