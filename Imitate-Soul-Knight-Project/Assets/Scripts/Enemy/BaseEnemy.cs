@@ -20,7 +20,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	protected float intensity = 2.5f;
 	protected Material material;
 
-	protected string bulletLayer = LayerGroup.enemyBullet;
+	protected string bulletLayer = LayerGroup.enemyWeapon;
 
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();

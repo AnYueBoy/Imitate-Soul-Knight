@@ -171,7 +171,7 @@ public class PlayerManager : MonoBehaviour {
 	private void setCurWeapon (BaseWeapon weapon) {
 		this.curWeapon = weapon;
 		this.curWeapon.gameObject.SetActive (true);
-		this.curWeapon.equipment (LayerGroup.playerBullet);
+		this.curWeapon.equipment (LayerGroup.playerWeapon);
 		this.curWeapon.transform.SetParent (this.roleControl.weaponParent);
 		this.curWeapon.transform.localPosition = Vector3.zero;
 		this.curWeapon.transform.localEulerAngles = Vector3.zero;

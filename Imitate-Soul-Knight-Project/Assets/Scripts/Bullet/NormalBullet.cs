@@ -29,7 +29,7 @@ public class NormalBullet : BaseBullet {
             return;
         }
 
-        if (resultLayer == LayerMask.NameToLayer (LayerGroup.player) && this.bulletData.layer == LayerGroup.enemyBullet) {
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.player) && this.bulletData.layer == LayerGroup.enemyWeapon) {
             // 回收子弹、对玩家造成伤害
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();
@@ -37,7 +37,7 @@ public class NormalBullet : BaseBullet {
             return;
         }
 
-        if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemy) && this.bulletData.layer == LayerGroup.playerBullet) {
+        if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemy) && this.bulletData.layer == LayerGroup.playerWeapon) {
             // 回收子弹、对敌人造成伤害
             this.bulletData.isDie = true;
             this.spawnBulletEffect ();

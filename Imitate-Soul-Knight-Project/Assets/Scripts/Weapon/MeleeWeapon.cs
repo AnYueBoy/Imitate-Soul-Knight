@@ -63,20 +63,20 @@ public class MeleeWeapon : BaseWeapon {
         this.animationSpeed = 120 / this.attackAnimationTime;
         this.isInAttackState = true;
         this.animationTimer = 0;
-
-        Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
-        meleeRotationTransfrom.eulerAngles = new Vector3 (0, 0, -60);
     }
 
     public override void localUpdate (float dt) {
         this.attackTimer += dt;
+        this.executeAnimation (dt);
         this.checkRayCast ();
     }
 
-    private void executeAnimation () {
+    private void executeAnimation (float dt) {
         if (!this.isInAttackState) {
             return;
         }
+
+        this.animationTimer += dt;
 
         Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
 
@@ -89,7 +89,7 @@ public class MeleeWeapon : BaseWeapon {
 
         float zEulerAngles = -60 + this.attackTimer * this.animationSpeed;
 
-        meleeRotationTransfrom.eulerAngles = new Vector3 (0, 0, zEulerAngles);
+        meleeRotationTransfrom.localEulerAngles = new Vector3 (0, 0, zEulerAngles);
     }
 
     private void checkRayCast () {

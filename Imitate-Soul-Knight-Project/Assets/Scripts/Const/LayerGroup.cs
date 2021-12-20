@@ -18,8 +18,8 @@ public class LayerGroup {
 
     #region  未设定在unity中的层，但在项目中使用
 
-    public const string enemyBullet = "EnemyBullet";
-    public const string playerBullet = "PlayerBullet";
+    public const string enemyWeapon = "EnemyWeapon";
+    public const string playerWeapon = "PlayerWeapon";
 
     #endregion
 }
