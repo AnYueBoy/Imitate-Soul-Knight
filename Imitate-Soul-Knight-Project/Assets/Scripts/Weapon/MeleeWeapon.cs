@@ -87,7 +87,7 @@ public class MeleeWeapon : BaseWeapon {
             return;
         }
 
-        if (this.animationTimer >= this.attackAnimationTime / 2) {
+        if (this.animationTimer >= this.attackAnimationTime / 4) {
             if (!this.attackEffectNode.activeSelf) {
                 this.attackEffectNode.SetActive (true);
             }
