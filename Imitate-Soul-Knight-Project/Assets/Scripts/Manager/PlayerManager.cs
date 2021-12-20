@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	public Transform getMeleeRotationTransform () {
-		return this.roleControl.meleeRotationTrans;
+		return this.roleControl.meleeRotationTrans2;
 	}
 
 	private bool isProtected = false;

@@ -37,7 +37,7 @@
 			"damage": 10,
 			"launchCount": 1,
 			"bulletSpeed": 1,
-			"bulletUrl": "",
+			"bulletUrl": "Effect/blueSword",
 			"mpConsume": 0,
 			"bulletOffset": 0,
 			"recoilForceDis": 0
