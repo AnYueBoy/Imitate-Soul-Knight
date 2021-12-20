@@ -44,25 +44,41 @@ public class MeleeWeapon : BaseWeapon {
 
         Transform effectTransform = ModuleManager.instance.playerManager.getMeleeEffectTransform ();
         effectNode.transform.SetParent (effectTransform);
+        // FIXME: 临时逻辑
+        effectNode.transform.localPosition = new Vector3 (0.4990001f, 0.08199999f, 0);
+        effectNode.SetActive (false);
     }
 
     private bool isInAttackState = false;
-    private float attackAnimationTime;
+    private float attackAnimationTime = -1;
 
     private float animationSpeed;
 
     private float animationTimer;
 
     private void playAttackAnimation () {
+        this.animator.gameObject.SetActive (true);
         this.animator.SetTrigger ("Attack");
+        this.getAttackAnimationTime ();
 
-        AnimatorStateInfo info = this.animator.GetCurrentAnimatorStateInfo (0);
-        this.attackAnimationTime = info.length;
-
-        // 开启动画，角度从60~-60
-        this.animationSpeed = 120 / this.attackAnimationTime;
+        // 开启动画，角度从66~-30
+        this.animationSpeed = 96 / this.attackAnimationTime * 2;
         this.isInAttackState = true;
         this.animationTimer = 0;
+    }
+
+    private void getAttackAnimationTime () {
+        if (this.attackAnimationTime != -1) {
+            return;
+        }
+
+        AnimationClip[] clips = this.animator.runtimeAnimatorController.animationClips;
+        for (int i = 0; i < clips.Length; i++) {
+            if (clips[i].name == "blueSword") {
+                this.attackAnimationTime = clips[i].length;
+                break;
+            }
+        }
     }
 
     public override void localUpdate (float dt) {
@@ -80,14 +96,15 @@ public class MeleeWeapon : BaseWeapon {
 
         Transform meleeRotationTransfrom = ModuleManager.instance.playerManager.getMeleeRotationTransform ();
 
-        if (this.animationTimer > this.attackAnimationTime) {
+        if (this.animationTimer > this.attackAnimationTime / 2) {
             this.animationTimer = 0;
             this.isInAttackState = false;
-            meleeRotationTransfrom.eulerAngles = Vector3.zero;
+            this.animator.gameObject.SetActive (false);
+            meleeRotationTransfrom.localEulerAngles = Vector3.zero;
             return;
         }
 
-        float zEulerAngles = -60 + this.attackTimer * this.animationSpeed;
+        float zEulerAngles = 60 - this.attackTimer * this.animationSpeed;
 
         meleeRotationTransfrom.localEulerAngles = new Vector3 (0, 0, zEulerAngles);
     }
