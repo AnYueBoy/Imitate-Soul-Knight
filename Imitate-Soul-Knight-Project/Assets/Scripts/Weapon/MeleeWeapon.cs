@@ -17,22 +17,25 @@ public class MeleeWeapon : BaseWeapon {
 
     public override void init (ItemIdEnum id) {
         base.init (id);
+        this.getAttackAnimationTime ();
+    }
+
+    protected void getAttackAnimationTime () {
         AnimationClip[] animationClips = this.animator.runtimeAnimatorController.animationClips;
         for (int i = 0; i < animationClips.Length; i++) {
             AnimationClip clip = animationClips[i];
-            if (clip.name == "attack") {
-                this.attackAnimationTime = clip.length;
+            if (clip.name == "Attack") {
+                // 僵直等待时间
+                this.attackAnimationTime = clip.length + 0.05f;
                 break;
             }
         }
+
+        this.attackInterval = Mathf.Max (this.attackAnimationTime, this.attackInterval);
     }
 
     public override void attack (float args) {
         if (this.isInAttackState) {
-            return;
-        }
-
-        if (this.attackTimer < this.attackInterval) {
             return;
         }
 
@@ -44,13 +47,20 @@ public class MeleeWeapon : BaseWeapon {
 
         ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
 
-        this.attackTimer = 0;
+        this.isInAttackState = true;
+        this.animator.SetTrigger ("Attack");
+
+        ModuleManager.instance.promiseTimer
+            .waitFor (this.attackInterval)
+            .then (() => {
+                this.isInAttackState = false;
+            });
+
     }
 
     private bool isInAttackState = false;
 
     public override void localUpdate (float dt) {
-        this.attackTimer += dt;
         this.checkRayCast ();
     }
 
