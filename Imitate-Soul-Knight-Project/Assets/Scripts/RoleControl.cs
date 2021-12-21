@@ -22,6 +22,8 @@ public class RoleControl : MonoBehaviour {
     public Transform meleeRotationTrans2;
     public Transform meleeEffectTransform;
 
+    public SpriteRenderer meleeEffectSprite;
+
     private Animator animator;
 
     private Material hurtFlashMaterial;

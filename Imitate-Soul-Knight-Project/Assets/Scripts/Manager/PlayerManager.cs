@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon?.localUpdate (dt);
 	}
 
+	#region  字段访问
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
 	}
@@ -70,6 +71,12 @@ public class PlayerManager : MonoBehaviour {
 	public Transform getMeleeRotationTransform () {
 		return this.roleControl.meleeRotationTrans2;
 	}
+
+	public SpriteRenderer getEffectSprite () {
+		return this.roleControl.meleeEffectSprite;
+	}
+
+	#endregion
 
 	private bool isProtected = false;
 	private readonly float protectedTime = 0.64f;

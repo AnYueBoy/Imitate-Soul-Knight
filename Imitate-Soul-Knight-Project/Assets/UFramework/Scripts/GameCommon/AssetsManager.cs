@@ -77,10 +77,14 @@ namespace UFramework.GameCommon {
         /// <param name="folderUrl"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public List<PackAsset> getAllAssetsByUrlSync<T> (string folderUrl) where T : Object {
+        public List<T> getAllAssetsByUrlSync<T> (string folderUrl) where T : Object {
             List<PackAsset> nativeAssets = this.findNativeAssets (folderUrl);
+            List<T> resultAssetsList = new List<T> ();
             if (nativeAssets != null) {
-                return nativeAssets;
+                foreach (PackAsset packAsset in nativeAssets) {
+                    resultAssetsList.Add (packAsset.targetAsset as T);
+                }
+                return resultAssetsList;
             }
 
             T[] targetAssets = Resources.LoadAll<T> (folderUrl);
@@ -94,12 +98,14 @@ namespace UFramework.GameCommon {
                 PackAsset packAsset = new PackAsset (assetUrl, targetAsset);
                 nativeAssets.Add (packAsset);
                 assetPool.Add (assetUrl, packAsset);
+
+                resultAssetsList.Add (packAsset.targetAsset as T);
             }
             floderAssetPool.Add (folderUrl, nativeAssets);
-            return nativeAssets;
+            return resultAssetsList;
         }
 
-        [Obsolete ("unity not allow")]
+        [Obsolete ("can not use unity api in thread")]
         public async Task<T> getAssetByUrlAsyncOb<T> (string assetUrl) where T : Object {
             T nativeAsset = this.findNativeAsset<T> (assetUrl);
             if (nativeAsset != null) {
