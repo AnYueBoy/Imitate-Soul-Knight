@@ -19,7 +19,7 @@ public abstract class BaseWeapon : MonoBehaviour {
 
     protected string weaponLayer;
 
-    [SerializeField] private SpriteRenderer weaponSpriteRender;
+    [SerializeField] protected SpriteRenderer weaponSpriteRender;
 
     public virtual void init (ItemIdEnum id) {
         this.id = id;

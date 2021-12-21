@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSpriteRender: {fileID: 728431948390464357}
   animator: {fileID: 4198556028395110010}
+  meleeCheckTrans: {fileID: 5886899714169286466}
 --- !u!1 &2970251538247490819
 GameObject:
   m_ObjectHideFlags: 0

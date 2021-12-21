@@ -4,14 +4,14 @@
  * @Description: 近战武器
  */
 
-using DG.Tweening;
+using System.Collections.Generic;
 using UFramework;
-using UFramework.GameCommon;
 using UnityEngine;
 
 public class MeleeWeapon : BaseWeapon {
 
     [SerializeField] protected Animator animator;
+    [SerializeField] protected Transform meleeCheckTrans;
 
     protected float attackAnimationTime;
 
@@ -50,6 +50,8 @@ public class MeleeWeapon : BaseWeapon {
         this.isInAttackState = true;
         this.animator.SetTrigger ("Attack");
 
+        this.hitNodeList.Clear ();
+
         ModuleManager.instance.promiseTimer
             .waitFor (this.attackInterval)
             .then (() => {
@@ -68,18 +70,67 @@ public class MeleeWeapon : BaseWeapon {
         if (!this.isInAttackState) {
             return;
         }
-        //TODO: box ray check
-        // RaycastHit2D raycastInfo = Physics2D.BoxCast (
-        //     this.transform.position,
-        //     size,
-        //     angle,
-        //     checkDir,
-        //     step,
-        //     1 << LayerMask.NameToLayer (LayerGroup.enemy) |
-        //     1 << LayerMask.NameToLayer (LayerGroup.player) |
-        //     1 << LayerMask.NameToLayer (LayerGroup.block) |
-        //     1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
 
-        // return raycastInfo;
+        float angle = this.meleeCheckTrans.eulerAngles.z;
+        Vector2 weaponSize = this.weaponSpriteRender.size;
+        RaycastHit2D[] raycastInfo = Physics2D.BoxCastAll (
+            this.meleeCheckTrans.position,
+            new Vector2 (1.13f, 0.3f),
+            angle,
+            Vector2.zero,
+            0,
+            1 << LayerMask.NameToLayer (LayerGroup.enemy) |
+            1 << LayerMask.NameToLayer (LayerGroup.player) |
+            1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock) |
+            1 << LayerMask.NameToLayer (LayerGroup.enemyWeapon) |
+            1 << LayerMask.NameToLayer (LayerGroup.playerWeapon));
+
+        if (raycastInfo.Length > 0) {
+            this.triggerHandler (raycastInfo);
+        }
+    }
+
+    private List<GameObject> hitNodeList = new List<GameObject> ();
+    protected void triggerHandler (RaycastHit2D[] raycastHitInfo) {
+        foreach (RaycastHit2D rayCastHit in raycastHitInfo) {
+            GameObject hitNode = rayCastHit.collider.gameObject;
+            Debug.Log ("collider name: " + hitNode.gameObject.name);
+            if (hitNodeList.Contains (hitNode)) {
+                return;
+            }
+            hitNodeList.Add (hitNode);
+            LayerMask resultLayer = hitNode.layer;
+            if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemy) && this.weaponLayer == LayerGroup.playerWeapon) {
+                // 武器为玩家且碰撞到了敌人
+                // TODO:方向需要计算获得
+                hitNode.GetComponent<BaseEnemy> ().injured (this.weaponConfigData.damage, Vector2.down);
+                continue;
+            }
+
+            if (resultLayer == LayerMask.NameToLayer (LayerGroup.player) && this.weaponLayer == LayerGroup.enemyWeapon) {
+                // 武器为敌人且碰撞到玩家
+                ModuleManager.instance.playerManager.injured (this.weaponConfigData.damage);
+                continue;
+            }
+
+            if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemyWeapon) && this.weaponLayer == LayerGroup.playerWeapon) {
+                // 武器为玩家且碰撞到敌人子弹
+                hitNode.GetComponent<BaseBullet> ().bulletData.isDie = true;
+                continue;
+            }
+
+            if (resultLayer == LayerMask.NameToLayer (LayerGroup.playerWeapon) && this.weaponLayer == LayerGroup.enemyWeapon) {
+                // 武器为敌人且碰撞到玩家子弹
+                hitNode.GetComponent<BaseBullet> ().bulletData.isDie = true;
+                continue;
+            }
+
+            if (resultLayer == LayerMask.NameToLayer (LayerGroup.destructibleBlock)) {
+                // 碰撞到可破坏障碍
+                hitNode.GetComponent<DestructibleBlock> ().destroyItem ();
+                continue;
+            }
+        }
+
     }
 }
