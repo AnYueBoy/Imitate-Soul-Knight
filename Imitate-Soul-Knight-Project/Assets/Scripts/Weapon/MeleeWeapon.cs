@@ -87,14 +87,13 @@ public class MeleeWeapon : BaseWeapon {
 
         if (raycastInfo.Length > 0) {
             this.triggerHandler (raycastInfo);
-        }
+        } 
     }
 
     private List<GameObject> hitNodeList = new List<GameObject> ();
     protected void triggerHandler (RaycastHit2D[] raycastHitInfo) {
         foreach (RaycastHit2D rayCastHit in raycastHitInfo) {
             GameObject hitNode = rayCastHit.collider.gameObject;
-            Debug.Log ("collider name: " + hitNode.gameObject.name);
             if (hitNodeList.Contains (hitNode)) {
                 return;
             }
@@ -132,5 +131,9 @@ public class MeleeWeapon : BaseWeapon {
             }
         }
 
+    }
+
+    private void OnDrawGizmos () {
+         Gizmos.DrawWireCube (this.meleeCheckTrans.position, new Vector2 (1.13f, 0.3f));
     }
 }
