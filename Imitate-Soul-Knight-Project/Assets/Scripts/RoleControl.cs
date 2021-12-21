@@ -14,15 +14,11 @@ public class RoleControl : MonoBehaviour {
 
     [SerializeField] private float checkDistance = 0.4f;
 
-    [SerializeField] private Transform rangeWeaponRotaionTrans;
-    [SerializeField] private Transform meleeRotationTrans1;
-
     public Transform rangeWeaponParent;
     public Transform meleeWeaponParent;
-    public Transform meleeRotationTrans2;
-    public Transform meleeEffectTransform;
 
-    public SpriteRenderer meleeEffectSprite;
+    private Transform rangeWeaponRotationTrans;
+    private Transform meleeWeaponRotationTrans;
 
     private Animator animator;
 
@@ -93,13 +89,24 @@ public class RoleControl : MonoBehaviour {
         // refer 为参考正方向
         float rotationAngle = Vector2.SignedAngle (refer, moveDir);
         Vector3 endEulerAngles = new Vector3 (0, 0, rotationAngle);
-        this.rangeWeaponRotaionTrans.eulerAngles = endEulerAngles;
-        this.meleeRotationTrans1.eulerAngles = endEulerAngles;
+        if (this.rangeWeaponRotationTrans != null) {
+            this.rangeWeaponRotationTrans.eulerAngles = endEulerAngles;
+        }
+        if (this.meleeWeaponRotationTrans != null) {
+            this.meleeWeaponRotationTrans.eulerAngles = endEulerAngles;
+        }
 
         if (moveDir.x != 0) {
             float sign = moveDir.x / Mathf.Abs (moveDir.x);
             transform.localScale = new Vector3 (sign, 1, 1);
         }
+    }
+
+    public void setRangeWeaponRotaTrans (Transform rangeTrans) {
+        this.rangeWeaponRotationTrans = rangeTrans;
+    }
+    public void setMeleeWeaponRotaTrans (Transform meleeTrans) {
+        this.meleeWeaponRotationTrans = meleeTrans;
     }
 
     private void roleAni () {

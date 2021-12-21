@@ -59,23 +59,6 @@ public class PlayerManager : MonoBehaviour {
 	public Transform getPlayerTrans () {
 		return this.roleControl.transform;
 	}
-
-	public Transform getMeleeEffectTransform () {
-		return this.roleControl.meleeEffectTransform;
-	}
-
-	public Transform getMeleeParentTransform () {
-		return this.roleControl.meleeWeaponParent;
-	}
-
-	public Transform getMeleeRotationTransform () {
-		return this.roleControl.meleeRotationTrans2;
-	}
-
-	public SpriteRenderer getEffectSprite () {
-		return this.roleControl.meleeEffectSprite;
-	}
-
 	#endregion
 
 	private bool isProtected = false;
@@ -181,8 +164,10 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon.equipment (LayerGroup.playerWeapon);
 		if (this.curWeapon.getWeaponType () == WeaponTypeEnum.RANGE) {
 			this.curWeapon.transform.SetParent (this.roleControl.rangeWeaponParent);
+			this.roleControl.setRangeWeaponRotaTrans (weapon.transform);
 		} else {
 			this.curWeapon.transform.SetParent (this.roleControl.meleeWeaponParent);
+			this.roleControl.setMeleeWeaponRotaTrans (weapon.transform);
 		}
 		this.curWeapon.transform.localPosition = Vector3.zero;
 		this.curWeapon.transform.localEulerAngles = Vector3.zero;
@@ -193,7 +178,7 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	private void setWeaponInfo (int consume) {
-		Sprite weaponSprite = this.curWeapon.GetComponent<SpriteRenderer> ().sprite;
+		Sprite weaponSprite = this.curWeapon.getWeaponSprite ();
 		ModuleManager.instance.inputManager.setWeaponInfo (weaponSprite, consume);
 	}
 

@@ -41,6 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6218864406400364760}
   - component: {fileID: 4198556028395110010}
+  - component: {fileID: 3939268803547950730}
+  - component: {fileID: 293570877729549917}
   m_Layer: 10
   m_Name: 1003
   m_TagString: Untagged
@@ -83,6 +85,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3939268803547950730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622848456258446558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d132685cfdfbd447b2c2c0346b76ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &293570877729549917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2622848456258446558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec7a8c0ad5852f41b64b69af1c6ad28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSpriteRender: {fileID: 728431948390464357}
+  animator: {fileID: 4198556028395110010}
 --- !u!1 &2970251538247490819
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,8 +264,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6920746274666997308}
   - component: {fileID: 728431948390464357}
-  - component: {fileID: 6096804913622340845}
-  - component: {fileID: 5630532401866196263}
   m_Layer: 0
   m_Name: melee
   m_TagString: Untagged
@@ -309,27 +335,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6096804913622340845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006995345290752489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d132685cfdfbd447b2c2c0346b76ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5630532401866196263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9006995345290752489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec7a8c0ad5852f41b64b69af1c6ad28, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

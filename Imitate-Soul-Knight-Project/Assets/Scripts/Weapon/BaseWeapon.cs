@@ -19,6 +19,8 @@ public abstract class BaseWeapon : MonoBehaviour {
 
     protected string weaponLayer;
 
+    [SerializeField] private SpriteRenderer weaponSpriteRender;
+
     public virtual void init (ItemIdEnum id) {
         this.id = id;
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
@@ -41,5 +43,9 @@ public abstract class BaseWeapon : MonoBehaviour {
 
     public WeaponTypeEnum getWeaponType () {
         return (WeaponTypeEnum) this.weaponConfigData.weaponType;
+    }
+
+    public Sprite getWeaponSprite () {
+        return this.weaponSpriteRender.sprite;
     }
 }
