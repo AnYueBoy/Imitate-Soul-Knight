@@ -53,6 +53,7 @@ public class InputManager : MonoBehaviour {
 
 	public void setWeaponInfo (Sprite sprite, int consume) {
 		this.curWeapon.sprite = sprite;
+		this.curWeapon.SetNativeSize ();
 		this.consumeText.text = consume.ToString ();
 	}
 
