@@ -46,9 +46,9 @@ public class RangeWeapon : BaseWeapon {
 
     protected virtual void spawnRecoilForce () {
         this.transform
-            .DOLocalMoveX (-this.recoilForceDis, this.recoilForceInterval / 2)
+            .DOLocalMove (-Vector3.one * this.recoilForceDis, this.recoilForceInterval / 2)
             .OnComplete (() => {
-                this.transform.DOLocalMoveX (0, this.recoilForceInterval / 2);
+                this.transform.DOLocalMove (Vector3.zero, this.recoilForceInterval / 2);
             });
     }
 
