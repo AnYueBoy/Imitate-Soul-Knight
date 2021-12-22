@@ -73,18 +73,28 @@ public class MeleeWeapon : BaseWeapon {
 
         float angle = this.meleeCheckTrans.eulerAngles.z;
         Vector2 weaponSize = this.weaponSpriteRender.size;
+
+        // 当存检测父节点存在碰撞时，检测的数量不一致，临时根据类别区分检测
+        int layerMask = 0;
+        if (this.weaponLayer == LayerGroup.enemyWeapon) {
+            layerMask = 1 << LayerMask.NameToLayer (LayerGroup.player) |
+                1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock) |
+                1 << LayerMask.NameToLayer (LayerGroup.playerWeapon);
+        } else if (this.weaponLayer == LayerGroup.playerWeapon) {
+            layerMask = 1 << LayerMask.NameToLayer (LayerGroup.enemy) |
+                1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock) |
+                1 << LayerMask.NameToLayer (LayerGroup.enemyWeapon);
+        } else {
+            Debug.LogError ("error layer mask value" + this.weaponLayer);
+        }
+
         RaycastHit2D[] raycastInfo = Physics2D.BoxCastAll (
             this.meleeCheckTrans.position,
             new Vector2 (1.13f, 0.3f),
             angle,
             Vector2.zero,
             0,
-            1 << LayerMask.NameToLayer (LayerGroup.enemy) |
-            1 << LayerMask.NameToLayer (LayerGroup.player) |
-            1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock) |
-            1 << LayerMask.NameToLayer (LayerGroup.enemyWeapon) |
-            1 << LayerMask.NameToLayer (LayerGroup.playerWeapon) |
-            1 << LayerMask.NameToLayer (LayerGroup.block));
+            layerMask);
 
         if (raycastInfo.Length > 0) {
             this.triggerHandler (raycastInfo);
@@ -99,6 +109,7 @@ public class MeleeWeapon : BaseWeapon {
             if (hitNodeList.Contains (hitNode)) {
                 return;
             }
+
             hitNodeList.Add (hitNode);
             LayerMask resultLayer = hitNode.layer;
             if (resultLayer == LayerMask.NameToLayer (LayerGroup.enemy) && this.weaponLayer == LayerGroup.playerWeapon) {
