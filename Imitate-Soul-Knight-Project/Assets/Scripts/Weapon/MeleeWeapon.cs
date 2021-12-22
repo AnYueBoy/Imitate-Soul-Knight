@@ -20,6 +20,15 @@ public class MeleeWeapon : BaseWeapon {
         this.getAttackAnimationTime ();
     }
 
+    private bool isLaunchRayCast = false;
+    private void startRayCast () {
+        this.isLaunchRayCast = true;
+    }
+
+    private void closeRayCast () {
+        this.isLaunchRayCast = false;
+    }
+
     protected void getAttackAnimationTime () {
         AnimationClip[] animationClips = this.animator.runtimeAnimatorController.animationClips;
         for (int i = 0; i < animationClips.Length; i++) {
@@ -67,7 +76,7 @@ public class MeleeWeapon : BaseWeapon {
     }
 
     private void checkRayCast () {
-        if (!this.isInAttackState) {
+        if (!this.isLaunchRayCast) {
             return;
         }
 
@@ -105,7 +114,6 @@ public class MeleeWeapon : BaseWeapon {
     protected void triggerHandler (RaycastHit2D[] raycastHitInfo) {
         foreach (RaycastHit2D rayCastHit in raycastHitInfo) {
             GameObject hitNode = rayCastHit.collider.gameObject;
-            Debug.Log ("g_o name: " + hitNode.name);
             if (hitNodeList.Contains (hitNode)) {
                 return;
             }
