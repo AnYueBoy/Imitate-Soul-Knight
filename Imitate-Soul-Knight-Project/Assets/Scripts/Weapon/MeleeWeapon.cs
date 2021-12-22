@@ -69,8 +69,6 @@ public class MeleeWeapon : BaseWeapon {
 
     }
 
-    private bool isInAttackState = false;
-
     public override void localUpdate (float dt) {
         this.checkRayCast ();
     }

@@ -15,9 +15,9 @@ public abstract class BaseWeapon : MonoBehaviour {
 
     protected float attackInterval = 0;
 
-    protected float attackTimer = 0;
-
     protected string weaponLayer;
+
+    protected bool isInAttackState = false;
 
     [SerializeField] protected SpriteRenderer weaponSpriteRender;
 
@@ -26,7 +26,6 @@ public abstract class BaseWeapon : MonoBehaviour {
         this.weaponConfigData = ModuleManager.instance.configManager.weaponConfig.getWeaponConfigDataById (this.id);
 
         this.attackInterval = weaponConfigData.attackInterval;
-        this.attackTimer = this.attackInterval;
     }
 
     public virtual void equipment (string bulletLayer) {

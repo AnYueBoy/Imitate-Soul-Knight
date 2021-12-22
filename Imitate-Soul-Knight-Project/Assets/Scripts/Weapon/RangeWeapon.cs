@@ -33,9 +33,7 @@ public class RangeWeapon : BaseWeapon {
         this.recoilForceDis = this.weaponConfigData.recoilForceDis;
     }
 
-    public override void localUpdate (float dt) {
-        this.attackTimer += dt;
-    }
+    public override void localUpdate (float dt) { }
 
     protected virtual void spawnShotGunFire () {
         this.shotGunEffect.color = new Color (1, 1, 1, 0);
@@ -55,11 +53,18 @@ public class RangeWeapon : BaseWeapon {
     }
 
     public override void attack (float args) {
-        float bulletDir = args;
-        
-        if (this.attackTimer < this.attackInterval) {
+        if (this.isInAttackState) {
             return;
         }
+
+        float bulletDir = args;
+
+        this.isInAttackState = true;
+        ModuleManager.instance.promiseTimer
+            .waitFor (this.attackInterval)
+            .then (() => {
+                this.isInAttackState = false;
+            });
 
         float weaponConsumeValue = this.weaponConfigData.mpConsume;
         float curMp = ModuleManager.instance.playerManager.getCurMp ();
@@ -75,7 +80,6 @@ public class RangeWeapon : BaseWeapon {
 
         ModuleManager.instance.playerManager.consumeMp (weaponConsumeValue);
 
-        this.attackTimer = 0;
         Vector2 moveDir = ModuleManager.instance.inputManager.MoveDir;
         float bulletSpeed = this.weaponConfigData.bulletSpeed;
         if (moveDir != Vector2.zero) {
