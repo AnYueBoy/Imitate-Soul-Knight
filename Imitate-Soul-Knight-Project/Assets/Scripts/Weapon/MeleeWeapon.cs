@@ -83,17 +83,19 @@ public class MeleeWeapon : BaseWeapon {
             1 << LayerMask.NameToLayer (LayerGroup.player) |
             1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock) |
             1 << LayerMask.NameToLayer (LayerGroup.enemyWeapon) |
-            1 << LayerMask.NameToLayer (LayerGroup.playerWeapon));
+            1 << LayerMask.NameToLayer (LayerGroup.playerWeapon) |
+            1 << LayerMask.NameToLayer (LayerGroup.block));
 
         if (raycastInfo.Length > 0) {
             this.triggerHandler (raycastInfo);
-        } 
+        }
     }
 
     private List<GameObject> hitNodeList = new List<GameObject> ();
     protected void triggerHandler (RaycastHit2D[] raycastHitInfo) {
         foreach (RaycastHit2D rayCastHit in raycastHitInfo) {
             GameObject hitNode = rayCastHit.collider.gameObject;
+            Debug.Log ("g_o name: " + hitNode.name);
             if (hitNodeList.Contains (hitNode)) {
                 return;
             }
@@ -134,6 +136,9 @@ public class MeleeWeapon : BaseWeapon {
     }
 
     private void OnDrawGizmos () {
-         Gizmos.DrawWireCube (this.meleeCheckTrans.position, new Vector2 (1.13f, 0.3f));
+        Matrix4x4 oldMatrix = Gizmos.matrix;
+        Gizmos.matrix = this.meleeCheckTrans.localToWorldMatrix;
+        Gizmos.DrawWireCube (Vector3.zero, new Vector2 (1.13f, 0.3f));
+        Gizmos.matrix = oldMatrix;
     }
 }
