@@ -26,7 +26,7 @@ public class ConstValue {
     /// <summary>
     /// 角色移动速度 
     /// </summary>
-    public const float moveSpeed = 7;
+    public const float moveSpeed = 4.5f;
 
     /// <summary>
     /// 战斗房间障碍数量
