@@ -12,7 +12,8 @@ public class RoleControl : MonoBehaviour {
 
     [SerializeField] private Transform selfTrans;
 
-    [SerializeField] private float checkDistance = 0.4f;
+    [SerializeField] private float checkDistance = 0.1f;
+    private readonly float boxLength = 0.533f;
 
     public Transform rangeWeaponParent;
     public Transform meleeWeaponParent;
@@ -43,31 +44,37 @@ public class RoleControl : MonoBehaviour {
 
         if (moveDir.x != 0) {
             float horizontal = Mathf.Abs (moveDir.x) / moveDir.x;
-            RaycastHit2D raycastHitInfo = Physics2D.Raycast (
+            RaycastHit2D hitInfo = Physics2D.BoxCast (
                 selfTrans.position,
+                new Vector2 (0.01f, this.boxLength),
+                0,
                 new Vector2 (horizontal, 0),
                 checkDistance,
-                1 << LayerMask.NameToLayer (LayerGroup.block) | 1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
+                1 << LayerMask.NameToLayer (LayerGroup.block) |
+                1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
 
-            if (raycastHitInfo) {
+            if (hitInfo) {
                 moveDir.x = 0;
             }
         }
 
         if (moveDir.y != 0) {
             float vertical = Mathf.Abs (moveDir.y) / moveDir.y;
-            RaycastHit2D raycastHitInfo = Physics2D.Raycast (
+            RaycastHit2D hitInfo = Physics2D.BoxCast (
                 selfTrans.position,
+                new Vector2 (this.boxLength, 0.01f),
+                0,
                 new Vector2 (0, vertical),
                 checkDistance,
-                1 << LayerMask.NameToLayer (LayerGroup.block) | 1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
-            if (raycastHitInfo) {
+                1 << LayerMask.NameToLayer (LayerGroup.block) |
+                1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
+
+            if (hitInfo) {
                 moveDir.y = 0;
             }
         }
 
         transform.Translate (moveDir * dt * ConstValue.moveSpeed);
-
     }
 
     private void refreshWeaponRotate () {
