@@ -176,6 +176,8 @@ public class Room {
 			case RoomTypeEnum.BORN:
 				// 设置玩家出现在出生房间
 				ModuleManager.instance.playerManager.getPlayerTrans ().position = roomCenterToWorldPos;
+				// FIXME: 测试逻辑
+				this.spawnAllWeapon ();
 				break;
 			default:
 				break;
@@ -284,5 +286,22 @@ public class Room {
 		Vector3 randomPos = randomPosList[0];
 
 		ModuleManager.instance.itemManager.spawnItem (randomPos, ItemIdEnum.WHITE_CHEST);
+	}
+
+	private void spawnAllWeapon () {
+		List<WeaponConfigData> allWeaponList = ModuleManager.instance.configManager.weaponConfig.getAllWeaponConfigData ();
+		int minX = this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 3;
+		int maxX = this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 3;
+		int minY = this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 3;
+		int maxY = this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 3;
+		int weaponCount = allWeaponList.Count;
+		List<Vector3> randomPosList = this.getRandomCellWorldPos (weaponCount, minX, maxX, minY, maxY);
+
+		for (int i = 0; i < allWeaponList.Count; i++) {
+			WeaponConfigData weaponConfigData = allWeaponList[i];
+			Vector3 randomPos = randomPosList[i];
+			ModuleManager.instance.itemManager.spawnWeapon (randomPos, (ItemIdEnum) weaponConfigData.id);
+		}
+
 	}
 }

@@ -162,6 +162,10 @@ public class PlayerManager : MonoBehaviour {
 		this.curWeapon = weapon;
 		this.curWeapon.gameObject.SetActive (true);
 		this.curWeapon.equipment (LayerGroup.playerWeapon);
+
+		this.roleControl.setRangeWeaponRotaTrans (null);
+		this.roleControl.setMeleeWeaponRotaTrans (null);
+
 		if (this.curWeapon.getWeaponType () == WeaponTypeEnum.RANGE) {
 			this.curWeapon.transform.SetParent (this.roleControl.rangeWeaponParent);
 			this.roleControl.setRangeWeaponRotaTrans (weapon.transform);
