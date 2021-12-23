@@ -45,8 +45,15 @@ public class RangeWeapon : BaseWeapon {
     }
 
     protected virtual void spawnRecoilForce () {
+        float angle = this.transform.eulerAngles.z;
+        float radValue = angle * Mathf.PI / 180;
+        float roleScaleX = ModuleManager.instance.playerManager.getPlayerTrans ().localScale.x;
+        Vector2 dir = new Vector2 (Mathf.Cos (radValue) * roleScaleX, Mathf.Sin (radValue) * roleScaleX);
+        dir = dir.normalized;
+        dir = -dir;
+        dir.x *= roleScaleX;
         this.transform
-            .DOLocalMove (-Vector3.one * this.recoilForceDis, this.recoilForceInterval / 2)
+            .DOLocalMove (dir * this.recoilForceDis, this.recoilForceInterval / 2)
             .OnComplete (() => {
                 this.transform.DOLocalMove (Vector3.zero, this.recoilForceInterval / 2);
             });
