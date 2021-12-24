@@ -166,15 +166,24 @@ public class InputManager : MonoBehaviour {
 	#region  动画
 
 	public void showInterfaceBtn () {
+		this.stopAllAnimation();
 		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
 		this.interfaceShowTween.Restart ();
 		this.attackHideTween.Restart ();
 	}
 
 	public void showAttackBtn () {
+		this.stopAllAnimation();
 		this.interfaceBtn.interactable = this.attackBtn.interactable = false;
 		this.interfaceHideTween.Restart ();
 		this.attackShowTween.Restart ();
+	}
+
+	private void stopAllAnimation () {
+		this.interfaceHideTween.Pause ();
+		this.interfaceShowTween.Pause ();
+		this.attackHideTween.Pause ();
+		this.attackShowTween.Pause ();
 	}
 
 	private void createAnimationTween () {
