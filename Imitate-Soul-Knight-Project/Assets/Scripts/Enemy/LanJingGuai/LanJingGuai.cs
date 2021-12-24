@@ -18,6 +18,7 @@ public class LanJingGuai : BaseEnemy {
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
 				new LanJingGuaiDeadAction (),
+				new LanJingGuaiRepelAction (),
 				new SequenceNode ().addChild (
 					new LanJingGuaiIdleAction (),
 					new LanJingGuaiRandomMoveAction (),
@@ -72,6 +73,7 @@ public class LanJingGuai : BaseEnemy {
 		float dt = this.blackboardMemory.getValue<float> ((int) BlackItemEnum.DT);
 		// 步长
 		float step = this.enemyConfigData.moveSpeed * dt;
+		Debug.Log ("moveSpeed: " + this.enemyConfigData.moveSpeed + "step: " + step);
 
 		// 笛卡尔分量
 		float horizontalStep = step * this.tempMoveDir.x;
