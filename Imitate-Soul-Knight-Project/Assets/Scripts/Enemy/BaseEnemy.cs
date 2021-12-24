@@ -180,6 +180,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	}
 
+	#region  击退状态逻辑
 	private float repelDis = 0.5f;
 	private float repelTime = 0.2f;
 	protected void setRepelInfo (float repelDis, float repelTime) {
@@ -187,7 +188,10 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		this.repelTime = repelTime;
 	}
 
+	public bool isInRepel = false;
+
 	protected void repel (Vector3 repelDir) {
+		this.isInRepel = true;
 		repelDir = repelDir.normalized;
 		RaycastHit2D castInfo = Physics2D.BoxCast (
 			this.transform.position,
@@ -199,12 +203,24 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 			1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
 
 		if (!castInfo) {
-			this.transform.DOMove (this.transform.position + repelDir * this.repelDis, this.repelTime);
+			this.transform
+				.DOMove (this.transform.position + repelDir * this.repelDis, this.repelTime)
+				.SetEase (Ease.OutCubic)
+				.OnComplete (() => {
+					this.isInRepel = false;
+				});
 			return;
 		}
 
-		this.transform.DOMove (this.transform.position + repelDir * castInfo.distance, this.repelTime);
+		this.transform
+			.DOMove (this.transform.position + repelDir * castInfo.distance, this.repelTime)
+			.SetEase (Ease.OutCubic)
+			.OnComplete (() => {
+				this.isInRepel = false;
+			});;
 	}
+
+	#endregion
 
 	protected virtual void recovery () {
 		ObjectPool.instance.returnInstance (this.gameObject);
