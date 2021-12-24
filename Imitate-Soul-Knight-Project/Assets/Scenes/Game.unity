@@ -849,7 +849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f17c2e814d7341b4da18ca8858130854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appMode: 2
+  appMode: 0
   uiRootRectTrans: {fileID: 1944031416}
   inputManager: {fileID: 671483816}
   mapManager: {fileID: 361785848}
