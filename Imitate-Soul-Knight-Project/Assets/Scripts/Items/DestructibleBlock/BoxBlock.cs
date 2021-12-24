@@ -18,12 +18,13 @@ public class BoxBlock : DestructibleBlock {
     public override void destroyItem () {
         this.callback?.Invoke (this.transform.position);
         this.callback = null;
-        
+
         ObjectPool.instance.returnInstance (this.gameObject);
 
         // TODO：被破坏特效
         // 生成能量item
-        ModuleManager.instance.itemManager.spawnItem (this.transform.position, ItemIdEnum.MP_ITEM);
+        MpItem mpItem = (MpItem) ModuleManager.instance.itemManager.spawnItem (this.transform.position, ItemIdEnum.MP_ITEM);
+        mpItem.init (this.transform.position);
     }
 
 }
