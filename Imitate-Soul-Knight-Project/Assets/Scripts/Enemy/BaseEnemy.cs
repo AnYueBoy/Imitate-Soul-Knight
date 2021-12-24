@@ -100,6 +100,10 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		this.enemyData.curHp -= damage;
 		this.enemyData.curHp = Mathf.Max (this.enemyData.curHp, 0);
 		this.damageBulletDir = bulletDir;
+		if (this.enemyData.curHp > 0) {
+			// 击退
+			this.repel (new Vector3 (bulletDir.x, bulletDir.y, 1));
+		}
 	}
 
 	public bool isDead () {
@@ -174,6 +178,32 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 			deadPath.Add (new Vector3 (endPoint.x, endPoint.y, 0));
 		}
 
+	}
+
+	private float repelDis = 0.5f;
+	private float repelTime = 0.2f;
+	protected void setRepelInfo (float repelDis, float repelTime) {
+		this.repelDis = repelDis;
+		this.repelTime = repelTime;
+	}
+
+	protected void repel (Vector3 repelDir) {
+		repelDir = repelDir.normalized;
+		RaycastHit2D castInfo = Physics2D.BoxCast (
+			this.transform.position,
+			this.boxCollider2D.size,
+			0,
+			repelDir,
+			this.repelDis,
+			1 << LayerMask.NameToLayer (LayerGroup.block) |
+			1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
+
+		if (!castInfo) {
+			this.transform.DOMove (this.transform.position + repelDir * this.repelDis, this.repelTime);
+			return;
+		}
+
+		this.transform.DOMove (this.transform.position + repelDir * castInfo.distance, this.repelTime);
 	}
 
 	protected virtual void recovery () {

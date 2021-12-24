@@ -151,11 +151,4 @@ public class MeleeWeapon : BaseWeapon {
         }
 
     }
-
-    private void OnDrawGizmos () {
-        Matrix4x4 oldMatrix = Gizmos.matrix;
-        Gizmos.matrix = this.meleeCheckTrans.localToWorldMatrix;
-        Gizmos.DrawWireCube (Vector3.zero, new Vector2 (1.13f, 0.3f));
-        Gizmos.matrix = oldMatrix;
-    }
 }
