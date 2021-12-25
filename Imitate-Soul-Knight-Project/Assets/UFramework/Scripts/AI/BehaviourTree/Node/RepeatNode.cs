@@ -3,12 +3,9 @@
  * @Date: 2021-01-16 15:23:26 
  * @Description: 重复节点
  */
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
 using UnityEngine;
 
-namespace UFramework.AI.BehaviourTree.Node {
+namespace UFramework.AI.BehaviourTree {
     public class RepeatNode : DecoratorNode {
 
         private int m_repeatCount;
@@ -21,9 +18,9 @@ namespace UFramework.AI.BehaviourTree.Node {
             m_repeatIndex = 0;
         }
 
-        protected override RunningStatus onUpdate (IAgent agent, BlackBoardMemory workingMemory) {
+        protected override RunningStatus onUpdate () {
             while (true) {
-                RunningStatus status = child.update (agent, workingMemory);
+                RunningStatus status = child.update (this.agent, this.blackBoardMemory);
                 if (status == RunningStatus.Failed) {
                     return RunningStatus.Failed;
                 }
@@ -32,17 +29,17 @@ namespace UFramework.AI.BehaviourTree.Node {
                     break;
                 }
 
-                if (++m_repeatIndex == m_repeatIndex) {
+                if (++m_repeatIndex == m_repeatCount) {
                     return RunningStatus.Finished;
                 }
-                child.reset (agent, workingMemory);
+                child.reset ();
             }
 
             return RunningStatus.Executing;
         }
 
-        protected override void onReset (IAgent agent, BlackBoardMemory workingMemory) {
-            child.reset (agent, workingMemory);
+        protected override void onReset () {
+            child.reset ();
             m_repeatCount = 0;
         }
     }

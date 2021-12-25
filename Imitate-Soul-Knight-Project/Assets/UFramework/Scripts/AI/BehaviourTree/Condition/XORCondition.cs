@@ -4,20 +4,19 @@
  * @Description: 异或条件
  */
 
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Condition;
+namespace UFramework.AI.BehaviourTree {
+    public class XORCondition : BaseCondition {
 
-public class XORCondition : BaseCondition {
+        private BaseCondition leftCondition;
+        private BaseCondition rightCondition;
 
-    private BaseCondition m_LHS;
-    private BaseCondition m_RHS;
+        public XORCondition (BaseCondition leftCondition, BaseCondition rightCondition) {
+            this.leftCondition = leftCondition;
+            this.rightCondition = rightCondition;
+        }
 
-    public XORCondition (BaseCondition lhs, BaseCondition rhs) {
-        this.m_LHS = lhs;
-        this.m_RHS = rhs;
-    }
-
-    public override bool isTrue (IAgent agent) {
-        return this.m_LHS.isTrue (agent) ^ this.m_RHS.isTrue (agent);
+        public override bool isTrue (IAgent agent) {
+            return this.leftCondition.isTrue (agent) ^ this.rightCondition.isTrue (agent);
+        }
     }
 }

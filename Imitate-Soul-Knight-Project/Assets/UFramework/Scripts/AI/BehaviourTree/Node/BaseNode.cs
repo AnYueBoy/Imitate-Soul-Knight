@@ -5,12 +5,8 @@
  */
 
 using System.Collections.Generic;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Condition;
-using UFramework.AI.BehaviourTree;
-using UFramework.AI.BlackBoard;
 
-namespace UFramework.AI.BehaviourTree.Node {
+namespace UFramework.AI.BehaviourTree {
     public class BaseNode {
 
         // Tree Structure
@@ -20,16 +16,23 @@ namespace UFramework.AI.BehaviourTree.Node {
         // PreCondition
         private BaseCondition m_PreCondition;
 
+        protected IAgent agent;
+
+        protected BlackBoardMemory blackBoardMemory;
+
         public RunningStatus update (IAgent agent, BlackBoardMemory workingMemory) {
+            this.agent = agent;
+            this.blackBoardMemory = workingMemory;
+
             if (this.m_PreCondition != null && !this.m_PreCondition.isTrue (agent)) {
                 return RunningStatus.Failed;
             }
 
-            return onUpdate (agent, workingMemory);
+            return onUpdate ();
         }
 
-        public void reset (IAgent agent, BlackBoardMemory workingMemory) {
-            onReset (agent, workingMemory);
+        public void reset () {
+            onReset ();
         }
 
         public BaseNode addChild (params BaseNode[] children) {
@@ -47,11 +50,11 @@ namespace UFramework.AI.BehaviourTree.Node {
         }
 
         //implemented by inherited class
-        protected virtual RunningStatus onUpdate (IAgent agent, BlackBoardMemory workingMemory) {
+        protected virtual RunningStatus onUpdate () {
             return RunningStatus.Finished;
         }
 
-        protected virtual void onReset (IAgent agent, BlackBoardMemory workingMemory) {
+        protected virtual void onReset () {
 
         }
     }

@@ -6,21 +6,19 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BlackBoard;
 using UnityEngine;
 
-namespace UFramework.AI.BehaviourTree.Node {
+namespace UFramework.AI.BehaviourTree {
     public class ParallelNode : BaseNode {
 
         private int m_requestFinishedCount;
         private List<RunningStatus> m_childrenRunning = new List<RunningStatus> ();
         public ParallelNode (int threshold) {
-            // 设定阈值(指定完成的节点数量)
+            // 设定阈值
             m_requestFinishedCount = threshold;
         }
 
-        protected override RunningStatus onUpdate (IAgent agent, BlackBoardMemory workingMemory) {
+        protected override RunningStatus onUpdate () {
             if (m_Children.Count == 0) {
                 return RunningStatus.Finished;
             }
@@ -35,7 +33,7 @@ namespace UFramework.AI.BehaviourTree.Node {
             for (int i = 0; i < m_Children.Count; ++i) {
                 RunningStatus status = m_childrenRunning[i];
                 if (status == RunningStatus.Executing) {
-                    status = m_Children[i].update (agent, workingMemory);
+                    status = m_Children[i].update (this.agent, this.blackBoardMemory);
                 }
 
                 if (status == RunningStatus.Finished) {
@@ -55,9 +53,9 @@ namespace UFramework.AI.BehaviourTree.Node {
             return RunningStatus.Executing;
         }
 
-        protected override void onReset (IAgent agent, BlackBoardMemory workingMemory) {
-            for (int i = 0; i < m_Children.Count; ++i) {
-                m_Children[i].reset (agent, workingMemory);
+        protected override void onReset () {
+            foreach (BaseNode node in m_Children) {
+                node.reset ();
             }
 
             m_childrenRunning.Clear ();

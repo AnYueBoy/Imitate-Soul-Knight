@@ -4,16 +4,12 @@
  * @Description: 队列节点（控制流节点）
  */
 
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
-
-namespace UFramework.AI.BehaviourTree.Node {
+namespace UFramework.AI.BehaviourTree {
     public class SequenceNode : BaseNode {
 
         private int m_currentNodeIndex = -1;
 
-        protected override RunningStatus onUpdate (IAgent agent, BlackBoardMemory workingMemory) {
+        protected override RunningStatus onUpdate () {
             if (m_Children.Count == 0) {
                 return RunningStatus.Finished;
             }
@@ -23,7 +19,7 @@ namespace UFramework.AI.BehaviourTree.Node {
             }
 
             for (int i = m_currentNodeIndex; i < m_Children.Count; ++i) {
-                RunningStatus status = m_Children[i].update (agent, workingMemory);
+                RunningStatus status = m_Children[i].update (this.agent, this.blackBoardMemory);
                 if (status != RunningStatus.Finished) {
                     return status;
                 }
@@ -34,9 +30,9 @@ namespace UFramework.AI.BehaviourTree.Node {
             return RunningStatus.Finished;
         }
 
-        protected override void onReset (IAgent agent, BlackBoardMemory workingMemory) {
+        protected override void onReset () {
             foreach (BaseNode node in m_Children) {
-                node.reset (agent, workingMemory);
+                node.reset ();
             }
 
             m_currentNodeIndex = -1;
