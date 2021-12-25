@@ -19,9 +19,12 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected string bulletLayer = LayerGroup.enemyWeapon;
 
+	protected BehaviourTreeRunner behaviourTreeRunner;
+
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
 		this.boxCollider2D = this.GetComponent<BoxCollider2D> ();
+		this.behaviourTreeRunner = this.GetComponent<BehaviourTreeRunner> ();
 	}
 
 	protected BlackBoardMemory blackboardMemory;
@@ -62,7 +65,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	public virtual void localUpdate (float dt) {
 		blackboardMemory.setValue ((int) BlackItemEnum.DT, dt);
-		BehaviourTreeRunner.execute (BTNode, this, blackboardMemory);
+		behaviourTreeRunner.execute (BTNode, this, blackboardMemory);
 	}
 
 	public bool isInAttackRange () {
