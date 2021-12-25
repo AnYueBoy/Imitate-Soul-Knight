@@ -5,18 +5,15 @@
  */
 
 using UFramework.AI.BehaviourTree;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
 
 public class YeZhuProbingAction : ActionNode {
-    protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
+    protected override void onEnter () {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.playMoveAni ();
         yeZhu.generateProbingPath ();
     }
 
-    protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
+    protected override RunningStatus onExecute () {
         YeZhu yeZhu = (YeZhu) agent;
         if (!yeZhu.canExecuteProbing ()) {
             return RunningStatus.Finished;
@@ -30,7 +27,7 @@ public class YeZhuProbingAction : ActionNode {
         return RunningStatus.Executing;
     }
 
-    protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
+    protected override void onExit () {
         YeZhu yeZhu = (YeZhu) agent;
         yeZhu.resetProbingState ();
     }

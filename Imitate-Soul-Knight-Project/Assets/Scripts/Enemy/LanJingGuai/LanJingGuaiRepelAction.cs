@@ -5,18 +5,14 @@
  */
 
 using UFramework.AI.BehaviourTree;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
-using UnityEngine;
 
 public class LanJingGuaiRepelAction : ActionNode {
-    protected override bool onEvaluate (IAgent agent, BlackBoardMemory workingMemory) {
+    protected override bool onEvaluate () {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
         return lanJingGuai.isInRepel;
     }
 
-    protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
+    protected override RunningStatus onExecute () {
         return RunningStatus.Executing;
     }
 }

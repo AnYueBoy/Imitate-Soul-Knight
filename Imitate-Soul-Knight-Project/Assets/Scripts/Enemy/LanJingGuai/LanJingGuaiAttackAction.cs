@@ -5,19 +5,16 @@
  */
 
 using UFramework.AI.BehaviourTree;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
 
 public class LanJingGuaiAttackAction : ActionNode {
-	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
+	protected override void onEnter () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.playIdleAni ();
 		lanJingGuai.attack ();
 		lanJingGuai.resetIdleState ();
 	}
 
-	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
+	protected override RunningStatus onExecute () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		return RunningStatus.Finished;
 	}

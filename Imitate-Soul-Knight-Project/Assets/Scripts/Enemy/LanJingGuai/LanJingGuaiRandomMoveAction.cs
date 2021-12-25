@@ -5,20 +5,16 @@
  */
 
 using UFramework.AI.BehaviourTree;
-using UFramework.AI.BehaviourTree.Agent;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
-using UnityEngine;
 
 public class LanJingGuaiRandomMoveAction : ActionNode {
 
-	protected override void onEnter (IAgent agent, BlackBoardMemory blackBoardMemory) {
+	protected override void onEnter () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.genRandomTargetPos ();
 		lanJingGuai.playMoveAni ();
 	}
 
-	protected override RunningStatus onExecute (IAgent agent, BlackBoardMemory workingMemory) {
+	protected override RunningStatus onExecute () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		if (!lanJingGuai.isReachEnd ()) {
 			lanJingGuai.moveToTargetPos ();
@@ -28,7 +24,7 @@ public class LanJingGuaiRandomMoveAction : ActionNode {
 		return RunningStatus.Finished;
 	}
 
-	protected override void onExit (IAgent agent, BlackBoardMemory workingMemory) {
+	protected override void onExit () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
 		lanJingGuai.resetRandomMoveState ();
 	}

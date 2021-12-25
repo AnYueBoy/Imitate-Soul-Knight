@@ -7,8 +7,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using UFramework;
-using UFramework.AI.BehaviourTree.Node;
-using UFramework.AI.BlackBoard;
+using UFramework.AI.BehaviourTree;
 using UFramework.FrameUtil;
 using UnityEngine;
 
