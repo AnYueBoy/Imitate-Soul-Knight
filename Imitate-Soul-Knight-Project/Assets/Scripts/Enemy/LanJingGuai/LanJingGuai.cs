@@ -4,27 +4,12 @@
  * @Description: 蓝精怪
  */
 
-using System.Collections.Generic;
-using UFramework;
 using UFramework.AI.BehaviourTree;
-using UFramework.FrameUtil;
-using UnityEngine;
 
 public class LanJingGuai : BaseEnemy {
 
 	private void Start () {
 		blackboardMemory = new BlackBoardMemory ();
-		// BTNode = new ParallelNode (1).addChild (
-		// 	new SelectorNode ().addChild (
-		// 		new LanJingGuaiDeadAction (),
-		// 		new LanJingGuaiRepelAction (),
-		// 		new SequenceNode ().addChild (
-		// 			new LanJingGuaiIdleAction (),
-		// 			new LanJingGuaiRandomMoveAction (),
-		// 			new LanJingGuaiAttackAction ()
-		// 		)
-		// 	)
-		// );
 		BTNode = new ParallelNode (1).addChild (
 			new SelectorNode ().addChild (
 				new SequenceNode ().addChild (
