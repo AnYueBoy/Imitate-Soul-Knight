@@ -9,8 +9,8 @@ using UnityEngine;
 namespace UFramework.AI.BehaviourTree {
     public class BehaviourTreeRunner : MonoBehaviour {
 
-        public void execute (BaseNode root, IAgent agent, BlackBoardMemory workingMemory) {
-            RunningStatus status = root.update (agent, workingMemory);
+        public void execute (BaseNode root, IAgent agent, BlackBoardMemory workingMemory, float dt) {
+            RunningStatus status = root.update (agent, workingMemory, dt);
             if (status != RunningStatus.Executing) {
                 root.reset ();
             }

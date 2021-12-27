@@ -32,23 +32,17 @@ public class LanJingGuai : BaseEnemy {
 					new Rebound ()
 				),
 				new SequenceNode ().addChild (
-					new IdleAction ()
+					new IdleAction (),
+					new SelectorNode ().addChild (
+						new SequenceNode ().addChild (
+							new GetRandomPosition (),
+							new MoveToTarget ()
+						),
+						new FourAttack ()
+					)
 				)
 			)
 		);
 	}
 
-	private List<Vector3> pathPosList = new List<Vector3> ();
-	public void genRandomTargetPos () {
-		// 产生随机移动的目标位置
-		Vector3 worldPos = this._pathFinding.getRandomCellPos ();
-		this.pathPosList = this._pathFinding.findPath (this.transform.position, worldPos);
-		if (this.pathPosList == null) {
-			return;
-		}
-
-		this.drawPathList = new List<Vector3> (this.pathPosList);
-
-		this.curMoveIndex = 0;
-		this.getNextTargetPos ();
-	}
+}

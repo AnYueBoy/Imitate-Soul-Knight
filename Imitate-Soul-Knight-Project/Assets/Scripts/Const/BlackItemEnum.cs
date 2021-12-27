@@ -5,9 +5,6 @@
  */
 
 public enum BlackItemEnum {
-	// 时间间隔
-	DT,
-
 	// 移动路径
 	MOVE_PATH,
 

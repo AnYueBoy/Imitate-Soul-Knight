@@ -20,7 +20,7 @@ namespace UFramework.AI.BehaviourTree {
 
         protected override RunningStatus onUpdate () {
             while (true) {
-                RunningStatus status = child.update (this.agent, this.blackBoardMemory);
+                RunningStatus status = child.update (this.agent, this.blackBoardMemory, dt);
                 if (status == RunningStatus.Failed) {
                     return RunningStatus.Failed;
                 }

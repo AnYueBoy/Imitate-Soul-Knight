@@ -45,7 +45,6 @@ public class MoveToTarget : ActionNode {
     private List<Vector3> drawPathList;
 
     private RunningStatus moveActionHandler () {
-        float dt = this.blackBoardMemory.getValue<float> ((int) BlackItemEnum.DT);
         // 步长
         float step = this.moveSpeed * dt;
 

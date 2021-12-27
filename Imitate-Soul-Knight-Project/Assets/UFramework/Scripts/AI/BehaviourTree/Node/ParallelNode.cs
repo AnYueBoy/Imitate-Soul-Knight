@@ -33,7 +33,7 @@ namespace UFramework.AI.BehaviourTree {
             for (int i = 0; i < m_Children.Count; ++i) {
                 RunningStatus status = m_childrenRunning[i];
                 if (status == RunningStatus.Executing) {
-                    status = m_Children[i].update (this.agent, this.blackBoardMemory);
+                    status = m_Children[i].update (this.agent, this.blackBoardMemory,dt);
                 }
 
                 if (status == RunningStatus.Success) {

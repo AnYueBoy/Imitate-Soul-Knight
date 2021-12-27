@@ -15,7 +15,7 @@ namespace UFramework.AI.BehaviourTree {
             // select running node
             m_lastRunningNode = null;
             foreach (BaseNode node in m_Children) {
-                runningStatus = node.update (this.agent, this.blackBoardMemory);
+                runningStatus = node.update (this.agent, this.blackBoardMemory, dt);
                 if (runningStatus != RunningStatus.Failed) {
                     m_lastRunningNode = node;
                     break;

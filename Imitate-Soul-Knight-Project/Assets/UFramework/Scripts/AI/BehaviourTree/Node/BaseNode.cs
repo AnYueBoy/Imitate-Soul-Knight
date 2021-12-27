@@ -20,9 +20,12 @@ namespace UFramework.AI.BehaviourTree {
 
         protected BlackBoardMemory blackBoardMemory;
 
-        public RunningStatus update (IAgent agent, BlackBoardMemory workingMemory) {
+        protected float dt;
+
+        public RunningStatus update (IAgent agent, BlackBoardMemory workingMemory, float dt) {
             this.agent = agent;
             this.blackBoardMemory = workingMemory;
+            this.dt = dt;
 
             if (this.m_PreCondition != null && !this.m_PreCondition.isTrue (agent)) {
                 return RunningStatus.Failed;
