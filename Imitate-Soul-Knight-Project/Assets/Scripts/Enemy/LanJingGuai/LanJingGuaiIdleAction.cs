@@ -14,6 +14,6 @@ public class LanJingGuaiIdleAction : ActionNode {
             lanJingGuai.executeIdle ();
             return RunningStatus.Executing;
         }
-        return RunningStatus.Finished;
+        return RunningStatus.Success;
     }
 }

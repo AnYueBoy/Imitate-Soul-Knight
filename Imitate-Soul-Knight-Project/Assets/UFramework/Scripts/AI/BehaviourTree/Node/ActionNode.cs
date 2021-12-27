@@ -14,7 +14,7 @@ namespace UFramework.AI.BehaviourTree {
                 return RunningStatus.Failed;
             }
 
-            RunningStatus runningStatus = RunningStatus.Finished;
+            RunningStatus runningStatus = RunningStatus.Success;
             if (m_actionStauts == ActionStatus.ACTION_READY) {
                 this.onEnter ();
                 m_actionStauts = ActionStatus.ACTION_RUNNING;
@@ -45,7 +45,7 @@ namespace UFramework.AI.BehaviourTree {
         }
 
         protected virtual RunningStatus onExecute () {
-            return RunningStatus.Finished;
+            return RunningStatus.Success;
         }
 
         protected virtual void onExit () {

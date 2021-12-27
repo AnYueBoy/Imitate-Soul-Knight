@@ -51,7 +51,7 @@ namespace UFramework.AI.BehaviourTree {
 
         //implemented by inherited class
         protected virtual RunningStatus onUpdate () {
-            return RunningStatus.Finished;
+            return RunningStatus.Success;
         }
 
         protected virtual void onReset () {

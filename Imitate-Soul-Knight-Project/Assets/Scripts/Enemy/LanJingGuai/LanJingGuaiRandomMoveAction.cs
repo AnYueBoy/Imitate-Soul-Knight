@@ -21,7 +21,7 @@ public class LanJingGuaiRandomMoveAction : ActionNode {
 			return RunningStatus.Executing;
 		}
 
-		return RunningStatus.Finished;
+		return RunningStatus.Success;
 	}
 
 	protected override void onExit () {

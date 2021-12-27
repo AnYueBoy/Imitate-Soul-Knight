@@ -20,7 +20,7 @@ namespace UFramework.AI.BehaviourTree {
 
         protected override RunningStatus onUpdate () {
             if (m_Children.Count == 0) {
-                return RunningStatus.Finished;
+                return RunningStatus.Success;
             }
 
             m_requestFinishedCount = Mathf.Clamp (m_requestFinishedCount, 1, m_Children.Count);
@@ -36,11 +36,11 @@ namespace UFramework.AI.BehaviourTree {
                     status = m_Children[i].update (this.agent, this.blackBoardMemory);
                 }
 
-                if (status == RunningStatus.Finished) {
+                if (status == RunningStatus.Success) {
                     finishedCount++;
                     m_childrenRunning[i] = status;
                     if (finishedCount == m_requestFinishedCount) {
-                        return RunningStatus.Finished;
+                        return RunningStatus.Success;
                     }
                 } else if (status == RunningStatus.Failed) {
                     failedCount++;

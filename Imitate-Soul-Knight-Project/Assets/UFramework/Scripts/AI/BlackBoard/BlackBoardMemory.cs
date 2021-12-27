@@ -7,17 +7,17 @@
 using System.Collections.Generic;
 namespace UFramework.AI.BehaviourTree {
     public class BlackBoardMemory {
-        private Dictionary<int, BlackBoardItem> m_items;
+        private Dictionary<BlackItemEnum, BlackBoardItem> m_items;
 
         public BlackBoardMemory () {
-            this.m_items = new Dictionary<int, BlackBoardItem> ();
+            this.m_items = new Dictionary<BlackItemEnum, BlackBoardItem> ();
         }
 
         public void clear () {
             this.m_items.Clear ();
         }
 
-        public void setValue (int key, object target, float expiredTime = -1f) {
+        public void setValue (BlackItemEnum key, object target, float expiredTime = -1f) {
             BlackBoardItem item;
             if (!m_items.ContainsKey (key)) {
                 item = new BlackBoardItem ();
@@ -29,7 +29,7 @@ namespace UFramework.AI.BehaviourTree {
             item.setValue (target, expiredTime);
         }
 
-        public bool hasValue (int key) {
+        public bool hasValue (BlackItemEnum key) {
             BlackBoardItem item;
             if (!m_items.TryGetValue (key, out item)) {
                 return false;
@@ -38,11 +38,11 @@ namespace UFramework.AI.BehaviourTree {
             return item.isValueValid ();
         }
 
-        public void delValue (int key) {
+        public void delValue (BlackItemEnum key) {
             m_items.Remove (key);
         }
 
-        public T getValue<T> (int key, T defaultValue = default (T)) {
+        public T getValue<T> (BlackItemEnum key, T defaultValue = default (T)) {
             BlackBoardItem item;
             if (!m_items.TryGetValue (key, out item)) {
                 return defaultValue;
@@ -51,7 +51,7 @@ namespace UFramework.AI.BehaviourTree {
             return item.getValue<T> (defaultValue);
         }
 
-        public bool tryGetValue<T> (int key, out T value) {
+        public bool tryGetValue<T> (BlackItemEnum key, out T value) {
             BlackBoardItem item;
             if (!m_items.TryGetValue (key, out item) || !item.isValueValid ()) {
                 value = default (T);

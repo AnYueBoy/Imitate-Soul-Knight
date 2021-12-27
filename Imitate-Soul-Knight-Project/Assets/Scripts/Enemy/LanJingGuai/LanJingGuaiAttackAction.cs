@@ -16,6 +16,6 @@ public class LanJingGuaiAttackAction : ActionNode {
 
 	protected override RunningStatus onExecute () {
 		LanJingGuai lanJingGuai = (LanJingGuai) agent;
-		return RunningStatus.Finished;
+		return RunningStatus.Success;
 	}
 }

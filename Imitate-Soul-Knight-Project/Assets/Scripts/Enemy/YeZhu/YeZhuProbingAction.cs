@@ -16,7 +16,7 @@ public class YeZhuProbingAction : ActionNode {
     protected override RunningStatus onExecute () {
         YeZhu yeZhu = (YeZhu) agent;
         if (!yeZhu.canExecuteProbing ()) {
-            return RunningStatus.Finished;
+            return RunningStatus.Success;
         }
 
         yeZhu.executeProbing ();

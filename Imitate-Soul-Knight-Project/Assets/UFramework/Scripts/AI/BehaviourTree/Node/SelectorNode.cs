@@ -9,7 +9,7 @@ namespace UFramework.AI.BehaviourTree {
         private BaseNode m_lastRunningNode;
 
         protected override RunningStatus onUpdate () {
-            RunningStatus runningStatus = RunningStatus.Finished;
+            RunningStatus runningStatus = RunningStatus.Success;
             BaseNode previousNode = m_lastRunningNode;
 
             // select running node

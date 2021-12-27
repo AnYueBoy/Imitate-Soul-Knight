@@ -11,7 +11,7 @@ namespace UFramework.AI.BehaviourTree {
 
         protected override RunningStatus onUpdate () {
             if (m_Children.Count == 0) {
-                return RunningStatus.Finished;
+                return RunningStatus.Success;
             }
 
             if (m_currentNodeIndex < 0) {
@@ -20,14 +20,14 @@ namespace UFramework.AI.BehaviourTree {
 
             for (int i = m_currentNodeIndex; i < m_Children.Count; ++i) {
                 RunningStatus status = m_Children[i].update (this.agent, this.blackBoardMemory);
-                if (status != RunningStatus.Finished) {
+                if (status != RunningStatus.Success) {
                     return status;
                 }
 
                 m_currentNodeIndex++;
             }
 
-            return RunningStatus.Finished;
+            return RunningStatus.Success;
         }
 
         protected override void onReset () {

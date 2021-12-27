@@ -30,7 +30,7 @@ namespace UFramework.AI.BehaviourTree {
                 }
 
                 if (++m_repeatIndex == m_repeatCount) {
-                    return RunningStatus.Finished;
+                    return RunningStatus.Success;
                 }
                 child.reset ();
             }

@@ -17,7 +17,7 @@ public class YeZhuIdleAction : ActionNode {
         if (!yeZhu.isRoomActive ()) {
             return RunningStatus.Executing;
         }
-        return RunningStatus.Finished;
+        return RunningStatus.Success;
     }
 
 }
