@@ -14,11 +14,14 @@ public class MoveToTarget : ActionNode {
     }
 
     private float moveSpeed;
-    private Transform actionTarget;
     private List<Vector3> movePathList;
+    private BaseEnemy agentInstance;
+
     protected override void onEnter () {
-        this.moveSpeed = this.blackBoardMemory.getValue<float> (BlackItemEnum.MOVE_SPEED);
-        this.actionTarget = this.blackBoardMemory.getValue<Transform> (BlackItemEnum.ACTION_TARGET);
+        agentInstance = (BaseEnemy) agent;
+
+        this.moveSpeed = agentInstance.enemyConfigData.moveSpeed;
+
         this.movePathList = this.blackBoardMemory.getValue<List<Vector3>> (BlackItemEnum.MOVE_PATH);
 
         this.drawPathList = new List<Vector3> (this.movePathList);
@@ -33,8 +36,6 @@ public class MoveToTarget : ActionNode {
     }
 
     protected override void onExit () {
-        this.blackBoardMemory.delValue (BlackItemEnum.MOVE_SPEED);
-        this.blackBoardMemory.delValue (BlackItemEnum.ACTION_TARGET);
         this.blackBoardMemory.delValue (BlackItemEnum.MOVE_PATH);
     }
 
@@ -53,16 +54,16 @@ public class MoveToTarget : ActionNode {
         float verticalStep = step * this.curMoveDir.y;
 
         if (this.curMoveDir.x > 0) {
-            this.actionTarget.localScale = Vector3.one;
+            this.agentInstance.transform.localScale = Vector3.one;
         } else {
-            this.actionTarget.localScale = new Vector3 (-1, 1, 1);
+            this.agentInstance.transform.localScale = new Vector3 (-1, 1, 1);
         }
 
-        this.actionTarget.position += new Vector3 (horizontalStep, verticalStep, 0);
+        this.agentInstance.transform.position += new Vector3 (horizontalStep, verticalStep, 0);
 
-        float distance = (this.actionTarget.position - targetPos).magnitude;
+        float distance = (this.agentInstance.transform.position - targetPos).magnitude;
         if (distance < step) {
-            this.actionTarget.position = targetPos;
+            this.agentInstance.transform.position = targetPos;
             this.curMoveIndex++;
             if (this.curMoveIndex >= this.movePathList.Count) {
                 return RunningStatus.Success;
@@ -76,7 +77,7 @@ public class MoveToTarget : ActionNode {
 
     private void getNextTargetPos () {
         this.targetPos = this.movePathList[this.curMoveIndex];
-        this.curMoveDir = (this.targetPos - this.actionTarget.position).normalized;
+        this.curMoveDir = (this.targetPos - this.agentInstance.transform.position).normalized;
     }
 
     private void drawPath (Color color) {
@@ -84,12 +85,12 @@ public class MoveToTarget : ActionNode {
             return;
         }
 
-        if ((this.actionTarget.position - this.drawPathList[0]).magnitude <= 0.4f) {
+        if ((this.agentInstance.transform.position - this.drawPathList[0]).magnitude <= 0.4f) {
             this.drawPathList.RemoveAt (0);
         }
         CommonUtil.drawPath (this.drawPathList, color);
         if (this.drawPathList.Count > 0) {
-            CommonUtil.drawLine (this.actionTarget.position, this.drawPathList[0], color);
+            CommonUtil.drawLine (this.agentInstance.transform.position, this.drawPathList[0], color);
         }
     }
 }
