@@ -1,29 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using UFramework;
 using UFramework.AI.BehaviourTree;
 using UFramework.FrameUtil;
-using UFramework.GameCommon;
-using UFramework.Tween;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
 
-	protected BoxCollider2D boxCollider2D;
-
 	protected float intensity = 2.5f;
-	protected Material material;
-
-	protected string bulletLayer = LayerGroup.enemyWeapon;
+	protected Material _material;
 
 	protected BehaviourTreeRunner behaviourTreeRunner;
 
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
-		this.boxCollider2D = this.GetComponent<BoxCollider2D> ();
+		this._boxCollider2D = this.GetComponent<BoxCollider2D> ();
 		this.behaviourTreeRunner = this.GetComponent<BehaviourTreeRunner> ();
 	}
 
@@ -33,34 +26,28 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	public Func<bool> isRoomActive;
 
-	protected EnemyConfigData enemyConfigData;
-
-	protected EnemyData enemyData;
-
-	protected PathFinding pathFinding;
-
-	protected float reflectOffset;
+	protected PathFinding _pathFinding;
 
 	public virtual void init (EnemyConfigData enemyConfigData, Func<bool> isRoomActive) {
-		this.enemyConfigData = enemyConfigData;
+		this._enemyConfigData = enemyConfigData;
 		this.isRoomActive = isRoomActive;
 
-		this.enemyData = new EnemyData (this.enemyConfigData);
+		this._enemyData = new EnemyData (this.enemyConfigData);
 		SpriteRenderer spriteRenderer = this.GetComponent<SpriteRenderer> ();
-		this.reflectOffset = Mathf.Max (spriteRenderer.size.x, spriteRenderer.size.y);
+		this._reboundOffset = Mathf.Max (spriteRenderer.size.x, spriteRenderer.size.y);
 
-		if (this.material == null) {
-			this.material = spriteRenderer.material;
+		if (this._material == null) {
+			this._material = spriteRenderer.material;
 		}
-		this.material.SetFloat ("_Fade", 1);
+		this._material.SetFloat ("_Fade", 1);
 		float factor = Mathf.Pow (2, intensity);
 		Color randomColor = CommonUtil.getRandomColor ();
 		randomColor = new Color (randomColor.r * factor, randomColor.g * factor, randomColor.b * factor, randomColor.a * factor);
-		this.material.SetColor ("_DissolveColor", randomColor);
+		this._material.SetColor ("_DissolveColor", randomColor);
 	}
 
 	public void setPathFinding (PathFinding pathFinding) {
-		this.pathFinding = pathFinding;
+		this._pathFinding = pathFinding;
 	}
 
 	public virtual void localUpdate (float dt) {
@@ -110,76 +97,6 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		return this.enemyData.curHp <= 0;
 	}
 
-	private void dissolveDead () {
-		this.material
-			.DOFloat (0, "_Fade", 2.5f)
-			.OnComplete (() => {
-				this.recovery ();
-			});
-	}
-
-	protected List<Vector3> deadPath = new List<Vector3> ();
-	protected float deadDistance = 6.5f;
-	protected float deadAnimationTime = 2.5f;
-	public void deadMove (Vector2 aimDir) {
-		this.getDeadPath (aimDir);
-		this.getDeadTween ();
-	}
-
-	protected void getDeadTween () {
-		if (this.deadPath == null || this.deadPath.Count <= 0) {
-			return;
-		}
-
-		this.transform
-			.pathTween (this.deadPath, this.deadAnimationTime)
-			.setEase (EaseType.OutCubic)
-			.setCompleted (() => {
-				ModuleManager.instance.promiseTimer.waitFor (1.0f).then (() => {
-					this.dissolveDead ();
-				});
-			});
-	}
-
-	/// <summary>
-	/// 获取死亡路径
-	/// </summary>
-	/// <param name="aimDir"></param>
-	protected void getDeadPath (Vector2 aimDir) {
-		deadPath.Clear ();
-		Vector2 startPos = this.transform.position;
-		float leftDistance = deadDistance;
-		RaycastHit2D raycastHitInfo;
-		while (leftDistance > 0) {
-			raycastHitInfo = Physics2D.Raycast (
-				startPos,
-				aimDir,
-				leftDistance,
-				1 << LayerMask.NameToLayer (LayerGroup.block) |
-				1 << LayerMask.NameToLayer (LayerGroup.destructibleBlock));
-			Debug.DrawRay (startPos, aimDir, Color.red);
-			if (!raycastHitInfo) {
-				break;
-			}
-
-			// 偏移值，否则可能因为点存在于碰撞体上，造成反射异常
-			Vector2 hitPoint = raycastHitInfo.point + aimDir * -this.reflectOffset;
-			deadPath.Add (new Vector3 (hitPoint.x, hitPoint.y, 0));
-
-			float distance = (hitPoint - startPos).magnitude;
-			leftDistance -= distance;
-
-			startPos = hitPoint;
-			aimDir = Vector2.Reflect (aimDir, raycastHitInfo.normal);
-		}
-
-		if (leftDistance > 0) {
-			Vector2 endPoint = startPos + aimDir * leftDistance;
-			deadPath.Add (new Vector3 (endPoint.x, endPoint.y, 0));
-		}
-
-	}
-
 	#region  击退状态逻辑
 	private float repelDis = 0.5f;
 	private float repelTime = 0.2f;
@@ -195,7 +112,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		repelDir = repelDir.normalized;
 		RaycastHit2D castInfo = Physics2D.BoxCast (
 			this.transform.position,
-			this.boxCollider2D.size,
+			this._boxCollider2D.size,
 			0,
 			repelDir,
 			this.repelDis,
@@ -222,7 +139,82 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	#endregion
 
-	protected virtual void recovery () {
-		ObjectPool.instance.returnInstance (this.gameObject);
+	#region  动画状态
+
+	public void playIdleAni () {
+		this.animator.SetBool ("IsMove", false);
 	}
+
+	public void playDeadAni () {
+		this.animator.SetBool ("IsDeath", true);
+	}
+	#endregion
+
+	#region  数据字段
+	private readonly float _attackOffset = 0.7f;
+	protected readonly float _idleInterval = 1.5f;
+	protected string _bulletLayer = LayerGroup.enemyWeapon;
+	protected EnemyConfigData _enemyConfigData;
+	protected EnemyData _enemyData;
+	protected BoxCollider2D _boxCollider2D;
+	protected float _reboundOffset;
+
+	#endregion
+
+	#region  数据访问
+
+	public EnemyConfigData enemyConfigData {
+		get {
+			return this._enemyConfigData;
+		}
+	}
+
+	public EnemyData enemyData {
+		get {
+			return this._enemyData;
+		}
+	}
+
+	public string bulletLayer {
+		get {
+			return this._bulletLayer;
+		}
+	}
+
+	public float attackOffset {
+		get {
+			return this._attackOffset;
+		}
+	}
+
+	public BoxCollider2D boxCollider {
+		get {
+			return this._boxCollider2D;
+		}
+	}
+
+	public float reboundOffset {
+		get {
+			return this._reboundOffset;
+		}
+	}
+
+	public Material material {
+		get {
+			return this._material;
+		}
+	}
+
+	public float idleInterval {
+		get {
+			return this._idleInterval;
+		}
+	}
+
+	public PathFinding pathFindComp {
+		get {
+			return this._pathFinding;
+		}
+	}
+	#endregion
 }

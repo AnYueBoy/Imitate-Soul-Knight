@@ -81,7 +81,7 @@ public class YeZhu : BaseEnemy {
             CommonUtil.confusionElement<Vector3> (posList);
 
             foreach (Vector3 pos in posList) {
-                Cell targetCell = this.pathFinding.getGridByPos (pos);
+                Cell targetCell = this._pathFinding.getGridByPos (pos);
                 if (targetCell == null) {
                     continue;
                 }
@@ -105,7 +105,7 @@ public class YeZhu : BaseEnemy {
             return;
         }
 
-        this.pathPosList = this.pathFinding.findPath (this.transform.position, targetCell.worldPos);
+        this.pathPosList = this._pathFinding.findPath (this.transform.position, targetCell.worldPos);
         if (this.pathPosList == null) {
             this.probingTimer = this.probingInterval;
             return;
@@ -190,7 +190,7 @@ public class YeZhu : BaseEnemy {
     #region 攻击状态
     public void getAimToPlayerPath () {
         Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-        this.pathPosList = this.pathFinding.findPath (this.transform.position, playerPos);
+        this.pathPosList = this._pathFinding.findPath (this.transform.position, playerPos);
         if (this.pathPosList == null) {
             return;
         }
