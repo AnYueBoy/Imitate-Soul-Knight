@@ -4,6 +4,7 @@
  * @Description: 移动到目标点
  */
 using System.Collections.Generic;
+using UFramework;
 using UFramework.AI.BehaviourTree;
 using UFramework.FrameUtil;
 using UnityEngine;
@@ -54,7 +55,8 @@ public class MoveToTarget : ActionNode {
         float horizontalStep = step * this.curMoveDir.x;
         float verticalStep = step * this.curMoveDir.y;
 
-        if (this.curMoveDir.x > 0) {
+        Vector3 toWardsDir = (ModuleManager.instance.playerManager.getPlayerTrans ().position - this.agentInstance.transform.position).normalized;
+        if (toWardsDir.x > 0) {
             this.agentInstance.transform.localScale = Vector3.one;
         } else {
             this.agentInstance.transform.localScale = new Vector3 (-1, 1, 1);
