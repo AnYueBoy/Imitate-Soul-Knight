@@ -10,4 +10,6 @@ public enum BlackItemEnum {
 
 	// 反弹方向
 	REBOUND_DIR,
+
+	CUR_MOVE_SPEED,
 }

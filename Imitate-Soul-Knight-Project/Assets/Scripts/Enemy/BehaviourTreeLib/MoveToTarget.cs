@@ -21,7 +21,7 @@ public class MoveToTarget : ActionNode {
         agentInstance = (BaseEnemy) agent;
         agentInstance.playMoveAni ();
 
-        this.moveSpeed = agentInstance.enemyConfigData.moveSpeed;
+        this.moveSpeed = this.blackBoardMemory.getValue<float> (BlackItemEnum.CUR_MOVE_SPEED);
 
         this.movePathList = this.blackBoardMemory.getValue<List<Vector3>> (BlackItemEnum.MOVE_PATH);
 
@@ -38,6 +38,7 @@ public class MoveToTarget : ActionNode {
 
     protected override void onExit () {
         this.blackBoardMemory.delValue (BlackItemEnum.MOVE_PATH);
+        this.blackBoardMemory.delValue (BlackItemEnum.CUR_MOVE_SPEED);
     }
 
     private Vector3 curMoveDir;
