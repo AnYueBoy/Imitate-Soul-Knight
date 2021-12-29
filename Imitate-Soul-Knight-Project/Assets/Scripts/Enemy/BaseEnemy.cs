@@ -12,13 +12,13 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	protected float intensity = 2.5f;
 	protected Material _material;
 
-	protected BehaviourTreeRunner behaviourTreeRunner;
-
 	protected virtual void OnEnable () {
 		this.animator = this.GetComponent<Animator> ();
 		this._boxCollider2D = this.GetComponent<BoxCollider2D> ();
 		this.behaviourTreeRunner = this.GetComponent<BehaviourTreeRunner> ();
 	}
+
+	protected BehaviourTreeRunner behaviourTreeRunner;
 
 	protected BlackBoardMemory blackboardMemory;
 
@@ -51,8 +51,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	public virtual void localUpdate (float dt) {
-		blackboardMemory.setValue ((int) BlackItemEnum.DT, dt);
-		behaviourTreeRunner.execute (BTNode, this, blackboardMemory);
+		behaviourTreeRunner.execute (BTNode, this, blackboardMemory, dt);
 	}
 
 	public bool isInAttackRange () {
@@ -143,6 +142,10 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 
 	public void playIdleAni () {
 		this.animator.SetBool ("IsMove", false);
+	}
+
+	public void playMoveAni () {
+		this.animator.SetBool ("IsMove", true);
 	}
 
 	public void playDeadAni () {

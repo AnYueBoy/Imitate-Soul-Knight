@@ -19,6 +19,7 @@ public class MoveToTarget : ActionNode {
 
     protected override void onEnter () {
         agentInstance = (BaseEnemy) agent;
+        agentInstance.playMoveAni ();
 
         this.moveSpeed = agentInstance.enemyConfigData.moveSpeed;
 
