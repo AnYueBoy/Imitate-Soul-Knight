@@ -19,11 +19,12 @@ public class LanJingGuai : BaseEnemy {
 				new SequenceNode ().addChild (
 					new IdleAction (),
 					new SelectorNode ().addChild (
-						new SequenceNode ().addChild (
-							new GetRandomPosition (),
-							new MoveToTarget ()
-						),
-						new FourAttack ()
+						new FailureNode (
+							new SequenceNode ().addChild (
+								new GetRandomPosition (),
+								new MoveToTarget ()
+							)),
+						new FailureNode (new FourAttack ())
 					)
 				)
 			)
