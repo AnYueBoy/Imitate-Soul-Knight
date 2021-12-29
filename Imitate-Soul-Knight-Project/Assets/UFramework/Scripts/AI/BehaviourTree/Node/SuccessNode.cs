@@ -4,8 +4,8 @@
  * @Description: 成功节点
  */
 using UFramework.AI.BehaviourTree;
-public class SucceederNode : DecoratorNode {
-    public SucceederNode (BaseNode child) : base (child) { }
+public class SuccessNode : DecoratorNode {
+    public SuccessNode (BaseNode child) : base (child) { }
 
     protected override RunningStatus onUpdate () {
         BaseNode childNode = m_Children[0];
@@ -20,5 +20,4 @@ public class SucceederNode : DecoratorNode {
     protected override void onReset () {
         m_Children[0].reset ();
     }
-
 }
