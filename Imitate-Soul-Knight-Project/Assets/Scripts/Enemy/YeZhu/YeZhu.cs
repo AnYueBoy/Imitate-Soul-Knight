@@ -4,6 +4,7 @@
  * @Description: 野猪怪
  */
 
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UFramework;
@@ -20,40 +21,36 @@ public class YeZhu : BaseEnemy {
         blackboardMemory = new BlackBoardMemory ();
         BTNode = new ParallelNode (1).addChild (
             new SelectorNode ().addChild (
-                new YeZhuDeadAction (),
                 new SequenceNode ().addChild (
-                    new YeZhuIdleAction (),
-                    new YeZhuProbingAction (),
-                    new YeZhuAttackAction ())
+                    new NormalDead ().setPreCondition (new IsDead ()),
+                    new Rebound ()
+                ),
+                new SequenceNode ().addChild (
+                    new IdleAction (),
+                    new SuccessNode (
+                        new SequenceNode ().addChild (
+                            new GetRoundRandomPos (),
+                            new MoveToTarget ()
+                        )
+                    ),
+                    new FailureNode (
+                        new ParallelNode (1).addChild (
+                            new YeZhuMeleeEffect (),
+                            new SuccessNode (new SequenceNode ().addChild (
+                                new GetTargetPosition (),
+                                new MoveToTarget ()
+                            ))
+                        )
+                    )
+                )
             )
         );
     }
 
-    #region 攻击状态
-    public void getAimToPlayerPath () {
-        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
-        this.pathPosList = this._pathFinding.findPath (this.transform.position, playerPos);
-        if (this.pathPosList == null) {
-            return;
-        }
-        this.drawPathList = new List<Vector3> (this.pathPosList);
-        this.curMoveSpeed = this.enemyConfigData.sprintSpeed;
-        this.curMoveIndex = 0;
-        this.getNextTargetPos ();
+    public override void init (EnemyConfigData enemyConfigData, Func<bool> isRoomActive) {
+        base.init (enemyConfigData, isRoomActive);
+        this._meleeAttackRange = 0.4f;
     }
-
-    public void showAttackEffect () {
-        this.sprintEffect.SetActive (true);
-    }
-
-    public void hideAttackEffect () {
-        this.sprintEffect.SetActive (false);
-    }
-
-    public float getDamageValue () {
-        return this.enemyConfigData.damage;
-    }
-    #endregion
 
     #region  数据字段
     private float probingTimer = 0;
@@ -79,6 +76,12 @@ public class YeZhu : BaseEnemy {
     public int probingMaxDistance {
         get {
             return this._probingMaxDistance;
+        }
+    }
+
+    public GameObject sprintEffectNode {
+        get {
+            return this.sprintEffect;
         }
     }
     #endregion

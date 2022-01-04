@@ -63,11 +63,6 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		return false;
 	}
 
-	public Vector3 aimToPlayerDir () {
-		Vector3 subVec = (ModuleManager.instance.playerManager.getPlayerTrans ().position - this.transform.position);
-		return subVec.normalized;
-	}
-
 	public float aimToPlayerDistance () {
 		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.getPlayerTrans ().position);
 		return subVec.magnitude;
@@ -156,6 +151,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	#region  数据字段
 	private readonly float _attackOffset = 0.7f;
 	protected readonly float _idleInterval = 1.5f;
+	protected float _meleeAttackRange = 0.4f;
 	protected string _bulletLayer = LayerGroup.enemyWeapon;
 	protected EnemyConfigData _enemyConfigData;
 	protected EnemyData _enemyData;
@@ -217,6 +213,12 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	public PathFinding pathFindComp {
 		get {
 			return this._pathFinding;
+		}
+	}
+
+	public float meleeAttackRange {
+		get {
+			return this._meleeAttackRange;
 		}
 	}
 	#endregion
