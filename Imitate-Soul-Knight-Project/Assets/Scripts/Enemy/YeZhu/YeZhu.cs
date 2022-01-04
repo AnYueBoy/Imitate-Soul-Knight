@@ -53,7 +53,6 @@ public class YeZhu : BaseEnemy {
     }
 
     #region  数据字段
-    private float probingTimer = 0;
     private readonly float _probingInterval = 4;
     private readonly int _probingMinDistance = 2;
     private readonly int _probingMaxDistance = 4;
