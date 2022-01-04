@@ -46,6 +46,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         this.drawBehaviourTree ();
         this.drawNodes ();
         this.drawConnections ();
+        this.drawConnectionLine (Event.current);
         this.processNodesEvents (Event.current);
         this.processEvents (Event.current);
         if (GUI.changed) Repaint ();
@@ -68,6 +69,36 @@ public class BehaviourTreeMonitor : EditorWindow {
 
         for (int i = 0; i < connections.Count; i++) {
             connections[i].draw ();
+        }
+    }
+
+    private void drawConnectionLine (Event e) {
+        if (selectedInPoint != null && selectedOutPoint == null) {
+            Handles.DrawBezier (
+                selectedInPoint.rect.center,
+                e.mousePosition,
+                selectedInPoint.rect.center + Vector2.left * 50f,
+                e.mousePosition - Vector2.left * 50f,
+                Color.white,
+                null,
+                2f
+            );
+
+            GUI.changed = true;
+        }
+
+        if (selectedOutPoint != null && selectedInPoint == null) {
+            Handles.DrawBezier (
+                selectedOutPoint.rect.center,
+                e.mousePosition,
+                selectedOutPoint.rect.center - Vector2.left * 50f,
+                e.mousePosition + Vector2.left * 50f,
+                Color.white,
+                null,
+                2f
+            );
+
+            GUI.changed = true;
         }
     }
 
