@@ -12,21 +12,27 @@ public class Node {
     public Rect rect;
     public string title;
     public bool isDragged;
+    public bool isSelected;
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
     public GUIStyle style;
+    public GUIStyle defaultNodeStyle;
+    public GUIStyle selectedNodeStyle;
 
     public Node (
         Vector2 postion,
         float width,
         float height,
         GUIStyle nodeStyle,
+        GUIStyle selectedStyle,
         GUIStyle inPointStyle,
         GUIStyle outPointStyle,
         Action<ConnectionPoint> onClickInPoint,
         Action<ConnectionPoint> onClickOutPoint) {
         rect = new Rect (postion.x, postion.y, width, height);
         this.style = nodeStyle;
+        defaultNodeStyle = nodeStyle;
+        this.selectedNodeStyle = selectedStyle;
         this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickInPoint);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle, onClickOutPoint);
     }
@@ -47,8 +53,12 @@ public class Node {
                     if (rect.Contains (e.mousePosition)) {
                         this.isDragged = true;
                         GUI.changed = true;
+                        isSelected = true;
+                        style = selectedNodeStyle;
                     } else {
                         GUI.changed = true;
+                        isSelected = false;
+                        style = defaultNodeStyle;
                     }
                 }
                 break;

@@ -7,6 +7,7 @@ public class BehaviourTreeMonitor : EditorWindow {
     private List<Node> nodes;
     private List<Connection> connections;
     private GUIStyle nodeStyle;
+    private GUIStyle selectedNodeStyle;
     private GUIStyle inPointStyle;
     private GUIStyle outPointStyle;
     private ConnectionPoint selectedInPoint;
@@ -24,6 +25,10 @@ public class BehaviourTreeMonitor : EditorWindow {
         Texture2D texture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1.png") as Texture2D;
         nodeStyle.normal.background = texture;
         nodeStyle.border = new RectOffset (12, 12, 12, 12);
+
+        selectedNodeStyle = new GUIStyle ();
+        selectedNodeStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1 on.png") as Texture2D;
+        selectedNodeStyle.border = new RectOffset (12, 12, 12, 12);
 
         inPointStyle = new GUIStyle ();
         inPointStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn left.png") as Texture2D;
@@ -100,7 +105,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         if (nodes == null) {
             nodes = new List<Node> ();
         }
-        nodes.Add (new Node (mousePosition, 100, 120, nodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint));
+        nodes.Add (new Node (mousePosition, 100, 120, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint));
     }
 
     private void onClickInPoint (ConnectionPoint inPoint) {
