@@ -12,6 +12,7 @@ public class BehaviourTreeMonitor : EditorWindow {
     private GUIStyle outPointStyle;
     private ConnectionPoint selectedInPoint;
     private ConnectionPoint selectedOutPoint;
+    private Vector2 drag;
 
     [MenuItem ("UFramework/BehaviourTreeMonitor")]
     private static void ShowWindow () {
@@ -71,15 +72,33 @@ public class BehaviourTreeMonitor : EditorWindow {
     }
 
     private void processEvents (Event e) {
-        if (e.type != EventType.MouseDown) {
-            return;
+        drag = Vector2.zero;
+        switch (e.type) {
+            case EventType.MouseDown:
+                if (e.button == 0) {
+                    clearConnectionSelection ();
+                }
+                if (e.button == 1) {
+                    this.processContextMenu (e.mousePosition);
+                }
+                break;
+
+            case EventType.MouseDrag:
+                if (e.button == 0) {
+                    onDrag (e.delta);
+                }
+                break;
         }
-        if (e.button == 0) {
-            clearConnectionSelection ();
+    }
+
+    private void onDrag (Vector2 delta) {
+        drag = delta;
+        if (nodes != null) {
+            for (int i = 0; i < nodes.Count; i++) {
+                nodes[i].drag (delta);
+            }
         }
-        if (e.button == 1) {
-            this.processContextMenu (e.mousePosition);
-        }
+        GUI.changed = true;
     }
 
     private void processNodesEvents (Event e) {
