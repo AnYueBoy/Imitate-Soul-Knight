@@ -105,7 +105,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         if (nodes == null) {
             nodes = new List<Node> ();
         }
-        nodes.Add (new Node (mousePosition, 100, 120, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint));
+        nodes.Add (new Node (mousePosition, 100, 120, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode));
     }
 
     private void onClickInPoint (ConnectionPoint inPoint) {
@@ -144,6 +144,28 @@ public class BehaviourTreeMonitor : EditorWindow {
 
     private void clearConnectionSelection () {
         selectedInPoint = selectedOutPoint = null;
+    }
+
+    private void onClickRemoveNode (Node node) {
+        nodes.Remove (node);
+
+        if (connections == null) {
+            return;
+        }
+
+        List<Connection> connectionsToRemove = new List<Connection> ();
+        for (int i = 0; i < connections.Count; i++) {
+            if (connections[i].inPoint == node.inPoint ||
+                connections[i].outPoint == node.outPoint) {
+                connectionsToRemove.Add (connections[i]);
+            }
+        }
+
+        for (var i = 0; i < connectionsToRemove.Count; i++) {
+            connections.Remove (connectionsToRemove[i]);
+        }
+
+        connectionsToRemove = null;
     }
 
     private void drawBehaviourTree () {
