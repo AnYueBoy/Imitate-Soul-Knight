@@ -10,10 +10,19 @@ namespace UFramework.AI.BehaviourTree {
     public class BehaviourTreeRunner : MonoBehaviour {
 
         public void execute (BaseNode root, IAgent agent, BlackBoardMemory workingMemory, float dt) {
+#if UNITY_EDITOR
+            this.root = root;
+#endif
             RunningStatus status = root.update (agent, workingMemory, dt);
             if (status != RunningStatus.Executing) {
                 root.reset ();
             }
         }
+
+#if UNITY_EDITOR
+
+        private BaseNode root;
+#endif
     }
+
 }

@@ -5,6 +5,7 @@ using UFramework.AI.BehaviourTree;
 using UFramework.FrameUtil;
 using UnityEngine;
 
+[RequireComponent (typeof (BehaviourTreeRunner))]
 public class BaseEnemy : MonoBehaviour, IAgent {
 
 	protected Animator animator;
@@ -18,7 +19,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		this.behaviourTreeRunner = this.GetComponent<BehaviourTreeRunner> ();
 	}
 
-	protected BehaviourTreeRunner behaviourTreeRunner;
+	private BehaviourTreeRunner behaviourTreeRunner;
 
 	protected BlackBoardMemory blackboardMemory;
 
