@@ -11,6 +11,7 @@ public class Node {
     public Rect rect;
 
     public string title = "默认";
+    public bool isDragged = false;
 
     public GUIStyle style;
 
@@ -27,6 +28,32 @@ public class Node {
     }
 
     public bool processEvents (Event e) {
+        switch (e.type) {
+            case EventType.MouseDown:
+                if (e.button == 0) {
+                    if (rect.Contains (e.mousePosition)) {
+                        this.isDragged = true;
+                        GUI.changed = true;
+                    } else {
+                        GUI.changed = true;
+                    }
+                }
+                break;
+
+            case EventType.MouseUp:
+                this.isDragged = false;
+                break;
+
+            case EventType.MouseDrag:
+                if (e.button == 0 && this.isDragged) {
+                    this.drag (e.delta);
+                    e.Use ();
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
         return false;
     }
 }

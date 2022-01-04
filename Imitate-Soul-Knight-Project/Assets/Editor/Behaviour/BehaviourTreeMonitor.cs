@@ -24,6 +24,7 @@ public class BehaviourTreeMonitor : EditorWindow {
     private void OnGUI () {
         this.drawBehaviourTree ();
         this.drawNodes ();
+        this.processNodesEvent (Event.current);
         this.processEvent (Event.current);
         if (GUI.changed) Repaint ();
     }
@@ -67,6 +68,19 @@ public class BehaviourTreeMonitor : EditorWindow {
         GenericMenu genericMenu = new GenericMenu ();
         genericMenu.AddItem (new GUIContent ("Add Item"), false, () => onClickAddNode (mousePosition));
         genericMenu.ShowAsContext ();
+    }
+
+    private void processNodesEvent (Event e) {
+        if (nodes == null) {
+            return;
+        }
+
+        for (int i = nodes.Count - 1; i >= 0; i--) {
+            bool guiChanged = nodes[i].processEvents (e);
+            if (guiChanged) {
+                GUI.changed = true;
+            }
+        }
     }
 
     private void onClickAddNode (Vector2 mousePosition) {
