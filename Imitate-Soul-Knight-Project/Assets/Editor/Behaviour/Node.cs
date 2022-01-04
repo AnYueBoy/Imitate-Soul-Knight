@@ -27,7 +27,7 @@ public class Node {
         Action<ConnectionPoint> onClickOutPoint) {
         rect = new Rect (postion.x, postion.y, width, height);
         this.style = nodeStyle;
-        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickOutPoint);
+        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickInPoint);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle, onClickOutPoint);
     }
 

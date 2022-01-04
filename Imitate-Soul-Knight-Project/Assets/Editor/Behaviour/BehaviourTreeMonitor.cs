@@ -39,7 +39,7 @@ public class BehaviourTreeMonitor : EditorWindow {
     private void OnGUI () {
         this.drawBehaviourTree ();
         this.drawNodes ();
-        this.drawConnection ();
+        this.drawConnections ();
         this.processNodesEvents (Event.current);
         this.processEvents (Event.current);
         if (GUI.changed) Repaint ();
@@ -55,7 +55,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         }
     }
 
-    private void drawConnection () {
+    private void drawConnections () {
         if (connections == null) {
             return;
         }
