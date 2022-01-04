@@ -29,7 +29,7 @@ public class Connection {
             null,
             2f);
 
-        if (Handles.Button ((inPoint.rect.center + outPoint.rect.center) / 2, Quaternion.identity, 4, 8, Handles.RectangleCap)) {
+        if (Handles.Button ((inPoint.rect.center + outPoint.rect.center) / 2, Quaternion.identity, 4, 8, Handles.RectangleHandleCap)) {
             onClickRemoveConnection?.Invoke (this);
         }
 
