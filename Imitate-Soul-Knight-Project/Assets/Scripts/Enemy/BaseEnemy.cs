@@ -54,15 +54,6 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		behaviourTreeRunner.execute (BTNode, this, blackboardMemory, dt);
 	}
 
-	public bool isInAttackRange () {
-		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.getPlayerTrans ().position);
-		float distance = subVec.magnitude;
-		if (distance <= enemyConfigData.maxAttackDistance && distance >= enemyConfigData.minAttackDistance) {
-			return true;
-		}
-		return false;
-	}
-
 	public float aimToPlayerDistance () {
 		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.getPlayerTrans ().position);
 		return subVec.magnitude;
