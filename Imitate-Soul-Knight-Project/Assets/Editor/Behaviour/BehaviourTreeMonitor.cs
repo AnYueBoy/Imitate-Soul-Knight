@@ -53,6 +53,8 @@ public class BehaviourTreeMonitor : EditorWindow {
         this.processNodesEvents (Event.current);
         this.processEvents (Event.current);
         if (GUI.changed) Repaint ();
+
+        // GUI.Box (new Rect (0, 0, 100, 100), "默认");
     }
 
     private void drawGrid (float gridSpacing, float gridOpacity, Color gridColor) {
@@ -250,6 +252,6 @@ public class BehaviourTreeMonitor : EditorWindow {
             return;
         }
 
-        // this.drawNodes ();
+        this.drawNodes ();
     }
 }

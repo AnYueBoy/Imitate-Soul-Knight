@@ -23,6 +23,7 @@ public class ConnectionPoint {
     }
 
     public void draw () {
+        // GUI坐标左下角
         rect.y = node.rect.y + node.rect.height / 2 - rect.height / 2;
 
         switch (type) {

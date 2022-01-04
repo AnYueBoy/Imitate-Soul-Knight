@@ -9,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 public class Node {
     public Rect rect;
-    public string title;
+    public string title = "默认";
     public bool isDragged;
     public bool isSelected;
     public ConnectionPoint inPoint;
