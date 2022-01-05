@@ -27,20 +27,24 @@ public class BehaviourTreeMonitor : EditorWindow {
         Texture2D texture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1.png") as Texture2D;
         nodeStyle.normal.background = texture;
         nodeStyle.border = new RectOffset (12, 12, 12, 12);
+        nodeStyle.alignment = TextAnchor.MiddleCenter;
 
         selectedNodeStyle = new GUIStyle ();
         selectedNodeStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1 on.png") as Texture2D;
         selectedNodeStyle.border = new RectOffset (12, 12, 12, 12);
+        selectedNodeStyle.alignment = TextAnchor.MiddleCenter;
 
         inPointStyle = new GUIStyle ();
         inPointStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn left.png") as Texture2D;
         inPointStyle.active.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn left on.png") as Texture2D;
         inPointStyle.border = new RectOffset (4, 4, 12, 12);
+        inPointStyle.alignment = TextAnchor.MiddleCenter;
 
         outPointStyle = new GUIStyle ();
         outPointStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn right.png") as Texture2D;
         outPointStyle.active.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn right on.png") as Texture2D;
         outPointStyle.border = new RectOffset (4, 4, 12, 12);
+        outPointStyle.alignment = TextAnchor.MiddleCenter;
     }
 
     private void OnGUI () {
@@ -53,8 +57,6 @@ public class BehaviourTreeMonitor : EditorWindow {
         this.processNodesEvents (Event.current);
         this.processEvents (Event.current);
         if (GUI.changed) Repaint ();
-
-        // GUI.Box (new Rect (0, 0, 100, 100), "默认");
     }
 
     private void drawGrid (float gridSpacing, float gridOpacity, Color gridColor) {
