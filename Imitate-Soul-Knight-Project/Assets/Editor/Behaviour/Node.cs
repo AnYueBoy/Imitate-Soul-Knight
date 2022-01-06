@@ -32,6 +32,13 @@ public class Node {
     public void drag (Vector2 delta) {
         rect.position += delta;
     }
+    public void scale (float value) {
+        value = value / 2;
+        rect.width += value;
+        rect.height += value;
+        rect.x += value;
+        rect.y += value;
+    }
     public void draw () {
         inPoint.draw ();
         outPoint.draw ();

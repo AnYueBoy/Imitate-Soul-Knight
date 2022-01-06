@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BehaviourTreeMonitor : EditorWindow {
     private List<Node> nodes = new List<Node> ();
-    private List<Connection> connections;
+    private List<Connection> connections = new List<Connection> ();
     private GUIStyle nodeStyle;
     private GUIStyle selectedNodeStyle;
     private Vector2 offset;
@@ -93,7 +93,14 @@ public class BehaviourTreeMonitor : EditorWindow {
                     onDrag (e.delta);
                 }
                 break;
+
+            case EventType.ScrollWheel:
+                if (e.isScrollWheel) {
+                    onScale (e.delta);
+                }
+                break;
         }
+
     }
 
     private void onDrag (Vector2 delta) {
@@ -101,6 +108,15 @@ public class BehaviourTreeMonitor : EditorWindow {
         if (nodes != null) {
             for (int i = 0; i < nodes.Count; i++) {
                 nodes[i].drag (delta);
+            }
+        }
+        GUI.changed = true;
+    }
+
+    private void onScale (Vector2 delta) {
+        if (nodes != null) {
+            for (int i = 0; i < nodes.Count; i++) {
+                nodes[i].scale (delta.y);
             }
         }
         GUI.changed = true;
@@ -144,6 +160,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         if (curBehaviourTreeRunner != behaviourTreeRunner) {
             curBehaviourTreeRunner = behaviourTreeRunner;
             this.nodes.Clear ();
+            this.connections.Clear ();
             this.buildTree (behaviourTreeRunner.rootNode, 0, 0, null);
         }
     }
