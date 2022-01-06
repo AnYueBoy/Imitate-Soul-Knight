@@ -8,8 +8,6 @@ public class BehaviourTreeMonitor : EditorWindow {
     private List<Connection> connections;
     private GUIStyle nodeStyle;
     private GUIStyle selectedNodeStyle;
-    private GUIStyle inPointStyle;
-    private GUIStyle outPointStyle;
     private Vector2 offset;
     private Vector2 drag;
 
@@ -32,18 +30,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         selectedNodeStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1 on.png") as Texture2D;
         selectedNodeStyle.border = new RectOffset (12, 12, 12, 12);
         selectedNodeStyle.alignment = TextAnchor.MiddleCenter;
-
-        inPointStyle = new GUIStyle ();
-        inPointStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn left.png") as Texture2D;
-        inPointStyle.active.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn left on.png") as Texture2D;
-        inPointStyle.border = new RectOffset (4, 4, 12, 12);
-        inPointStyle.alignment = TextAnchor.MiddleCenter;
-
-        outPointStyle = new GUIStyle ();
-        outPointStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn right.png") as Texture2D;
-        outPointStyle.active.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/btn right on.png") as Texture2D;
-        outPointStyle.border = new RectOffset (4, 4, 12, 12);
-        outPointStyle.alignment = TextAnchor.MiddleCenter;
+        selectedNodeStyle.normal.textColor = Color.green;
     }
 
     private void OnGUI () {
@@ -159,7 +146,6 @@ public class BehaviourTreeMonitor : EditorWindow {
             this.nodes.Clear ();
             this.buildTree (behaviourTreeRunner.rootNode, 0, 0, null);
         }
-
     }
 
     private void buildTree (BaseNode btNode, int layer, int childIndex, Node parent) {
@@ -203,7 +189,7 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
         }
 
-        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle);
+        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle);
         nodes.Add (rootNode);
         return rootNode;
     }

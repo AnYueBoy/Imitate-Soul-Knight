@@ -8,8 +8,6 @@ using UnityEngine;
 public class Node {
     public Rect rect;
     public string title = "默认";
-    public bool isDragged;
-    public bool isSelected;
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
     public GUIStyle style;
@@ -21,16 +19,14 @@ public class Node {
         float height,
         string title,
         GUIStyle nodeStyle,
-        GUIStyle selectedStyle,
-        GUIStyle inPointStyle,
-        GUIStyle outPointStyle) {
+        GUIStyle selectedStyle) {
         rect = new Rect (postion.x, postion.y, width, height);
         this.title = title;
         this.style = nodeStyle;
         defaultNodeStyle = nodeStyle;
         this.selectedNodeStyle = selectedStyle;
-        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle);
-        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle);
+        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In);
+        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out);
     }
 
     public void drag (Vector2 delta) {
@@ -47,28 +43,21 @@ public class Node {
             case EventType.MouseDown:
                 if (e.button == 0) {
                     if (rect.Contains (e.mousePosition)) {
-                        this.isDragged = true;
                         GUI.changed = true;
-                        isSelected = true;
                         style = selectedNodeStyle;
                     } else {
                         GUI.changed = true;
-                        isSelected = false;
                         style = defaultNodeStyle;
                     }
+                    return true;
                 }
+
                 break;
 
             case EventType.MouseUp:
-                this.isDragged = false;
                 break;
 
             case EventType.MouseDrag:
-                if (e.button == 0 && this.isDragged) {
-                    this.drag (e.delta);
-                    e.Use ();
-                    return true;
-                }
                 break;
         }
         return false;

@@ -9,12 +9,9 @@ public class ConnectionPoint {
     public ConnectionPointType type;
     public Node node;
 
-    public GUIStyle style;
-
-    public ConnectionPoint (Node node, ConnectionPointType type, GUIStyle style) {
+    public ConnectionPoint (Node node, ConnectionPointType type) {
         this.node = node;
         this.type = type;
-        this.style = style;
         this.rect = new Rect (0, 0, 20f, 10f);
     }
 
