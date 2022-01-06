@@ -4,8 +4,6 @@
  * @Description: 节点
  */
 
-using System;
-using UnityEditor;
 using UnityEngine;
 public class Node {
     public Rect rect;
@@ -25,16 +23,14 @@ public class Node {
         GUIStyle nodeStyle,
         GUIStyle selectedStyle,
         GUIStyle inPointStyle,
-        GUIStyle outPointStyle,
-        Action<ConnectionPoint> onClickInPoint,
-        Action<ConnectionPoint> onClickOutPoint) {
+        GUIStyle outPointStyle) {
         rect = new Rect (postion.x, postion.y, width, height);
         this.title = title;
         this.style = nodeStyle;
         defaultNodeStyle = nodeStyle;
         this.selectedNodeStyle = selectedStyle;
-        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickInPoint);
-        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle, onClickOutPoint);
+        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle);
+        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle);
     }
 
     public void drag (Vector2 delta) {

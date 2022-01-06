@@ -10,8 +10,6 @@ public class BehaviourTreeMonitor : EditorWindow {
     private GUIStyle selectedNodeStyle;
     private GUIStyle inPointStyle;
     private GUIStyle outPointStyle;
-    private ConnectionPoint selectedInPoint;
-    private ConnectionPoint selectedOutPoint;
     private Vector2 offset;
     private Vector2 drag;
 
@@ -54,7 +52,6 @@ public class BehaviourTreeMonitor : EditorWindow {
         this.drawGrid (100, 0.4f, Color.gray);
         this.drawNodes ();
         this.drawConnections ();
-        this.drawConnectionLine (Event.current);
         this.processNodesEvents (Event.current);
         this.processEvents (Event.current);
         if (GUI.changed) Repaint ();
@@ -98,43 +95,10 @@ public class BehaviourTreeMonitor : EditorWindow {
         }
     }
 
-    private void drawConnectionLine (Event e) {
-        if (selectedInPoint != null && selectedOutPoint == null) {
-            Handles.DrawBezier (
-                selectedInPoint.rect.center,
-                e.mousePosition,
-                selectedInPoint.rect.center + Vector2.down * 50f,
-                e.mousePosition - Vector2.down * 50f,
-                Color.white,
-                null,
-                2f
-            );
-
-            GUI.changed = true;
-        }
-
-        if (selectedOutPoint != null && selectedInPoint == null) {
-            Handles.DrawBezier (
-                selectedOutPoint.rect.center,
-                e.mousePosition,
-                selectedOutPoint.rect.center - Vector2.down * 50f,
-                e.mousePosition + Vector2.down * 50f,
-                Color.white,
-                null,
-                2f
-            );
-
-            GUI.changed = true;
-        }
-    }
-
     private void processEvents (Event e) {
         drag = Vector2.zero;
         switch (e.type) {
             case EventType.MouseDown:
-                if (e.button == 0) {
-                    clearConnectionSelection ();
-                }
                 break;
 
             case EventType.MouseDrag:
@@ -167,39 +131,12 @@ public class BehaviourTreeMonitor : EditorWindow {
             }
         }
     }
-
-    private void onClickInPoint (ConnectionPoint inPoint) {
-        selectedInPoint = inPoint;
-        if (selectedOutPoint == null) {
-            return;
-        }
-
-        if (selectedOutPoint.node != selectedInPoint.node) {
-            this.createConnection ();
-        }
-        this.clearConnectionSelection ();
-    }
-    private void onClickOutPoint (ConnectionPoint outPoint) {
-        selectedOutPoint = outPoint;
-        if (selectedInPoint == null) {
-            return;
-        }
-        if (selectedOutPoint.node != selectedInPoint.node) {
-            this.createConnection ();
-        }
-        this.clearConnectionSelection ();
-    }
-
-    private void createConnection () {
+    private void createConnection (ConnectionPoint inPoint, ConnectionPoint outPoint) {
         if (connections == null) {
             connections = new List<Connection> ();
         }
 
-        connections.Add (new Connection (selectedInPoint, selectedOutPoint));
-    }
-
-    private void clearConnectionSelection () {
-        selectedInPoint = selectedOutPoint = null;
+        connections.Add (new Connection (inPoint, outPoint));
     }
 
     private BehaviourTreeRunner curBehaviourTreeRunner;
@@ -227,6 +164,9 @@ public class BehaviourTreeMonitor : EditorWindow {
 
     private void buildTree (BaseNode btNode, int layer, int childIndex, Node parent) {
         Node rootNode = this.createNode (btNode, layer, childIndex, parent);
+        if (parent != null) {
+            this.createConnection (parent.outPoint, rootNode.inPoint);
+        }
         if (btNode.children.Count <= 0) {
             return;
         }
@@ -263,7 +203,7 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
         }
 
-        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint);
+        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle);
         nodes.Add (rootNode);
         return rootNode;
     }

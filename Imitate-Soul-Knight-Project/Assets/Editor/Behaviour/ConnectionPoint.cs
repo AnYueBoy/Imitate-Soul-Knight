@@ -12,13 +12,10 @@ public class ConnectionPoint {
 
     public GUIStyle style;
 
-    public Action<ConnectionPoint> onClickConnectionPoint;
-
-    public ConnectionPoint (Node node, ConnectionPointType type, GUIStyle style, Action<ConnectionPoint> onClickConnectionPoint) {
+    public ConnectionPoint (Node node, ConnectionPointType type, GUIStyle style) {
         this.node = node;
         this.type = type;
         this.style = style;
-        this.onClickConnectionPoint = onClickConnectionPoint;
         this.rect = new Rect (0, 0, 20f, 10f);
     }
 
@@ -37,10 +34,5 @@ public class ConnectionPoint {
             default:
                 break;
         }
-
-        if (GUI.Button (rect, "", style)) {
-            onClickConnectionPoint?.Invoke (this);
-        }
-
     }
 }
