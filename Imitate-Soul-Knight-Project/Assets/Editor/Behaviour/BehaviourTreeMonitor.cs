@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 public class BehaviourTreeMonitor : EditorWindow {
-    private List<Node> nodes;
+    private List<Node> nodes = new List<Node> ();
     private List<Connection> connections;
     private GUIStyle nodeStyle;
     private GUIStyle selectedNodeStyle;
@@ -28,6 +28,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         nodeStyle.normal.background = texture;
         nodeStyle.border = new RectOffset (12, 12, 12, 12);
         nodeStyle.alignment = TextAnchor.MiddleCenter;
+        nodeStyle.normal.textColor = Color.green;
 
         selectedNodeStyle = new GUIStyle ();
         selectedNodeStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1 on.png") as Texture2D;
@@ -102,8 +103,8 @@ public class BehaviourTreeMonitor : EditorWindow {
             Handles.DrawBezier (
                 selectedInPoint.rect.center,
                 e.mousePosition,
-                selectedInPoint.rect.center + Vector2.left * 50f,
-                e.mousePosition - Vector2.left * 50f,
+                selectedInPoint.rect.center + Vector2.down * 50f,
+                e.mousePosition - Vector2.down * 50f,
                 Color.white,
                 null,
                 2f
@@ -116,8 +117,8 @@ public class BehaviourTreeMonitor : EditorWindow {
             Handles.DrawBezier (
                 selectedOutPoint.rect.center,
                 e.mousePosition,
-                selectedOutPoint.rect.center - Vector2.left * 50f,
-                e.mousePosition + Vector2.left * 50f,
+                selectedOutPoint.rect.center - Vector2.down * 50f,
+                e.mousePosition + Vector2.down * 50f,
                 Color.white,
                 null,
                 2f
@@ -180,7 +181,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         if (nodes == null) {
             nodes = new List<Node> ();
         }
-        nodes.Add (new Node (mousePosition, 100, 120, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode));
+        nodes.Add (new Node (mousePosition, 100, 120, "默认", nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode));
     }
 
     private void onClickInPoint (ConnectionPoint inPoint) {
@@ -243,7 +244,11 @@ public class BehaviourTreeMonitor : EditorWindow {
         connectionsToRemove = null;
     }
 
+    private BehaviourTreeRunner curBehaviourTreeRunner;
     private void drawBehaviourTree () {
+        if (!Application.isPlaying) {
+            return;
+        }
         GameObject behaviourNode = Selection.activeGameObject;
         if (behaviourNode == null) {
             return;
@@ -254,6 +259,50 @@ public class BehaviourTreeMonitor : EditorWindow {
             return;
         }
 
-        this.drawNodes ();
+        if (curBehaviourTreeRunner != behaviourTreeRunner) {
+            curBehaviourTreeRunner = behaviourTreeRunner;
+            this.nodes.Clear ();
+            this.buildTree (behaviourTreeRunner.rootNode, 0, 0, null);
+        }
+
+    }
+
+    private readonly float verticalInterval = 200f;
+    private readonly float horizontalInterval = 600f;
+    private void buildTree (BaseNode btNode, int layer, int childIndex, Node parent) {
+        int totalChildCount = 0;
+        float rootNodeX = 0;
+        if (btNode.parent != null) {
+            totalChildCount = btNode.parent.children.Count;
+            rootNodeX = parent.rect.x;
+        }
+        int midValue = totalChildCount / 2;
+
+        bool isDouble = false;
+        if (totalChildCount != 0 && totalChildCount % 2 == 0) {
+            isDouble = true;
+        }
+        float nodeXValue = 0;
+        float realHorizontalInterval = horizontalInterval;
+        if (layer > 1) {
+            // FIXME: 寻找新方法调整节点间距
+            realHorizontalInterval = horizontalInterval - 80 * layer;
+        }
+        if (isDouble) {
+            nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval + realHorizontalInterval / 2;
+        } else {
+            nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
+        }
+
+        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode);
+        nodes.Add (rootNode);
+
+        if (btNode.children.Count <= 0) {
+            return;
+        }
+        layer++;
+        for (int i = 0; i < btNode.children.Count; i++) {
+            this.buildTree (btNode.children[i], layer, i, rootNode);
+        }
     }
 }

@@ -11,7 +11,17 @@ namespace UFramework.AI.BehaviourTree {
 
         // Tree Structure
         protected BaseNode m_parent;
+        public BaseNode parent {
+            get {
+                return this.m_parent;
+            }
+        }
         protected List<BaseNode> m_Children = new List<BaseNode> ();
+        public List<BaseNode> children {
+            get {
+                return this.m_Children;
+            }
+        }
 
         // PreCondition
         private BaseCondition m_PreCondition;

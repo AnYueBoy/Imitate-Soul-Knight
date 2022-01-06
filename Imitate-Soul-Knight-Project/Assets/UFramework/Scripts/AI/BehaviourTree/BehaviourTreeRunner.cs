@@ -11,7 +11,7 @@ namespace UFramework.AI.BehaviourTree {
 
         public void execute (BaseNode root, IAgent agent, BlackBoardMemory workingMemory, float dt) {
 #if UNITY_EDITOR
-            this.root = root;
+            this._root = root;
 #endif
             RunningStatus status = root.update (agent, workingMemory, dt);
             if (status != RunningStatus.Executing) {
@@ -21,7 +21,12 @@ namespace UFramework.AI.BehaviourTree {
 
 #if UNITY_EDITOR
 
-        private BaseNode root;
+        private BaseNode _root;
+        public BaseNode rootNode {
+            get {
+                return _root;
+            }
+        }
 #endif
     }
 
