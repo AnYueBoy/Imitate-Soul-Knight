@@ -17,8 +17,6 @@ public class Node {
     public GUIStyle style;
     public GUIStyle defaultNodeStyle;
     public GUIStyle selectedNodeStyle;
-    public Action<Node> onRemoveNode;
-
     public Node (
         Vector2 postion,
         float width,
@@ -29,8 +27,7 @@ public class Node {
         GUIStyle inPointStyle,
         GUIStyle outPointStyle,
         Action<ConnectionPoint> onClickInPoint,
-        Action<ConnectionPoint> onClickOutPoint,
-        Action<Node> onRemoveNode) {
+        Action<ConnectionPoint> onClickOutPoint) {
         rect = new Rect (postion.x, postion.y, width, height);
         this.title = title;
         this.style = nodeStyle;
@@ -38,7 +35,6 @@ public class Node {
         this.selectedNodeStyle = selectedStyle;
         this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickInPoint);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle, onClickOutPoint);
-        this.onRemoveNode = onRemoveNode;
     }
 
     public void drag (Vector2 delta) {
@@ -65,11 +61,6 @@ public class Node {
                         style = defaultNodeStyle;
                     }
                 }
-
-                if (e.button == 1 && isSelected && rect.Contains (e.mousePosition)) {
-                    processContextMenu ();
-                    e.Use ();
-                }
                 break;
 
             case EventType.MouseUp:
@@ -85,15 +76,5 @@ public class Node {
                 break;
         }
         return false;
-    }
-
-    private void processContextMenu () {
-        GenericMenu genericMenu = new GenericMenu ();
-        genericMenu.AddItem (new GUIContent ("Remove Node"), false, onClickRemoveNode);
-        genericMenu.ShowAsContext ();
-    }
-
-    private void onClickRemoveNode () {
-        onRemoveNode?.Invoke (this);
     }
 }

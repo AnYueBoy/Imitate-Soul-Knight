@@ -135,9 +135,6 @@ public class BehaviourTreeMonitor : EditorWindow {
                 if (e.button == 0) {
                     clearConnectionSelection ();
                 }
-                if (e.button == 1) {
-                    this.processContextMenu (e.mousePosition);
-                }
                 break;
 
             case EventType.MouseDrag:
@@ -171,19 +168,6 @@ public class BehaviourTreeMonitor : EditorWindow {
         }
     }
 
-    private void processContextMenu (Vector2 mousePosition) {
-        GenericMenu genericMenu = new GenericMenu ();
-        genericMenu.AddItem (new GUIContent ("Add Item"), false, () => onClickAddNode (mousePosition));
-        genericMenu.ShowAsContext ();
-    }
-
-    private void onClickAddNode (Vector2 mousePosition) {
-        if (nodes == null) {
-            nodes = new List<Node> ();
-        }
-        nodes.Add (new Node (mousePosition, 100, 120, "默认", nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode));
-    }
-
     private void onClickInPoint (ConnectionPoint inPoint) {
         selectedInPoint = inPoint;
         if (selectedOutPoint == null) {
@@ -206,42 +190,16 @@ public class BehaviourTreeMonitor : EditorWindow {
         this.clearConnectionSelection ();
     }
 
-    private void onClickRemoveConnection (Connection connection) {
-        connections.Remove (connection);
-    }
-
     private void createConnection () {
         if (connections == null) {
             connections = new List<Connection> ();
         }
 
-        connections.Add (new Connection (selectedInPoint, selectedOutPoint, onClickRemoveConnection));
+        connections.Add (new Connection (selectedInPoint, selectedOutPoint));
     }
 
     private void clearConnectionSelection () {
         selectedInPoint = selectedOutPoint = null;
-    }
-
-    private void onClickRemoveNode (Node node) {
-        nodes.Remove (node);
-
-        if (connections == null) {
-            return;
-        }
-
-        List<Connection> connectionsToRemove = new List<Connection> ();
-        for (int i = 0; i < connections.Count; i++) {
-            if (connections[i].inPoint == node.inPoint ||
-                connections[i].outPoint == node.outPoint) {
-                connectionsToRemove.Add (connections[i]);
-            }
-        }
-
-        for (var i = 0; i < connectionsToRemove.Count; i++) {
-            connections.Remove (connectionsToRemove[i]);
-        }
-
-        connectionsToRemove = null;
     }
 
     private BehaviourTreeRunner curBehaviourTreeRunner;
@@ -267,9 +225,20 @@ public class BehaviourTreeMonitor : EditorWindow {
 
     }
 
+    private void buildTree (BaseNode btNode, int layer, int childIndex, Node parent) {
+        Node rootNode = this.createNode (btNode, layer, childIndex, parent);
+        if (btNode.children.Count <= 0) {
+            return;
+        }
+        layer++;
+        for (int i = 0; i < btNode.children.Count; i++) {
+            this.buildTree (btNode.children[i], layer, i, rootNode);
+        }
+    }
+
     private readonly float verticalInterval = 200f;
     private readonly float horizontalInterval = 600f;
-    private void buildTree (BaseNode btNode, int layer, int childIndex, Node parent) {
+    private Node createNode (BaseNode btNode, int layer, int childIndex, Node parent) {
         int totalChildCount = 0;
         float rootNodeX = 0;
         if (btNode.parent != null) {
@@ -294,15 +263,8 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
         }
 
-        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint, onClickRemoveNode);
+        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle, inPointStyle, outPointStyle, onClickInPoint, onClickOutPoint);
         nodes.Add (rootNode);
-
-        if (btNode.children.Count <= 0) {
-            return;
-        }
-        layer++;
-        for (int i = 0; i < btNode.children.Count; i++) {
-            this.buildTree (btNode.children[i], layer, i, rootNode);
-        }
+        return rootNode;
     }
 }
