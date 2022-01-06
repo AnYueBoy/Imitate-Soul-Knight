@@ -3,7 +3,6 @@
  * @Date: 2022-01-04 14:03:53 
  * @Description: 链接点
  */
-using System;
 using UnityEngine;
 public class ConnectionPoint {
     public Rect rect;
@@ -25,11 +24,11 @@ public class ConnectionPoint {
 
         switch (type) {
             case ConnectionPointType.In:
-                rect.y = node.rect.y - rect.height / 2;
+                rect.y = node.rect.y;
                 break;
 
             case ConnectionPointType.Out:
-                rect.y = node.rect.y + node.rect.height - rect.height;
+                rect.y = node.rect.y + node.rect.height - rect.height - 2f;
                 break;
             default:
                 break;
