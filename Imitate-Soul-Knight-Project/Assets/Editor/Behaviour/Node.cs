@@ -23,6 +23,7 @@ public class Node {
         Vector2 postion,
         float width,
         float height,
+        string title,
         GUIStyle nodeStyle,
         GUIStyle selectedStyle,
         GUIStyle inPointStyle,
@@ -31,6 +32,7 @@ public class Node {
         Action<ConnectionPoint> onClickOutPoint,
         Action<Node> onRemoveNode) {
         rect = new Rect (postion.x, postion.y, width, height);
+        this.title = title;
         this.style = nodeStyle;
         defaultNodeStyle = nodeStyle;
         this.selectedNodeStyle = selectedStyle;
