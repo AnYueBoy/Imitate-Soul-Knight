@@ -59,6 +59,9 @@ public class Node {
         switch (runningStatus) {
             case RunningStatus.Executing:
                 GUI.Box (rect, title, runningStyle);
+                float endValue = Mathf.Sin (Time.time % (Mathf.PI / 2));
+                GUI.HorizontalScrollbar (new Rect (rect.x, rect.y + 5f, rect.width, 1), 1, endValue, 1, 0, GUI.skin.GetStyle ("horizontalscrollbar"));
+                GUI.changed = true;
                 break;
             case RunningStatus.Success:
                 GUI.Box (rect, title, successStyle);
