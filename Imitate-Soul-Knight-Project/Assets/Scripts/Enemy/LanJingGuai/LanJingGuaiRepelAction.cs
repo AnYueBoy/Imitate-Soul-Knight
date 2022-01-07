@@ -13,6 +13,7 @@ public class LanJingGuaiRepelAction : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
+        this.curNodeRunningStatus = RunningStatus.Executing;
         return RunningStatus.Executing;
     }
 }

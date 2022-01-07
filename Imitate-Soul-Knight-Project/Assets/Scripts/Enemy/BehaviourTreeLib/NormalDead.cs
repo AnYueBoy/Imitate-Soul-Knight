@@ -19,6 +19,7 @@ public class NormalDead : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
+        this.curNodeRunningStatus = RunningStatus.Success;
         return RunningStatus.Success;
     }
 

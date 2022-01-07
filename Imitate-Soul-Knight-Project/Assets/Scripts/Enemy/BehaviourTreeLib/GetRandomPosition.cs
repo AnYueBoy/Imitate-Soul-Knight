@@ -16,7 +16,8 @@ public class GetRandomPosition : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
-        return this.generateRandomPathList ();
+        this.curNodeRunningStatus = this.generateRandomPathList ();
+        return this.curNodeRunningStatus;
     }
 
     protected override void onExit () { }

@@ -19,10 +19,10 @@ public class GetTargetPosition : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
+        this.curNodeRunningStatus = RunningStatus.Success;
         return RunningStatus.Success;
     }
 
-    protected override void onExit () {
-    }
+    protected override void onExit () { }
 
 }

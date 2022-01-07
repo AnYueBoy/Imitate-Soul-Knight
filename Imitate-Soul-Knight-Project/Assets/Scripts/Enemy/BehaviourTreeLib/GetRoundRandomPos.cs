@@ -21,7 +21,8 @@ public class GetRoundRandomPos : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
-        return this.generatePathList ();
+        this.curNodeRunningStatus = this.generatePathList ();
+        return this.curNodeRunningStatus;
     }
 
     protected override void onExit () { }

@@ -20,6 +20,7 @@ public class MeleeAttack : ActionNode {
             float damage = this.agentInstance.enemyConfigData.damage;
             ModuleManager.instance.playerManager.injured (damage);
         }
+        this.curNodeRunningStatus = RunningStatus.Executing;
         return RunningStatus.Executing;
     }
 

@@ -18,13 +18,16 @@ public class IdleAction : ActionNode {
 
     protected override RunningStatus onExecute () {
         if (!agentInstace.isRoomActive ()) {
+            this.curNodeRunningStatus = RunningStatus.Executing;
             return RunningStatus.Executing;
         }
 
         if (this.idleTimer < agentInstace.idleInterval) {
             this.idleTimer += dt;
+            this.curNodeRunningStatus = RunningStatus.Executing;
             return RunningStatus.Executing;
         }
+        this.curNodeRunningStatus = RunningStatus.Success;
         return RunningStatus.Success;
     }
 

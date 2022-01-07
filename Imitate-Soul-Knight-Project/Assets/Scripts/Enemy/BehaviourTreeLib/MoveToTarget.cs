@@ -32,9 +32,9 @@ public class MoveToTarget : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
-        RunningStatus runningStatus = this.moveActionHandler ();
+        this.curNodeRunningStatus = this.moveActionHandler ();
         this.drawPath (Color.red);
-        return runningStatus;
+        return this.curNodeRunningStatus;
     }
 
     protected override void onExit () {
