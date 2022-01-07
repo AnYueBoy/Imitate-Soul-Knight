@@ -12,12 +12,15 @@ public class InverterNode : DecoratorNode {
         BaseNode childNode = m_Children[0];
         RunningStatus runningStatus = childNode.update (agent, blackBoardMemory, dt);
         if (runningStatus == RunningStatus.Failed) {
+            this.curNodeRunningStatus = RunningStatus.Success;
             return RunningStatus.Success;
         }
 
         if (runningStatus == RunningStatus.Success) {
+            this.curNodeRunningStatus = RunningStatus.Failed;
             return RunningStatus.Failed;
         }
+        this.curNodeRunningStatus = runningStatus;
         return runningStatus;
     }
 

@@ -20,6 +20,7 @@ namespace UFramework.AI.BehaviourTree {
 
         protected override RunningStatus onUpdate () {
             if (m_Children.Count == 0) {
+                this.curNodeRunningStatus = RunningStatus.Success;
                 return RunningStatus.Success;
             }
 
@@ -33,23 +34,25 @@ namespace UFramework.AI.BehaviourTree {
             for (int i = 0; i < m_Children.Count; ++i) {
                 RunningStatus status = m_childrenRunning[i];
                 if (status == RunningStatus.Executing) {
-                    status = m_Children[i].update (this.agent, this.blackBoardMemory,dt);
+                    status = m_Children[i].update (this.agent, this.blackBoardMemory, dt);
                 }
 
                 if (status == RunningStatus.Success) {
                     finishedCount++;
                     m_childrenRunning[i] = status;
                     if (finishedCount == m_requestFinishedCount) {
+                        this.curNodeRunningStatus = RunningStatus.Success;
                         return RunningStatus.Success;
                     }
                 } else if (status == RunningStatus.Failed) {
                     failedCount++;
                     if (failedCount > m_Children.Count - m_requestFinishedCount) {
+                        this.curNodeRunningStatus = RunningStatus.Failed;
                         return RunningStatus.Failed;
                     }
                 }
             }
-
+            this.curNodeRunningStatus = RunningStatus.Executing;
             return RunningStatus.Executing;
         }
 

@@ -27,6 +27,7 @@ namespace UFramework.AI.BehaviourTree {
                 previousNode.reset ();
             }
 
+            this.curNodeRunningStatus = runningStatus;
             return runningStatus;
         }
 

@@ -11,8 +11,10 @@ public class FailureNode : DecoratorNode {
         BaseNode childNode = m_Children[0];
         RunningStatus runningStatus = childNode.update (agent, blackBoardMemory, dt);
         if (runningStatus != RunningStatus.Executing) {
+            this.curNodeRunningStatus = RunningStatus.Failed;
             return RunningStatus.Failed;
         } else {
+            this.curNodeRunningStatus = RunningStatus.Executing;
             return RunningStatus.Executing;
         }
     }

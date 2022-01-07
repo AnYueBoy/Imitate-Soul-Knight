@@ -22,6 +22,7 @@ namespace UFramework.AI.BehaviourTree {
             while (true) {
                 RunningStatus status = child.update (this.agent, this.blackBoardMemory, dt);
                 if (status == RunningStatus.Failed) {
+                    this.curNodeRunningStatus = RunningStatus.Failed;
                     return RunningStatus.Failed;
                 }
 
@@ -30,11 +31,13 @@ namespace UFramework.AI.BehaviourTree {
                 }
 
                 if (++m_repeatIndex == m_repeatCount) {
+                    this.curNodeRunningStatus = RunningStatus.Success;
                     return RunningStatus.Success;
                 }
                 child.reset ();
             }
 
+            this.curNodeRunningStatus = RunningStatus.Executing;
             return RunningStatus.Executing;
         }
 

@@ -11,6 +11,7 @@ namespace UFramework.AI.BehaviourTree {
 
         protected override RunningStatus onUpdate () {
             if (!this.onEvaluate ()) {
+                this.curNodeRunningStatus = RunningStatus.Failed;
                 return RunningStatus.Failed;
             }
 
@@ -23,6 +24,7 @@ namespace UFramework.AI.BehaviourTree {
             if (m_actionStauts == ActionStatus.ACTION_RUNNING) {
                 runningStatus = onExecute ();
             }
+            this.curNodeRunningStatus = runningStatus;
 
             return runningStatus;
         }
