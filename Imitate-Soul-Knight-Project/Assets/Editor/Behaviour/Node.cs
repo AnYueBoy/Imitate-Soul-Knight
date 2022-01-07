@@ -11,21 +11,26 @@ public class Node {
     public string title = "默认";
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
-    public GUIStyle style;
+    public GUIStyle runningStyle;
+    public GUIStyle successStyle;
+    public GUIStyle failedStyle;
     public BaseNode btNode;
     public Node (
         BaseNode btNode,
         Vector2 postion,
         float width,
         float height,
-        string title,
-        GUIStyle nodeStyle) {
+        GUIStyle runningStyle,
+        GUIStyle successStyle,
+        GUIStyle failedStyle) {
         this.btNode = btNode;
         rect = new Rect (postion.x, postion.y, width, height);
-        this.title = title;
-        this.style = nodeStyle;
+        this.runningStyle = runningStyle;
+        this.successStyle = successStyle;
+        this.failedStyle = failedStyle;
         this.inPoint = new ConnectionPoint (this, ConnectionPointType.In);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out);
+        this.title = btNode.GetType ().Name;
     }
 
     public void drag (Vector2 delta) {
@@ -53,13 +58,13 @@ public class Node {
         RunningStatus runningStatus = btNode.curNodeRunningStatus;
         switch (runningStatus) {
             case RunningStatus.Executing:
-                GUI.Box (rect, title, style);
+                GUI.Box (rect, title, runningStyle);
                 break;
             case RunningStatus.Success:
-                GUI.Box (rect, title, style);
+                GUI.Box (rect, title, successStyle);
                 break;
             case RunningStatus.Failed:
-                GUI.Box (rect, title, style);
+                GUI.Box (rect, title, failedStyle);
                 break;
         }
 

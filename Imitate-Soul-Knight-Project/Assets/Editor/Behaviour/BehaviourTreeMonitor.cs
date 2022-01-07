@@ -6,7 +6,9 @@ using UnityEngine;
 public class BehaviourTreeMonitor : EditorWindow {
     private List<Node> nodes = new List<Node> ();
     private List<Connection> connections = new List<Connection> ();
-    private GUIStyle nodeStyle;
+    private GUIStyle nodeRunningStyle;
+    private GUIStyle nodeSuccessStyle;
+    private GUIStyle nodeFailedStyle;
     private Vector2 offset;
     private Vector2 drag;
 
@@ -18,12 +20,26 @@ public class BehaviourTreeMonitor : EditorWindow {
     }
 
     private void OnEnable () {
-        nodeStyle = new GUIStyle ();
-        Texture2D texture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node0.png") as Texture2D;
-        nodeStyle.normal.background = texture;
-        nodeStyle.border = new RectOffset (12, 12, 12, 12);
-        nodeStyle.alignment = TextAnchor.MiddleCenter;
-        nodeStyle.normal.textColor = Color.white;
+        nodeRunningStyle = new GUIStyle ();
+        Texture2D runningTexture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node4.png") as Texture2D;
+        nodeRunningStyle.normal.background = runningTexture;
+        nodeRunningStyle.border = new RectOffset (12, 12, 12, 12);
+        nodeRunningStyle.alignment = TextAnchor.MiddleCenter;
+        nodeRunningStyle.normal.textColor = Color.white;
+
+        nodeSuccessStyle = new GUIStyle ();
+        Texture2D successTexture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node3.png") as Texture2D;
+        nodeSuccessStyle.normal.background = successTexture;
+        nodeSuccessStyle.border = new RectOffset (12, 12, 12, 12);
+        nodeSuccessStyle.alignment = TextAnchor.MiddleCenter;
+        nodeSuccessStyle.normal.textColor = Color.white;
+
+        nodeFailedStyle = new GUIStyle ();
+        Texture2D failedTexture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node6.png") as Texture2D;
+        nodeFailedStyle.normal.background = failedTexture;
+        nodeFailedStyle.border = new RectOffset (12, 12, 12, 12);
+        nodeFailedStyle.alignment = TextAnchor.MiddleCenter;
+        nodeFailedStyle.normal.textColor = Color.white;
     }
 
     private void OnGUI () {
@@ -199,7 +215,15 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
         }
 
-        Node rootNode = new Node (btNode, new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle);
+        Node rootNode = new Node (
+            btNode,
+            new Vector2 (nodeXValue, layer * verticalInterval),
+            100,
+            120,
+            nodeRunningStyle,
+            nodeSuccessStyle,
+            nodeFailedStyle);
+            
         nodes.Add (rootNode);
         return rootNode;
     }
