@@ -7,7 +7,6 @@ public class BehaviourTreeMonitor : EditorWindow {
     private List<Node> nodes = new List<Node> ();
     private List<Connection> connections = new List<Connection> ();
     private GUIStyle nodeStyle;
-    private GUIStyle selectedNodeStyle;
     private Vector2 offset;
     private Vector2 drag;
 
@@ -20,17 +19,11 @@ public class BehaviourTreeMonitor : EditorWindow {
 
     private void OnEnable () {
         nodeStyle = new GUIStyle ();
-        Texture2D texture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1.png") as Texture2D;
+        Texture2D texture = EditorGUIUtility.Load ("builtin skins/darkskin/images/node0.png") as Texture2D;
         nodeStyle.normal.background = texture;
         nodeStyle.border = new RectOffset (12, 12, 12, 12);
         nodeStyle.alignment = TextAnchor.MiddleCenter;
-        nodeStyle.normal.textColor = Color.green;
-
-        selectedNodeStyle = new GUIStyle ();
-        selectedNodeStyle.normal.background = EditorGUIUtility.Load ("builtin skins/darkskin/images/node1 on.png") as Texture2D;
-        selectedNodeStyle.border = new RectOffset (12, 12, 12, 12);
-        selectedNodeStyle.alignment = TextAnchor.MiddleCenter;
-        selectedNodeStyle.normal.textColor = Color.green;
+        nodeStyle.normal.textColor = Color.white;
     }
 
     private void OnGUI () {
@@ -206,7 +199,7 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeXValue = rootNodeX + (childIndex - midValue) * realHorizontalInterval;
         }
 
-        Node rootNode = new Node (new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle, selectedNodeStyle);
+        Node rootNode = new Node (btNode, new Vector2 (nodeXValue, layer * verticalInterval), 100, 120, btNode.GetType ().Name, nodeStyle);
         nodes.Add (rootNode);
         return rootNode;
     }
