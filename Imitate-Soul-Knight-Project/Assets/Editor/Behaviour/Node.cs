@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2022-01-04 10:03:17 
@@ -15,6 +16,7 @@ public class Node {
     public GUIStyle successStyle;
     public GUIStyle failedStyle;
     public BaseNode btNode;
+    private Texture2D[] runningList;
     public Node (
         BaseNode btNode,
         Vector2 postion,
@@ -22,7 +24,8 @@ public class Node {
         float height,
         GUIStyle runningStyle,
         GUIStyle successStyle,
-        GUIStyle failedStyle) {
+        GUIStyle failedStyle,
+        Texture2D[] runningList) {
         this.btNode = btNode;
         rect = new Rect (postion.x, postion.y, width, height);
         this.runningStyle = runningStyle;
@@ -30,6 +33,7 @@ public class Node {
         this.failedStyle = failedStyle;
         this.inPoint = new ConnectionPoint (this, ConnectionPointType.In);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out);
+        this.runningList = runningList;
         this.title = btNode.GetType ().Name;
     }
 
@@ -47,8 +51,10 @@ public class Node {
         inPoint.draw ();
         outPoint.draw ();
         this.checkNodeStatus ();
-
     }
+
+    private int curRuningIndex = 0;
+    private int runningFrame = 0;
 
     private void checkNodeStatus () {
         if (btNode == null) {
@@ -59,8 +65,15 @@ public class Node {
         switch (runningStatus) {
             case RunningStatus.Executing:
                 GUI.Box (rect, title, runningStyle);
-                float endValue = Mathf.Sin (Time.time % (Mathf.PI / 2));
-                GUI.HorizontalScrollbar (new Rect (rect.x, rect.y + 5f, rect.width, 1), 1, endValue, 1, 0, GUI.skin.GetStyle ("horizontalscrollbar"));
+                GUIStyle GUIStyle = new GUIStyle ();
+                GUIStyle.normal.background = this.runningList[curRuningIndex];
+                GUI.Box (new Rect (rect.x + rect.width / 2 - 10, rect.y + 10, 20, 20), "", GUIStyle);
+                this.runningFrame++;
+                if (runningFrame > 10) {
+                    this.curRuningIndex++;
+                    this.curRuningIndex %= this.runningList.Length;
+                    this.runningFrame = 0;
+                }
                 GUI.changed = true;
                 break;
             case RunningStatus.Success:

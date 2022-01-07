@@ -9,6 +9,8 @@ public class BehaviourTreeMonitor : EditorWindow {
     private GUIStyle nodeRunningStyle;
     private GUIStyle nodeSuccessStyle;
     private GUIStyle nodeFailedStyle;
+
+    private Texture2D[] runningList = new Texture2D[7];
     private Vector2 offset;
     private Vector2 drag;
 
@@ -40,6 +42,11 @@ public class BehaviourTreeMonitor : EditorWindow {
         nodeFailedStyle.border = new RectOffset (12, 12, 12, 12);
         nodeFailedStyle.alignment = TextAnchor.MiddleCenter;
         nodeFailedStyle.normal.textColor = Color.white;
+
+        for (int i = 0; i <= 7; i++) {
+            Texture2D texture2D = EditorGUIUtility.Load ("running 1_" + i + ".png") as Texture2D;
+            this.runningList[i] = texture2D;
+        }
     }
 
     private void OnGUI () {
@@ -154,6 +161,12 @@ public class BehaviourTreeMonitor : EditorWindow {
     private BehaviourTreeRunner curBehaviourTreeRunner;
     private void drawBehaviourTree () {
         if (!Application.isPlaying) {
+            if (this.connections.Count > 0) {
+                this.connections.Clear ();
+            }
+            if (this.nodes.Count > 0) {
+                this.nodes.Clear ();
+            }
             return;
         }
         GameObject behaviourNode = Selection.activeGameObject;
@@ -222,8 +235,9 @@ public class BehaviourTreeMonitor : EditorWindow {
             120,
             nodeRunningStyle,
             nodeSuccessStyle,
-            nodeFailedStyle);
-            
+            nodeFailedStyle,
+            this.runningList);
+
         nodes.Add (rootNode);
         return rootNode;
     }
