@@ -10,7 +10,7 @@ public class BehaviourTreeMonitor : EditorWindow {
     private GUIStyle nodeSuccessStyle;
     private GUIStyle nodeFailedStyle;
 
-    private Texture2D[] runningList = new Texture2D[7];
+    private Texture2D[] runningList = new Texture2D[8];
     private Vector2 offset;
     private Vector2 drag;
 
@@ -44,7 +44,7 @@ public class BehaviourTreeMonitor : EditorWindow {
         nodeFailedStyle.normal.textColor = Color.white;
 
         for (int i = 0; i <= 7; i++) {
-            Texture2D texture2D = EditorGUIUtility.Load ("running 1_" + i + ".png") as Texture2D;
+            Texture2D texture2D = EditorGUIUtility.Load ("running_" + i + ".png") as Texture2D;
             this.runningList[i] = texture2D;
         }
     }
