@@ -56,8 +56,10 @@ public class PlayerManager : MonoBehaviour {
 	}
 
 	#region  字段访问
-	public Transform getPlayerTrans () {
-		return this.roleControl.transform;
+	public Transform playerTrans {
+		get {
+			return this.roleControl.transform;
+		}
 	}
 	#endregion
 

@@ -373,7 +373,7 @@ public class MapManager : MonoBehaviour {
 
     public BaseEnemy getClosetEnemy () {
         BaseEnemy closestEnemy = null;
-        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+        Transform playerTrans = ModuleManager.instance.playerManager.playerTrans;
         float curClosetDis = ConstValue.playerAttackDis;
         foreach (Room room in roomDic.Values) {
             if (room == null) {

@@ -56,7 +56,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	public float aimToPlayerDistance () {
-		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.getPlayerTrans ().position);
+		Vector3 subVec = (this.transform.position - ModuleManager.instance.playerManager.playerTrans.position);
 		return subVec.magnitude;
 	}
 

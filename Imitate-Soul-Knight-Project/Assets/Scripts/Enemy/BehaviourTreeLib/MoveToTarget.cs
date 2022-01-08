@@ -55,7 +55,7 @@ public class MoveToTarget : ActionNode {
         float horizontalStep = step * this.curMoveDir.x;
         float verticalStep = step * this.curMoveDir.y;
 
-        Vector3 toWardsDir = (ModuleManager.instance.playerManager.getPlayerTrans ().position - this.agentInstance.transform.position).normalized;
+        Vector3 toWardsDir = (ModuleManager.instance.playerManager.playerTrans.position - this.agentInstance.transform.position).normalized;
         if (toWardsDir.x > 0) {
             this.agentInstance.transform.localScale = Vector3.one;
         } else {

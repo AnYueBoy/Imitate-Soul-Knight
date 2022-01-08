@@ -50,7 +50,7 @@ public class AutoTriggerItem : BaseItem {
         float distance = this.getSelfToPlayerDis ();
         float speed = distance / (this.animationTime - this.curAnimationTimer);
 
-        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
+        Vector3 playerPos = ModuleManager.instance.playerManager.playerTrans.position;
         Vector3 moveDir = (playerPos - this.transform.position).normalized;
 
         this.transform.position = this.transform.position + moveDir * speed * dt;

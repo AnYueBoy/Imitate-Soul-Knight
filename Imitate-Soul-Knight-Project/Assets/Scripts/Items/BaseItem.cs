@@ -12,7 +12,7 @@ public class BaseItem : MonoBehaviour {
     }
 
     public float getSelfToPlayerDis () {
-        Transform playerTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+        Transform playerTrans = ModuleManager.instance.playerManager.playerTrans;
         float distance = (this.transform.position - playerTrans.position).magnitude;
         return distance;
     }

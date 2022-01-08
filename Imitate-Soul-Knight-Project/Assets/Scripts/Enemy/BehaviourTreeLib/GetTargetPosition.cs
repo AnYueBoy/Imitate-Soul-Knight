@@ -13,7 +13,7 @@ public class GetTargetPosition : ActionNode {
     BaseEnemy agentInstace;
     protected override void onEnter () {
         agentInstace = (BaseEnemy) agent;
-        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
+        Vector3 playerPos = ModuleManager.instance.playerManager.playerTrans.position;
         List<Vector3> pathList = agentInstace.pathFindComp.findPath (agentInstace.transform.position, playerPos);
         this.blackBoardMemory.setValue (BlackItemEnum.MOVE_PATH, pathList);
     }

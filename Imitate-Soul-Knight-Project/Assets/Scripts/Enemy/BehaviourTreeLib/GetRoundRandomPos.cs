@@ -43,7 +43,7 @@ public class GetRoundRandomPos : ActionNode {
     }
 
     private Cell getTargetCell () {
-        Vector3 playerPos = ModuleManager.instance.playerManager.getPlayerTrans ().position;
+        Vector3 playerPos = ModuleManager.instance.playerManager.playerTrans.position;
         int randomProbingDistance = CommonUtil.getRandomValue (this.probingMinDistance, this.probingMaxDistance);
 
         float curFindCount = 0;

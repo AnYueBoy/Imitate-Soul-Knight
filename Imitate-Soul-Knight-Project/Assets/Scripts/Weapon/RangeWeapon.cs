@@ -47,7 +47,7 @@ public class RangeWeapon : BaseWeapon {
     protected virtual void spawnRecoilForce () {
         float angle = this.transform.eulerAngles.z;
         float radValue = angle * Mathf.PI / 180;
-        float roleScaleX = ModuleManager.instance.playerManager.getPlayerTrans ().localScale.x;
+        float roleScaleX = ModuleManager.instance.playerManager.playerTrans .localScale.x;
         Vector2 dir = new Vector2 (Mathf.Cos (radValue) * roleScaleX, Mathf.Sin (radValue) * roleScaleX);
         dir = dir.normalized;
         dir = -dir;

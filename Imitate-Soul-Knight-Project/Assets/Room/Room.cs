@@ -130,7 +130,7 @@ public class Room {
 	}
 
 	private bool isInRoom () {
-		Transform roleTrans = ModuleManager.instance.playerManager.getPlayerTrans ();
+		Transform roleTrans = ModuleManager.instance.playerManager.playerTrans;
 		if (roleTrans.position.x > this.leftTilePoint.x &&
 			roleTrans.position.x < this.rightTilePoint.x &&
 			roleTrans.position.y < this.upTilePoint.y &&
@@ -175,7 +175,7 @@ public class Room {
 
 			case RoomTypeEnum.BORN:
 				// 设置玩家出现在出生房间
-				ModuleManager.instance.playerManager.getPlayerTrans ().position = roomCenterToWorldPos;
+				ModuleManager.instance.playerManager.playerTrans.position = roomCenterToWorldPos;
 				// FIXME: 测试逻辑
 				this.spawnAllWeapon ();
 				break;
