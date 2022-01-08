@@ -21,7 +21,7 @@ public class Connection {
             outPoint.rect.center,
             inPoint.rect.center + Vector2.up * 50f,
             outPoint.rect.center - Vector2.up * 50f,
-            Color.green,
+            Color.white,
             null,
             2f);
     }
