@@ -12,6 +12,7 @@ public class FourAttack : ActionNode {
     private BaseEnemy agentInstance;
     protected override void onEnter () {
         agentInstance = (BaseEnemy) agent;
+        this.attackHandler ();
     }
 
     protected override RunningStatus onExecute () {
