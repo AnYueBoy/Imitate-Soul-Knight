@@ -25,9 +25,13 @@ public class RoleControl : MonoBehaviour {
 
     private Material hurtFlashMaterial;
 
+    public Vector2 selfSize;
+
     private void OnEnable () {
         this.animator = transform.GetComponent<Animator> ();
-        this.hurtFlashMaterial = transform.GetComponent<SpriteRenderer> ().material;
+        SpriteRenderer spriteRenderer = transform.GetComponent<SpriteRenderer> ();
+        this.selfSize = spriteRenderer.sprite.bounds.size;
+        this.hurtFlashMaterial = spriteRenderer.material;
     }
 
     public void localUpdate (float dt) {

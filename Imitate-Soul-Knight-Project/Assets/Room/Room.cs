@@ -39,10 +39,10 @@ public class Room {
 	}
 
 	public void init () {
-		this.leftTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x - this.roomData.roomWidth / 2 + 1, this.roomData.roomCenter.y, 0));
-		this.rightTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x + this.roomData.roomWidth / 2 - 1, this.roomData.roomCenter.y, 0));
-		this.upTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y + this.roomData.roomHeight / 2 - 1, 0));
-		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2 + 1, 0));
+		this.leftTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x - this.roomData.roomWidth / 2, this.roomData.roomCenter.y, 0));
+		this.rightTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x + this.roomData.roomWidth / 2, this.roomData.roomCenter.y, 0));
+		this.upTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y + this.roomData.roomHeight / 2, 0));
+		this.downTilePoint = ModuleManager.instance.mapManager.floorTilemap.CellToWorld (new Vector3Int (this.roomData.roomCenter.x, this.roomData.roomCenter.y - this.roomData.roomHeight / 2, 0));
 		this.roomEnemyList.Clear ();
 
 		// 初始化房间的寻路信息
@@ -130,11 +130,14 @@ public class Room {
 	}
 
 	private bool isInRoom () {
-		Transform roleTrans = ModuleManager.instance.playerManager.playerTrans;
-		if (roleTrans.position.x > this.leftTilePoint.x &&
-			roleTrans.position.x < this.rightTilePoint.x &&
-			roleTrans.position.y < this.upTilePoint.y &&
-			roleTrans.position.y > this.downTilePoint.y) {
+		float leftBound = ModuleManager.instance.playerManager.leftBound;
+		float rightBound = ModuleManager.instance.playerManager.rightBound;
+		float topBound = ModuleManager.instance.playerManager.topBound;
+		float bottomBound = ModuleManager.instance.playerManager.bottomBound;
+		if (leftBound > this.leftTilePoint.x &&
+			rightBound < this.rightTilePoint.x &&
+			topBound < this.upTilePoint.y &&
+			bottomBound > this.downTilePoint.y) {
 			return true;
 		}
 		return false;

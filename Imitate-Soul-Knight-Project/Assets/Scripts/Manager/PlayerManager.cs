@@ -61,6 +61,26 @@ public class PlayerManager : MonoBehaviour {
 			return this.roleControl.transform;
 		}
 	}
+	public float leftBound {
+		get {
+			return playerTrans.position.x - this.roleControl.selfSize.x / 2;
+		}
+	}
+	public float rightBound {
+		get {
+			return playerTrans.position.x + this.roleControl.selfSize.x / 2;
+		}
+	}
+	public float topBound {
+		get {
+			return playerTrans.position.y + this.roleControl.selfSize.y / 2;
+		}
+	}
+	public float bottomBound {
+		get {
+			return playerTrans.position.y - this.roleControl.selfSize.y / 2;
+		}
+	}
 	#endregion
 
 	private bool isProtected = false;
