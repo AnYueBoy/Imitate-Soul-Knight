@@ -11,6 +11,8 @@ public class BehaviourTreeMonitor : EditorWindow {
     private GUIStyle nodeFailedStyle;
 
     private Texture2D[] runningList = new Texture2D[8];
+    private Texture2D successTexture;
+    private Texture2D failedTexture;
     private Vector2 offset;
     private Vector2 drag;
 
@@ -47,6 +49,9 @@ public class BehaviourTreeMonitor : EditorWindow {
             Texture2D texture2D = EditorGUIUtility.Load ("running_" + i + ".png") as Texture2D;
             this.runningList[i] = texture2D;
         }
+
+        this.successTexture = EditorGUIUtility.Load ("success.png") as Texture2D;
+        this.failedTexture = EditorGUIUtility.Load ("failed.png") as Texture2D;
     }
 
     private void OnGUI () {
@@ -236,7 +241,9 @@ public class BehaviourTreeMonitor : EditorWindow {
             nodeRunningStyle,
             nodeSuccessStyle,
             nodeFailedStyle,
-            this.runningList);
+            this.runningList,
+            this.successTexture,
+            this.failedTexture);
 
         nodes.Add (rootNode);
         return rootNode;

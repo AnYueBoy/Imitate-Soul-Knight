@@ -15,6 +15,8 @@ public class Node {
     public GUIStyle runningStyle;
     public GUIStyle successStyle;
     public GUIStyle failedStyle;
+    private Texture2D successTexture;
+    private Texture2D failedTexture;
     public BaseNode btNode;
     private Texture2D[] runningList;
     public Node (
@@ -25,7 +27,9 @@ public class Node {
         GUIStyle runningStyle,
         GUIStyle successStyle,
         GUIStyle failedStyle,
-        Texture2D[] runningList) {
+        Texture2D[] runningList,
+        Texture2D successTexture,
+        Texture2D failedTexture) {
         this.btNode = btNode;
         rect = new Rect (postion.x, postion.y, width, height);
         this.runningStyle = runningStyle;
@@ -34,6 +38,8 @@ public class Node {
         this.inPoint = new ConnectionPoint (this, ConnectionPointType.In);
         this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out);
         this.runningList = runningList;
+        this.successTexture = successTexture;
+        this.failedTexture = failedTexture;
         this.title = btNode.GetType ().Name;
     }
 
@@ -65,9 +71,9 @@ public class Node {
         switch (runningStatus) {
             case RunningStatus.Executing:
                 GUI.Box (rect, title, runningStyle);
-                GUIStyle GUIStyle = new GUIStyle ();
-                GUIStyle.normal.background = this.runningList[curRuningIndex];
-                GUI.Box (new Rect (rect.x + rect.width / 2 - 10, rect.y + 10, 20, 20), "", GUIStyle);
+                GUIStyle runningGUIStyle = new GUIStyle ();
+                runningGUIStyle.normal.background = this.runningList[curRuningIndex];
+                GUI.Box (new Rect (rect.x + rect.width / 2 - 10, rect.y + 10, 20, 20), "", runningGUIStyle);
                 this.runningFrame++;
                 if (runningFrame > 10) {
                     this.curRuningIndex++;
@@ -78,9 +84,15 @@ public class Node {
                 break;
             case RunningStatus.Success:
                 GUI.Box (rect, title, successStyle);
+                GUIStyle successGUIStyle = new GUIStyle ();
+                successGUIStyle.normal.background = successTexture;
+                GUI.Box (new Rect (rect.x + rect.width / 2 - 18, rect.y + 10, 36, 36), "", successGUIStyle);
                 break;
             case RunningStatus.Failed:
                 GUI.Box (rect, title, failedStyle);
+                GUIStyle failedGUIStyle = new GUIStyle ();
+                failedGUIStyle.normal.background = failedTexture;
+                GUI.Box (new Rect (rect.x + rect.width / 2 - 18, rect.y + 10, 36, 36), "", failedGUIStyle);
                 break;
         }
 
