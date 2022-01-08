@@ -17,6 +17,7 @@ public class Rebound : ActionNode {
     private Vector2 reboundDir;
     protected override void onEnter () {
         this.agentInstance = (BaseEnemy) agent;
+        // FIXME: 反弹方向未设置
         this.reboundDir = this.blackBoardMemory.getValue<Vector2> (BlackItemEnum.REBOUND_DIR);
 
         this.generateReBoundPath ();
@@ -24,8 +25,8 @@ public class Rebound : ActionNode {
     }
 
     protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Success;
-        return RunningStatus.Success;
+        this.curNodeRunningStatus = RunningStatus.Executing;
+        return RunningStatus.Executing;
     }
 
     protected override void onExit () {
@@ -74,7 +75,6 @@ public class Rebound : ActionNode {
         if (this.reboundList == null || this.reboundList.Count <= 0) {
             return;
         }
-
         this.agentInstance.transform
             .pathTween (this.reboundList, this.reboundAniTime)
             .setEase (EaseType.OutCubic)
