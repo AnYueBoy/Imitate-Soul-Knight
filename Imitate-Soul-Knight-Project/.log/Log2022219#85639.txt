@@ -1,0 +1,2 @@
+2022/2/19 8:56:39	The referenced script (Unknown) on this Behaviour is missing!
+2022/2/19 8:56:39	The referenced script on this Behaviour (Game Object '<null>') is missing!
