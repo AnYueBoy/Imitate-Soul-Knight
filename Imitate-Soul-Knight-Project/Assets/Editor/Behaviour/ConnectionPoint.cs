@@ -3,32 +3,43 @@
  * @Date: 2022-01-04 14:03:53 
  * @Description: 链接点
  */
+using System;
 using UnityEngine;
 public class ConnectionPoint {
     public Rect rect;
     public ConnectionPointType type;
     public Node node;
 
-    public ConnectionPoint (Node node, ConnectionPointType type) {
+    public GUIStyle style;
+
+    public Action<ConnectionPoint> onClickConnectionPoint;
+
+    public ConnectionPoint (Node node, ConnectionPointType type, GUIStyle style, Action<ConnectionPoint> onClickConnectionPoint) {
         this.node = node;
         this.type = type;
-        this.rect = new Rect (0, 0, 20f, 10f);
+        this.style = style;
+        this.onClickConnectionPoint = onClickConnectionPoint;
+        this.rect = new Rect (0, 0, 10f, 20f);
     }
 
-    public void draw () {
-        // GUI坐标左上角为（0,0），右下角为(screenWidth,screenHeight)
-        rect.x = node.rect.x + node.rect.width / 2 - rect.width / 2;
+    public void Draw () {
+        rect.y = node.rect.y + node.rect.height / 2 - rect.height / 2;
 
         switch (type) {
             case ConnectionPointType.In:
-                rect.y = node.rect.y;
+                rect.x = node.rect.x - rect.width + 8f;
                 break;
 
             case ConnectionPointType.Out:
-                rect.y = node.rect.y + node.rect.height - rect.height - 2f;
+                rect.x = node.rect.x + node.rect.width - 8f;
                 break;
             default:
                 break;
         }
+
+        if (GUI.Button (rect, "", style)) {
+            onClickConnectionPoint?.Invoke (this);
+        }
+
     }
 }

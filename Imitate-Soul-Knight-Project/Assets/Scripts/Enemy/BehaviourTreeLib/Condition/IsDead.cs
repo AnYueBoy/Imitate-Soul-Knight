@@ -5,7 +5,7 @@
  */
 using UFramework.AI.BehaviourTree;
 public class IsDead : BaseCondition {
-    public override bool isTrue (IAgent agent) {
+    public override bool IsTrue (IAgent agent) {
         BaseEnemy agentInstance = (BaseEnemy) agent;
         return agentInstance.enemyData.curHp <= 0;
     }

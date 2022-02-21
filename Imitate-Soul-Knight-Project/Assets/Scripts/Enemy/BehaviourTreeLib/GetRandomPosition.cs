@@ -11,16 +11,15 @@ using UnityEngine;
 public class GetRandomPosition : ActionNode {
 
     private BaseEnemy agentInstance;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstance = (BaseEnemy) agent;
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = this.generateRandomPathList ();
-        return this.curNodeRunningStatus;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = this.generateRandomPathList ();
     }
 
-    protected override void onExit () { }
+    protected override void OnExit () { }
 
     private RunningStatus generateRandomPathList () {
         // 产生随机移动的目标位置
@@ -29,8 +28,8 @@ public class GetRandomPosition : ActionNode {
         if (pathList == null) {
             return RunningStatus.Failed;
         }
-        this.blackBoardMemory.setValue (BlackItemEnum.MOVE_PATH, pathList);
-        this.blackBoardMemory.setValue (BlackItemEnum.CUR_MOVE_SPEED, agentInstance.enemyConfigData.moveSpeed);
+        this.blackBoardMemory.SetValue ((int)BlackItemEnum.MOVE_PATH, pathList);
+        this.blackBoardMemory.SetValue ((int)BlackItemEnum.CUR_MOVE_SPEED, agentInstance.enemyConfigData.moveSpeed);
         return RunningStatus.Success;
     }
 

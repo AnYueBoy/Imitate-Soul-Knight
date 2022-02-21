@@ -14,18 +14,17 @@ public class GetRoundRandomPos : ActionNode {
     private int probingMinDistance;
     private int probingMaxDistance;
 
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstance = (YeZhu) agent;
         this.probingMinDistance = agentInstance.probingMinDistance;
         this.probingMaxDistance = agentInstance.probingMaxDistance;
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = this.generatePathList ();
-        return this.curNodeRunningStatus;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = this.generatePathList ();
     }
 
-    protected override void onExit () { }
+    protected override void OnExit () { }
 
     private RunningStatus generatePathList () {
         Cell targetCell = this.getTargetCell ();
@@ -37,8 +36,8 @@ public class GetRoundRandomPos : ActionNode {
         if (pathList == null) {
             return RunningStatus.Failed;
         }
-        this.blackBoardMemory.setValue (BlackItemEnum.MOVE_PATH, pathList);
-        this.blackBoardMemory.setValue (BlackItemEnum.CUR_MOVE_SPEED, agentInstance.enemyConfigData.moveSpeed);
+        this.blackBoardMemory.SetValue ((int)BlackItemEnum.MOVE_PATH, pathList);
+        this.blackBoardMemory.SetValue ((int)BlackItemEnum.CUR_MOVE_SPEED, agentInstance.enemyConfigData.moveSpeed);
         return RunningStatus.Success;
     }
 

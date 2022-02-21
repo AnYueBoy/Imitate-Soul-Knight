@@ -11,18 +11,17 @@ using UnityEngine;
 
 public class GetTargetPosition : ActionNode {
     BaseEnemy agentInstace;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         agentInstace = (BaseEnemy) agent;
         Vector3 playerPos = ModuleManager.instance.playerManager.playerTrans.position;
         List<Vector3> pathList = agentInstace.pathFindComp.findPath (agentInstace.transform.position, playerPos);
-        this.blackBoardMemory.setValue (BlackItemEnum.MOVE_PATH, pathList);
+        this.blackBoardMemory.SetValue ((int) BlackItemEnum.MOVE_PATH, pathList);
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Success;
-        return RunningStatus.Success;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = RunningStatus.Success;
     }
 
-    protected override void onExit () { }
+    protected override void OnExit () { }
 
 }

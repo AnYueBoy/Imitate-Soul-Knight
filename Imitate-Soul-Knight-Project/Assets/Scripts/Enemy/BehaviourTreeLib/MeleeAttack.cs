@@ -10,19 +10,18 @@ using UFramework.AI.BehaviourTree;
 public class MeleeAttack : ActionNode {
 
     private BaseEnemy agentInstance;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstance = (BaseEnemy) agent;
     }
 
-    protected override RunningStatus onExecute () {
+    protected override RunningStatus OnExecute () {
         float aimToPlayerDis = agentInstance.aimToPlayerDistance ();
         if (aimToPlayerDis < agentInstance.meleeAttackRange) {
             float damage = this.agentInstance.enemyConfigData.damage;
             ModuleManager.instance.playerManager.injured (damage);
         }
-        this.curNodeRunningStatus = RunningStatus.Executing;
-        return RunningStatus.Executing;
+        return nodeRunningState = RunningStatus.Executing;
     }
 
-    protected override void onExit () { }
+    protected override void OnExit () { }
 }

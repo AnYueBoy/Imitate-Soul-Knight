@@ -1,114 +1,97 @@
-using System.Collections.Generic;
 /*
  * @Author: l hy 
  * @Date: 2022-01-04 10:03:17 
  * @Description: 节点
  */
 
-using UFramework.AI.BehaviourTree;
+using System;
+using UnityEditor;
 using UnityEngine;
 public class Node {
     public Rect rect;
-    public string title = "默认";
+    public string title;
+    public bool isDragged;
+    public bool isSelected;
     public ConnectionPoint inPoint;
     public ConnectionPoint outPoint;
-    public GUIStyle runningStyle;
-    public GUIStyle successStyle;
-    public GUIStyle failedStyle;
-    private Texture2D successTexture;
-    private Texture2D failedTexture;
-    public BaseNode btNode;
-    private Texture2D[] runningList;
+    public GUIStyle style;
+    public GUIStyle defaultNodeStyle;
+    public GUIStyle selectedNodeStyle;
+    public Action<Node> onRemoveNode;
+
     public Node (
-        BaseNode btNode,
         Vector2 postion,
         float width,
         float height,
-        GUIStyle runningStyle,
-        GUIStyle successStyle,
-        GUIStyle failedStyle,
-        Texture2D[] runningList,
-        Texture2D successTexture,
-        Texture2D failedTexture) {
-        this.btNode = btNode;
+        GUIStyle nodeStyle,
+        GUIStyle selectedStyle,
+        GUIStyle inPointStyle,
+        GUIStyle outPointStyle,
+        Action<ConnectionPoint> onClickInPoint,
+        Action<ConnectionPoint> onClickOutPoint,
+        Action<Node> onRemoveNode) {
         rect = new Rect (postion.x, postion.y, width, height);
-        this.runningStyle = runningStyle;
-        this.successStyle = successStyle;
-        this.failedStyle = failedStyle;
-        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In);
-        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out);
-        this.runningList = runningList;
-        this.successTexture = successTexture;
-        this.failedTexture = failedTexture;
-        this.title = btNode.GetType ().Name;
+        this.style = nodeStyle;
+        defaultNodeStyle = nodeStyle;
+        this.selectedNodeStyle = selectedStyle;
+        this.inPoint = new ConnectionPoint (this, ConnectionPointType.In, inPointStyle, onClickInPoint);
+        this.outPoint = new ConnectionPoint (this, ConnectionPointType.Out, outPointStyle, onClickOutPoint);
+        this.onRemoveNode = onRemoveNode;
     }
 
-    public void drag (Vector2 delta) {
+    public void Drag (Vector2 delta) {
         rect.position += delta;
     }
-    public void scale (float value) {
-        value = value / 2;
-        rect.width += value;
-        rect.height += value;
-        rect.x += value;
-        rect.y += value;
-    }
-    public void draw () {
-        inPoint.draw ();
-        outPoint.draw ();
-        this.checkNodeStatus ();
+    public void Draw () {
+        inPoint.Draw ();
+        outPoint.Draw ();
+        GUI.Box (rect, title, style);
     }
 
-    private int curRuningIndex = 0;
-    private int runningFrame = 0;
-
-    private void checkNodeStatus () {
-        if (btNode == null) {
-            return;
-        }
-
-        RunningStatus runningStatus = btNode.curNodeRunningStatus;
-        switch (runningStatus) {
-            case RunningStatus.Executing:
-                GUI.Box (rect, title, runningStyle);
-                GUIStyle runningGUIStyle = new GUIStyle ();
-                runningGUIStyle.normal.background = this.runningList[curRuningIndex];
-                GUI.Box (new Rect (rect.x + rect.width / 2 - 10, rect.y + 10, 20, 20), "", runningGUIStyle);
-                this.runningFrame++;
-                if (runningFrame > 10) {
-                    this.curRuningIndex++;
-                    this.curRuningIndex %= this.runningList.Length;
-                    this.runningFrame = 0;
-                }
-                GUI.changed = true;
-                break;
-            case RunningStatus.Success:
-                GUI.Box (rect, title, successStyle);
-                GUIStyle successGUIStyle = new GUIStyle ();
-                successGUIStyle.normal.background = successTexture;
-                GUI.Box (new Rect (rect.x + rect.width / 2 - 18, rect.y + 10, 36, 36), "", successGUIStyle);
-                break;
-            case RunningStatus.Failed:
-                GUI.Box (rect, title, failedStyle);
-                GUIStyle failedGUIStyle = new GUIStyle ();
-                failedGUIStyle.normal.background = failedTexture;
-                GUI.Box (new Rect (rect.x + rect.width / 2 - 18, rect.y + 10, 36, 36), "", failedGUIStyle);
-                break;
-        }
-
-    }
-
-    public bool processEvents (Event e) {
+    public bool ProcessEvents (Event e) {
         switch (e.type) {
             case EventType.MouseDown:
+                if (e.button == 0) {
+                    if (rect.Contains (e.mousePosition)) {
+                        this.isDragged = true;
+                        GUI.changed = true;
+                        isSelected = true;
+                        style = selectedNodeStyle;
+                    } else {
+                        GUI.changed = true;
+                        isSelected = false;
+                        style = defaultNodeStyle;
+                    }
+                }
+
+                if (e.button == 1 && isSelected && rect.Contains (e.mousePosition)) {
+                    ProcessContextMenu ();
+                    e.Use ();
+                }
                 break;
 
             case EventType.MouseUp:
+                this.isDragged = false;
                 break;
 
             case EventType.MouseDrag:
+                if (e.button == 0 && this.isDragged) {
+                    this.Drag (e.delta);
+                    e.Use ();
+                    return true;
+                }
                 break;
         }
         return false;
+    }
+
+    private void ProcessContextMenu () {
+        GenericMenu genericMenu = new GenericMenu ();
+        genericMenu.AddItem (new GUIContent ("Remove Node"), false, OnClickRemoveNode);
+        genericMenu.ShowAsContext ();
+    }
+
+    private void OnClickRemoveNode () {
+        onRemoveNode?.Invoke (this);
     }
 }

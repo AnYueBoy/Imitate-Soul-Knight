@@ -10,17 +10,17 @@ using UnityEngine;
 
 public class FourAttack : ActionNode {
     private BaseEnemy agentInstance;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         agentInstance = (BaseEnemy) agent;
         this.attackHandler ();
     }
 
-    protected override RunningStatus onExecute () {
-        return base.onExecute ();
+    protected override RunningStatus OnExecute () {
+        return base.OnExecute ();
     }
 
-    protected override void onExit () {
-        base.onExit ();
+    protected override void OnExit () {
+        base.OnExit ();
     }
 
     private void attackHandler () {
@@ -37,19 +37,19 @@ public class FourAttack : ActionNode {
         float bulletDamage = agentInstance.enemyConfigData.damage;
 
         // 左
-        Vector3 leftEulerAngles = CommonUtil.getWorldEulerAngles (this.agentInstance.transform, Vector3.zero);
+        Vector3 leftEulerAngles = Util.GetWorldEulerAngles (this.agentInstance.transform, Vector3.zero);
         ModuleManager.instance.bulletManager.spawnBullet (leftPos, leftEulerAngles, -1, bulletLayer, bulletUrl, bulletSpeed, bulletDamage);
 
         // 右
-        Vector3 rightEulerAngles = CommonUtil.getWorldEulerAngles (this.agentInstance.transform, Vector3.zero);
+        Vector3 rightEulerAngles = Util.GetWorldEulerAngles (this.agentInstance.transform, Vector3.zero);
         ModuleManager.instance.bulletManager.spawnBullet (rightPos, rightEulerAngles, 1, bulletLayer, bulletUrl, bulletSpeed, bulletDamage);
 
         // 上
-        Vector3 upEulerAngles = CommonUtil.getWorldEulerAngles (this.agentInstance.transform, new Vector3 (0, 0, 90));
+        Vector3 upEulerAngles = Util.GetWorldEulerAngles (this.agentInstance.transform, new Vector3 (0, 0, 90));
         ModuleManager.instance.bulletManager.spawnBullet (upPos, upEulerAngles, 1, bulletLayer, bulletUrl, bulletSpeed, bulletDamage);
 
         // 下
-        Vector3 downEulerAngles = CommonUtil.getWorldEulerAngles (this.agentInstance.transform, new Vector3 (0, 0, -90));
+        Vector3 downEulerAngles = Util.GetWorldEulerAngles (this.agentInstance.transform, new Vector3 (0, 0, -90));
         ModuleManager.instance.bulletManager.spawnBullet (downPos, downEulerAngles, 1, bulletLayer, bulletUrl, bulletSpeed, bulletDamage);
     }
 

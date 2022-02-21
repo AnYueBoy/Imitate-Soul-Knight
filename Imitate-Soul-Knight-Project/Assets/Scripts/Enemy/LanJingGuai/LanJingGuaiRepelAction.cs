@@ -7,13 +7,12 @@
 using UFramework.AI.BehaviourTree;
 
 public class LanJingGuaiRepelAction : ActionNode {
-    protected override bool onEvaluate () {
+    protected override bool OnEvaluate () {
         LanJingGuai lanJingGuai = (LanJingGuai) agent;
         return lanJingGuai.isInRepel;
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Executing;
-        return RunningStatus.Executing;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = RunningStatus.Executing;
     }
 }

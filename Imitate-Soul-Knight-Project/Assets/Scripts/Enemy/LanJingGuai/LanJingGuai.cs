@@ -10,17 +10,17 @@ public class LanJingGuai : BaseEnemy {
 
 	private void Start () {
 		blackboardMemory = new BlackBoardMemory ();
-		BTNode = new ParallelNode (1).addChild (
-			new SelectorNode ().addChild (
-				new SequenceNode ().addChild (
-					new NormalDead ().setPreCondition (new IsDead ()),
+		BTNode = new ParallelNode (1).AddChild (
+			new SelectorNode ().AddChild (
+				new SequenceNode ().AddChild (
+					new NormalDead ().SetPreCondition (new IsDead ()),
 					new Rebound ()
 				),
-				new SequenceNode ().addChild (
+				new SequenceNode ().AddChild (
 					new IdleAction (),
-					new SelectorNode ().addChild (
+					new SelectorNode ().AddChild (
 						new FailureNode (
-							new SequenceNode ().addChild (
+							new SequenceNode ().AddChild (
 								new GetRandomPosition (),
 								new MoveToTarget ()
 							)),

@@ -9,29 +9,26 @@ using UFramework.AI.BehaviourTree;
 public class IdleAction : ActionNode {
 
     private BaseEnemy agentInstace;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstace = (BaseEnemy) agent;
         this.agentInstace.playIdleAni ();
     }
 
     private float idleTimer;
 
-    protected override RunningStatus onExecute () {
+    protected override RunningStatus OnExecute () {
         if (!agentInstace.isRoomActive ()) {
-            this.curNodeRunningStatus = RunningStatus.Executing;
-            return RunningStatus.Executing;
+            return nodeRunningState = RunningStatus.Executing;
         }
 
         if (this.idleTimer < agentInstace.idleInterval) {
-            this.idleTimer += dt;
-            this.curNodeRunningStatus = RunningStatus.Executing;
-            return RunningStatus.Executing;
+            this.idleTimer += deltaTime;
+            return nodeRunningState = RunningStatus.Executing;
         }
-        this.curNodeRunningStatus = RunningStatus.Success;
-        return RunningStatus.Success;
+        return nodeRunningState = RunningStatus.Success;
     }
 
-    protected override void onExit () {
+    protected override void OnExit () {
         this.idleTimer = 0;
     }
 

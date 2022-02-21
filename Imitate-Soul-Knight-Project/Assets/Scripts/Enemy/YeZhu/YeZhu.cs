@@ -19,24 +19,24 @@ public class YeZhu : BaseEnemy {
 
     private void Start () {
         blackboardMemory = new BlackBoardMemory ();
-        BTNode = new ParallelNode (1).addChild (
-            new SelectorNode ().addChild (
-                new SequenceNode ().addChild (
-                    new NormalDead ().setPreCondition (new IsDead ()),
+        BTNode = new ParallelNode (1).AddChild (
+            new SelectorNode ().AddChild (
+                new SequenceNode ().AddChild (
+                    new NormalDead ().SetPreCondition (new IsDead ()),
                     new Rebound ()
                 ),
-                new SequenceNode ().addChild (
+                new SequenceNode ().AddChild (
                     new IdleAction (),
                     new SuccessNode (
-                        new SequenceNode ().addChild (
+                        new SequenceNode ().AddChild (
                             new GetRoundRandomPos (),
                             new MoveToTarget ()
                         )
                     ),
                     new FailureNode (
-                        new ParallelNode (1).addChild (
+                        new ParallelNode (1).AddChild (
                             new YeZhuMeleeEffect (),
-                            new SuccessNode (new SequenceNode ().addChild (
+                            new SuccessNode (new SequenceNode ().AddChild (
                                 new GetTargetPosition (),
                                 new MoveToTarget ()
                             ))

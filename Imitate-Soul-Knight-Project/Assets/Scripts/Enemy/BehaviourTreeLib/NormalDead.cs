@@ -8,7 +8,7 @@ using UFramework.AI.BehaviourTree;
 
 public class NormalDead : ActionNode {
     private BaseEnemy agentInstance;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstance = (BaseEnemy) agent;
 
         this.agentInstance.playDeadAni ();
@@ -18,12 +18,10 @@ public class NormalDead : ActionNode {
         }
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Success;
-        return RunningStatus.Success;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = RunningStatus.Success;
     }
 
-    protected override void onExit () {
-    }
+    protected override void OnExit () { }
 
 }

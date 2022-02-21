@@ -10,36 +10,36 @@ using UFramework.FrameUtil;
 using UnityEngine;
 
 public class MoveToTarget : ActionNode {
-    protected override bool onEvaluate () {
-        return this.blackBoardMemory.hasValue (BlackItemEnum.MOVE_PATH);
+    protected override bool OnEvaluate () {
+        return this.blackBoardMemory.HasValue ((int)BlackItemEnum.MOVE_PATH);
     }
 
     private float moveSpeed;
     private List<Vector3> movePathList;
     private BaseEnemy agentInstance;
 
-    protected override void onEnter () {
+    protected override void OnEnter () {
         agentInstance = (BaseEnemy) agent;
         agentInstance.playMoveAni ();
 
-        this.moveSpeed = this.blackBoardMemory.getValue<float> (BlackItemEnum.CUR_MOVE_SPEED);
+        this.moveSpeed = this.blackBoardMemory.GetValue<float> ((int)BlackItemEnum.CUR_MOVE_SPEED);
 
-        this.movePathList = this.blackBoardMemory.getValue<List<Vector3>> (BlackItemEnum.MOVE_PATH);
+        this.movePathList = this.blackBoardMemory.GetValue<List<Vector3>> ((int)BlackItemEnum.MOVE_PATH);
 
         this.drawPathList = new List<Vector3> (this.movePathList);
         this.curMoveIndex = 0;
         this.getNextTargetPos ();
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = this.moveActionHandler ();
+    protected override RunningStatus OnExecute () {
+        nodeRunningState = this.moveActionHandler ();
         this.drawPath (Color.red);
-        return this.curNodeRunningStatus;
+        return nodeRunningState;
     }
 
-    protected override void onExit () {
-        this.blackBoardMemory.delValue (BlackItemEnum.MOVE_PATH);
-        this.blackBoardMemory.delValue (BlackItemEnum.CUR_MOVE_SPEED);
+    protected override void OnExit () {
+        this.blackBoardMemory.DelValue ((int)BlackItemEnum.MOVE_PATH);
+        this.blackBoardMemory.DelValue ((int)BlackItemEnum.CUR_MOVE_SPEED);
     }
 
     private Vector3 curMoveDir;
@@ -49,7 +49,7 @@ public class MoveToTarget : ActionNode {
 
     private RunningStatus moveActionHandler () {
         // 步长
-        float step = this.moveSpeed * dt;
+        float step = this.moveSpeed * deltaTime;
 
         // 笛卡尔分量
         float horizontalStep = step * this.curMoveDir.x;
@@ -91,9 +91,9 @@ public class MoveToTarget : ActionNode {
         if ((this.agentInstance.transform.position - this.drawPathList[0]).magnitude <= 0.4f) {
             this.drawPathList.RemoveAt (0);
         }
-        CommonUtil.drawPath (this.drawPathList, color);
+        Util.DrawPath (this.drawPathList, color);
         if (this.drawPathList.Count > 0) {
-            CommonUtil.drawLine (this.agentInstance.transform.position, this.drawPathList[0], color);
+            Util.DrawLine (this.agentInstance.transform.position, this.drawPathList[0], color);
         }
     }
 }

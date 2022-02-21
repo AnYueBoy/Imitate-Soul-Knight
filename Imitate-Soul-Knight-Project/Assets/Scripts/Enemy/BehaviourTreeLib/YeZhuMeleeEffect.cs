@@ -9,17 +9,16 @@ using UFramework.AI.BehaviourTree;
 public class YeZhuMeleeEffect : ActionNode {
 
     YeZhu agentInstace;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         agentInstace = (YeZhu) agent;
         agentInstace.sprintEffectNode.SetActive (true);
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Executing;
-        return RunningStatus.Executing;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = RunningStatus.Executing;
     }
 
-    protected override void onExit () {
+    protected override void OnExit () {
         agentInstace.sprintEffectNode.SetActive (false);
     }
 

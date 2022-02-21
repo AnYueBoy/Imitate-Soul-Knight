@@ -42,7 +42,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 		}
 		this._material.SetFloat ("_Fade", 1);
 		float factor = Mathf.Pow (2, intensity);
-		Color randomColor = CommonUtil.getRandomColor ();
+		Color randomColor = Util.GetRandomColor ();
 		randomColor = new Color (randomColor.r * factor, randomColor.g * factor, randomColor.b * factor, randomColor.a * factor);
 		this._material.SetColor ("_DissolveColor", randomColor);
 	}
@@ -52,7 +52,7 @@ public class BaseEnemy : MonoBehaviour, IAgent {
 	}
 
 	public virtual void localUpdate (float dt) {
-		behaviourTreeRunner.execute (BTNode, this, blackboardMemory, dt);
+		behaviourTreeRunner.Execute (BTNode, this, blackboardMemory, dt);
 	}
 
 	public float aimToPlayerDistance () {

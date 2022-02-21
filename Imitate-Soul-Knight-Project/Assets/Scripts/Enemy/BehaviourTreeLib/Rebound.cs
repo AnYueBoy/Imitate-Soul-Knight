@@ -15,22 +15,21 @@ using UnityEngine;
 public class Rebound : ActionNode {
     private BaseEnemy agentInstance;
     private Vector2 reboundDir;
-    protected override void onEnter () {
+    protected override void OnEnter () {
         this.agentInstance = (BaseEnemy) agent;
         // FIXME: 反弹方向未设置
-        this.reboundDir = this.blackBoardMemory.getValue<Vector2> (BlackItemEnum.REBOUND_DIR);
+        this.reboundDir = this.blackBoardMemory.GetValue<Vector2> ((int) BlackItemEnum.REBOUND_DIR);
 
         this.generateReBoundPath ();
         this.reboundTween ();
     }
 
-    protected override RunningStatus onExecute () {
-        this.curNodeRunningStatus = RunningStatus.Executing;
-        return RunningStatus.Executing;
+    protected override RunningStatus OnExecute () {
+        return nodeRunningState = RunningStatus.Executing;
     }
 
-    protected override void onExit () {
-        this.blackBoardMemory.delValue (BlackItemEnum.REBOUND_DIR);
+    protected override void OnExit () {
+        this.blackBoardMemory.DelValue ((int)BlackItemEnum.REBOUND_DIR);
     }
 
     private List<Vector3> reboundList = new List<Vector3> ();
@@ -76,9 +75,9 @@ public class Rebound : ActionNode {
             return;
         }
         this.agentInstance.transform
-            .pathTween (this.reboundList, this.reboundAniTime)
-            .setEase (EaseType.OutCubic)
-            .setCompleted (() => {
+            .PathTween (this.reboundList, this.reboundAniTime)
+            .SetEase (EaseType.OutCubic)
+            .SetCompleted (() => {
                 ModuleManager.instance.promiseTimer.waitFor (1.0f).then (() => {
                     this.dissolveDead ();
                 });
