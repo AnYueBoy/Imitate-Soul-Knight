@@ -6,10 +6,6 @@ public class PlayerData : BaseData {
 
     public bool isNewPlayer = true;
 
-    public int chapter = 1;
-
-    public int level = 1;
-
     /// <summary>
     /// 当前角色id 
     /// </summary>

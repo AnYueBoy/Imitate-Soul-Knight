@@ -8,20 +8,21 @@
 
 using System.IO;
 using LitJson;
+using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
 
-public class PlayerDataManager {
+public class PlayerDataManager : IPlayerDataManager {
     private PlayerData playerData = new PlayerData ();
     private readonly string playerDataUrl = "PlayerData";
 
-    public void init () {
-        this.parseData ();
+    public void Init () {
+        this.ParseData ();
     }
 
     #region  数据读取与保存
-    private void parseData () {
-        TextAsset jsonAsset = AssetsManager.instance.getAssetByUrlSync<TextAsset> (playerDataUrl);
+    private void ParseData () {
+        TextAsset jsonAsset = App.Make<IAssetsManager> ().GetAssetByUrlSync<TextAsset> (playerDataUrl);
         if (jsonAsset == null) {
             return;
         }
@@ -34,9 +35,9 @@ public class PlayerDataManager {
         this.playerData.isNewPlayer = false;
     }
 
-    public void saveData () {
+    private void SaveData () {
         string playerDataStr = JsonMapper.ToJson (this.playerData);
-        string filePath = Application.dataPath + "/Resources/" + this.playerDataUrl + ".json";
+        string filePath = UnityEngine.Application.dataPath + "/Resources/" + this.playerDataUrl + ".json";
 
         StreamWriter sw = new StreamWriter (filePath);
         sw.Write (playerDataStr);
@@ -45,22 +46,47 @@ public class PlayerDataManager {
 
     #endregion
 
+    private float saveTimer = 0;
+    private readonly float saveInterval = 5f;
+
+    public void SaveDataByFixedTime (float deltaTime) {
+        if (this.saveTimer < this.saveInterval) {
+            return;
+        }
+
+        this.saveTimer = 0;
+        this.SaveData ();
+    }
+
+    private void OnApplicationPause (bool pauseStatus) {
+        if (pauseStatus) {
+            OnAppHide ();
+        } else {
+            OnAppShow ();
+        }
+    }
+
+    private void OnAppShow () {
+
+    }
+
+    private void OnAppHide () {
+        this.SaveData ();
+    }
+
     #region  数据访问
 
-    public int getCurChapter () {
-        return this.playerData.chapter;
+    public int CurRoleId {
+        get {
+            return this.playerData.curRoleId;
+        }
     }
 
-    public int getCurLevel () {
-        return this.playerData.level;
-    }
+    public int CurWeaponId {
+        get {
+            return this.playerData.curWeaponId;
 
-    public int getCurRoleId () {
-        return this.playerData.curRoleId;
-    }
-
-    public int getCurWeaponId () {
-        return this.playerData.curWeaponId;
+        }
     }
     #endregion
 }
