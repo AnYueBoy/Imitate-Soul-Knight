@@ -5,28 +5,32 @@
  */
 
 using LitJson;
+using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
 
-public class ConfigManager {
+public class ConfigManager : IConfigManager {
 
-	public LevelConfig levelConfig;
+	private WeaponConfig weaponConfig;
 
-	public WeaponConfig weaponConfig;
+	private EnemyConfig enemyConfig;
 
-	public EnemyConfig enemyConfig;
+	private RoleConfig roleConfig;
 
-	public RoleConfig roleConfig;
+	public WeaponConfig WeaponConfig => weaponConfig;
 
-	public void init () {
-		levelConfig = this.loadConfig<LevelConfig> (ConfigAssetsUrl.levelConfig);
+	public EnemyConfig EnemyConfig => enemyConfig;
+
+	public RoleConfig RoleConfig => roleConfig;
+
+	public void Init () {
 		weaponConfig = this.loadConfig<WeaponConfig> (ConfigAssetsUrl.weaponConfig);
 		enemyConfig = this.loadConfig<EnemyConfig> (ConfigAssetsUrl.enemyConfig);
 		roleConfig = this.loadConfig<RoleConfig> (ConfigAssetsUrl.roleConfig);
 	}
 
-	public T loadConfig<T> (string configUrl) {
-		TextAsset configContext = AssetsManager.instance.getAssetByUrlSync<TextAsset> (configUrl);
+	private T loadConfig<T> (string configUrl) {
+		TextAsset configContext = App.Make<IAssetsManager> ().GetAssetByUrlSync<TextAsset> (configUrl);
 		string context = configContext.text;
 		T configData = JsonMapper.ToObject<T> (context);
 		(configData as IConfig).convertData ();

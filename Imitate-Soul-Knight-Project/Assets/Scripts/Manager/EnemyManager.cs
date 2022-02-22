@@ -7,26 +7,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UFramework;
+using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
 
-public class EnemyManager {
+public class EnemyManager : IEnemyManager {
 
     private HashSet<BaseEnemy> enemySet = new HashSet<BaseEnemy> ();
 
-    public void localUpdate (float dt) {
+    public void LocalUpdate (float deltaTime) {
         foreach (BaseEnemy enemy in enemySet) {
-            enemy.localUpdate (dt);
+            enemy.localUpdate (deltaTime);
         }
     }
 
-    public BaseEnemy spawnEnemyById (int enemyId, Vector3 pos, Func<bool> callback = null) {
-        EnemyConfigData enemyConfigData = ModuleManager.instance.configManager.enemyConfig.getEnemyConfigById (enemyId);
+    public BaseEnemy SpawnEnemyById (int enemyId, Vector3 pos, Func<bool> callback = null) {
+        EnemyConfigData enemyConfigData = App.Make<IConfigManager> ().EnemyConfig.getEnemyConfigById (enemyId);
         string enemyUrl = enemyConfigData.url;
-        GameObject enemyPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (enemyUrl);
-        GameObject enemyNode = ObjectPool.instance.requestInstance (enemyPrefab);
-        enemyNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
+        GameObject enemyPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> (enemyUrl);
+        GameObject enemyNode = App.Make<IObjectPool> ().RequestInstance (enemyPrefab);
+        enemyNode.transform.SetParent (App.Make<ITransfromManager> ().GoTransfrom);
         enemyNode.transform.position = pos;
 
         BaseEnemy enemy = enemyNode.GetComponent<BaseEnemy> ();

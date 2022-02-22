@@ -5,7 +5,7 @@
  */
 using System.Collections.Generic;
 using Cinemachine;
-using UFramework;
+using UFramework.Core;
 using UFramework.GameCommon;
 using UnityEngine;
 public class PlayerManager : MonoBehaviour {
@@ -31,18 +31,18 @@ public class PlayerManager : MonoBehaviour {
 
 	private void buildBattleRole () {
 		// 构建角色实例
-		GameObject playerPrefab = AssetsManager.instance.getAssetByUrlSync<GameObject> (RoleAssetsUrl.player);
-		GameObject playerNode = ObjectPool.instance.requestInstance (playerPrefab);
+		GameObject playerPrefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> (RoleAssetsUrl.player);
+		GameObject playerNode = App.Make<IObjectPool> ().RequestInstance (playerPrefab);
 		playerNode.transform.SetParent (ModuleManager.instance.gameObjectTrans);
 		this.roleControl = playerNode.GetComponent<RoleControl> ();
 		cinemaCamera.Follow = this.roleControl.transform;
 
 		// 构建角色数据
-		int curRoleId = ModuleManager.instance.playerDataManager.getCurRoleId ();
+		int curRoleId = App.Make<IPlayerDataManager> ().CurRoleId;
 		this.battleRoleData = new BattleRoleData (curRoleId);
 
 		// 根据当前武器生成武器实例
-		int curWeaponId = ModuleManager.instance.playerDataManager.getCurWeaponId ();
+		int curWeaponId = App.Make<IPlayerDataManager> ().CurWeaponId;
 		BaseWeapon curWeapon = ModuleManager.instance.itemManager.spawnWeapon (Vector3.zero, (ItemIdEnum) curWeaponId);
 
 		// TODO:生成备用近战武器
