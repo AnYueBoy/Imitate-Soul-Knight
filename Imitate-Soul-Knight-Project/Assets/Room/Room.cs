@@ -5,6 +5,7 @@
  */
 using System.Collections.Generic;
 using UFramework;
+using UFramework.Core;
 using UFramework.FrameUtil;
 using UFramework.GameCommon;
 using UFramework.Tween;
@@ -30,8 +31,8 @@ public class Room {
 
 	public Room (RoomData roomData) {
 		this.roomData = roomData;
-		doorOpenTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
-		doorCloseTile = AssetsManager.instance.getAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
+		doorOpenTile = App.Make<IAssetsManager>().GetAssetByUrlSync<TileBase> (MapAssetsUrl.doorOpenTile);
+		doorCloseTile = App.Make<IAssetsManager>().GetAssetByUrlSync<TileBase> (MapAssetsUrl.doorCloseTile);
 		this.roomActive = false;
 		this.pathFinding = new PathFinding ();
 
