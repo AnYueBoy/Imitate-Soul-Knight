@@ -6,7 +6,7 @@
  * @Last Modified time: 2021-05-05 10:30:58
  */
 using System.Collections.Generic;
-using UFramework.Const;
+using UFramework.Core;
 using UnityEngine;
 namespace UFramework.GameCommon {
 
@@ -38,6 +38,10 @@ namespace UFramework.GameCommon {
             this.currentBoard = targetUI;
         }
 
+        public void ShowBoard<T> (params object[] args) where T : BaseUI {
+            this.ShowBoard (typeof (T).ToString (), args);
+        }
+
         public void HideAll () {
             foreach (BaseUI targerUI in this.uiDic.Values) {
                 if (targerUI == null) {
@@ -51,8 +55,16 @@ namespace UFramework.GameCommon {
             this.showUI (uiName, args);
         }
 
+        public void ShowDialog<T> (params object[] args) where T : BaseUI {
+            this.ShowDialog (typeof (T).ToString (), args);
+        }
+
         public void CloseDialog (string uiName) {
             this.hideUI (uiName);
+        }
+
+        public void CloseDialog<T> () where T : BaseUI {
+            this.CloseDialog (typeof (T).ToString ());
         }
 
         private void hideUI (string uiName) {
@@ -75,12 +87,12 @@ namespace UFramework.GameCommon {
             if (targetUI != null) {
                 targetUI.gameObject.SetActive (true);
             } else {
-                string url = UrlString.uiUrl + uiName;
-                GameObject prefab = Resources.Load<GameObject> (url);
+                string url = "UI/" + uiName;
+                GameObject prefab = App.Make<IAssetsManager> ().GetAssetByUrlSync<GameObject> (url);
 
-                GameObject uiNode = GameObject.Instantiate (prefab);
-                uiNode.transform.SetParent (this.uiRoot);
-                uiNode.transform.localPosition = Vector3.zero;
+                GameObject uiNode = App.Make<IObjectPool> ().RequestInstance (prefab);
+                RectTransform rectTransform = uiNode.GetComponent<RectTransform> ();
+                rectTransform.SetParent (this.uiRoot, false);
                 targetUI = uiNode.GetComponent<BaseUI> ();
                 this.uiDic.Add (uiName, targetUI);
                 uiNode.SetActive (true);

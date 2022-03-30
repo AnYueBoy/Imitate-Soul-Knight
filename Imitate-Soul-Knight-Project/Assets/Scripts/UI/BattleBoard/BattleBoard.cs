@@ -10,12 +10,13 @@ using UFramework.GameCommon;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BattleBoard : BaseUI {
-
-    public override void onShow (params object[] args) {
-
+public class BattleBoard : BaseUI
+{
+    public override void OnShow(params object[] args)
+    {
     }
 
-    private void Update () {
+    private void Update()
+    {
     }
 }
